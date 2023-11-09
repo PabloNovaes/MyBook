@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="cyan"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="red"
+    />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Perfil de usuário</title>
+    <link rel="stylesheet" href="../../pages/userProfile/index.css" />
+    <link rel="stylesheet" href="../../global/global.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+  </head>
+
+  <body style="height: 100vh !important">
+    <div id="shadow"></div>
+    <%- include('../../components/shoppingBag/bag') %>
+    <%-include('../../components/favorite/favorite') %>
+    <main id="main">
+      <%-include('../../components/sidebar/sidebar') %>
+      <%-include('../../components/pageLoader/index') %> <%-
+      include('../../components/header/header') %>
+      <div class="container">
+        <img id="user-img" src="" alt="" />
+        <p id="user-name">...</p>
+
+        <div id="user-info">
+          <span id="post-quantity">
+            <p></p>
+            <p>Posts</p>
+          </span>
+          <i class="divider"></i>
+          <p id="name"></p>
+        </div>
+      </div>
+
+      <nav id="navigation">
+        <header>
+          <span>
+            <p id="assessment">
+              <i class="ti ti-brand-feedly"></i>
+              Publicações
+            </p>
+          </span>
+          <span id="init-chat">
+            <p>
+              <i class="ti ti-message-circle-2"></i>
+              Iniciar conversa
+            </p>
+          </span>
+        </header>
+      </nav>
+
+      <section id="pages">
+        <div id="publications" class="tab-content">
+          <div id="posts-list"></div>
+
+          <span id="message">
+            <i class="ti ti-mood-confuzed-filled"></i>
+            <p>Você não tem nunhuma publicação</p>
+          </span>
+        </div>
+
+        <footer id="image-options">
+          <header>
+            <p>Fechar</p>
+          </header>
+          <ul>
+            <li class="option">
+              <i class="ph-fill ph-user-circle"></i>
+              <p>ver imagem</p>
+            </li>
+          </ul>
+        </footer>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+    <script
+      async
+      type="module"
+      src="../../pages/userProfile/js/index.js"
+    ></script>
+   
+  </body>
+</html>

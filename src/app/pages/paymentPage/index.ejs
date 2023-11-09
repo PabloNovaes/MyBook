@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" id="html" class="">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <title>Document</title>
+  <link rel="stylesheet" href="../../pages/paymentPage/index.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+
+<body>
+  <div id="shadow"></div>
+  <%- include('../../components/shoppingBag/bag') %>
+  <%- include('../../components/favorite/favorite') %>
+  <%- include('../../components/sidebar/sidebar') %>
+
+    <main>
+
+      <%- include('../../components/header/header') %>
+
+        <div class="container">
+          <div id="buy-details">
+            <div id="address">
+              <header>
+                <h1>Endereço de envio</h1>
+              </header>
+              <span>R. Nazir Miguel - Raposo Tavares
+                São Paulo - SP, 05570-030
+              </span>
+            </div>
+            <div id="payment-methods">
+              <header>
+                <h1>Metodos de pagamento</h1>
+              </header>
+              <span>Selecione um metodo de pagamento</span>
+            </div>
+            <div class="list-case">
+              <ul id="itens">
+                <li class="item">
+                  <div class="img">
+                    <img src="../../pages/paymentPage/assets/book.svg" alt="">
+                  </div>
+                  <div id="book-info">
+                    <p id="title">O Senhor dos Anéis: Volume Único - Capa Os Anéis de Poder</p>
+                    <p id="author">por J.R.R. Tolkien (Autor), Ronald Kyrmse (Tradutor)</p>
+                    <p id="price">R$ 43,00</p>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="img">
+                    <img src="../../pages/paymentPage/assets/book.svg" alt="">
+                  </div>
+                  <div id="book-info">
+                    <p id="title">O Senhor dos Anéis: Volume Único - Capa Os Anéis de Poder</p>
+                    <p id="author">por J.R.R. Tolkien (Autor), Ronald Kyrmse (Tradutor)</p>
+                    <p id="price">R$ 43,00</p>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="img">
+                    <img src="../../pages/paymentPage/assets/book.svg" alt="">
+                  </div>
+                  <div id="book-info">
+                    <p id="title">O Senhor dos Anéis: Volume Único - Capa Os Anéis de Poder</p>
+                    <p id="author">por J.R.R. Tolkien (Autor), Ronald Kyrmse (Tradutor)</p>
+                    <p id="price">R$ 43,00</p>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="img">
+                    <img src="../../pages/paymentPage/assets/book.svg" alt="">
+                  </div>
+                  <div id="book-info">
+                    <p id="title">O Senhor dos Anéis: Volume Único - Capa Os Anéis de Poder</p>
+                    <p id="author">por J.R.R. Tolkien (Autor), Ronald Kyrmse (Tradutor)</p>
+                    <p id="price">R$ 43,00</p>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="img">
+                    <img src="../../pages/paymentPage/assets/book.svg" alt="">
+                  </div>
+                  <div id="book-info">
+                    <p id="title">O Senhor dos Anéis: Volume Único - Capa Os Anéis de Poder</p>
+                    <p id="author">por J.R.R. Tolkien (Autor), Ronald Kyrmse (Tradutor)</p>
+                    <p id="price">R$ 43,00</p>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="img">
+                    <img src="../../pages/paymentPage/assets/book.svg" alt="">
+                  </div>
+                  <div id="book-info">
+                    <p id="title">O Senhor dos Anéis: Volume Único - Capa Os Anéis de Poder</p>
+                    <p id="author">por J.R.R. Tolkien (Autor), Ronald Kyrmse (Tradutor)</p>
+                    <p id="price">R$ 43,00</p>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="img">
+                    <img src="../../pages/paymentPage/assets/book.svg" alt="">
+                  </div>
+                  <div id="book-info">
+                    <p id="title">O Senhor dos Anéis: Volume Único - Capa Os Anéis de Poder</p>
+                    <p id="author">por J.R.R. Tolkien (Autor), Ronald Kyrmse (Tradutor)</p>
+                    <p id="price">R$ 43,00</p>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="img">
+                    <img src="../../pages/paymentPage/assets/book.svg" alt="">
+                  </div>
+                  <div id="book-info">
+                    <p id="title">O Senhor dos Anéis: Volume Único - Capa Os Anéis de Poder</p>
+                    <p id="author">por J.R.R. Tolkien (Autor), Ronald Kyrmse (Tradutor)</p>
+                    <p id="price">R$ 43,00</p>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <div id="buy-values">
+            <header>
+              <p>Resumo</p>
+            </header>
+            <span>
+              <p>Subtotal</p>
+              <p>R$ 126,00</p>
+            </span>
+            <span>
+              <p>Desconto</p>
+              <p>R$ 0,00</p>
+            </span>
+            <span>
+              <p>Frete</p>
+              <p>R$ 12,00</p>
+            </span>
+            <div id="buy-now">
+              <span>
+                <p>Total</p>
+                <p>R$ 148,00</p>
+              </span>
+              <button>
+                <p>Fazer pedido</p>
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+    <script type="module" src="../../pages/paymentPage/js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id              String            @id
+  name            String
+  nickname        String?
+  email           String            @unique
+  avatar_url      String?           @db.Text
+  birth_year      String?
+  cpf             String?
+  password        String?
+  
+  adresses        Adress_per_user[]
+  posts           Post[]
+  order           Order[]
+  ProductBag      ProductBag[]
+  FavoriteProduct FavoriteProduct[]
+
+  @@map("users")
+}
+
+model Product {
+  id              String            @id @default(uuid())
+  name            String
+  author          String
+  price           Float
+  category        String
+  image           String
+  description     String            @db.Text
+  
+  Order           Order?            @relation(fields: [orderId], references: [id])
+  orderId         String?
+  ProductBag      ProductBag[]
+  FavoriteProduct FavoriteProduct[]
+
+  @@map("products")
+}
+
+model ProductBag {
+  id        String @id @default(uuid())
+  userId    String
+  productId String
+
+  User    User    @relation(fields: [userId], references: [id])
+  Product Product @relation(fields: [productId], references: [id])
+
+  @@map("products_bag")
+}
+
+model FavoriteProduct {
+  id        String @id @default(uuid())
+  userId    String
+  productId String
+
+  User    User    @relation(fields: [userId], references: [id])
+  Product Product @relation(fields: [productId], references: [id])
+
+  @@map("favorite_products")
+}
+
+model Adress {
+  id       String @id @default(uuid())
+  street   String
+  district String
+  cep      String
+  number   Int
+  city     String
+  uf       String
+
+  users Adress_per_user[]
+
+  @@map("adresses")
+}
+
+model Adress_per_user {
+  id       String  @id @default(uuid())
+  userId   String?
+  adressId String?
+
+  User   User?   @relation(fields: [userId], references: [id])
+  Adress Adress? @relation(fields: [adressId], references: [id])
+
+  @@map("adresses_per_users")
+}
+
+model Post {
+  id          String  @id @default(uuid())
+  description String?
+  image_url   String? @db.Text
+  created_at  String
+
+  User        User?   @relation(fields: [userId], references: [id])
+  userId      String?
+
+  @@map("posts")
+}
+
+model Order {
+  id       String    @id @default(uuid())
+  created  DateTime  @default(now())
+  status   String
+  
+  User     User      @relation(fields: [userId], references: [id])
+  userId   String
+  products Product[]
+
+  @@map("orders")
+}

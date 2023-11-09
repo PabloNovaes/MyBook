@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="../../components/sidebar/sidebar.css" />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/tippy.js@6/animations/shift-away.css"
+/>
+
+<nav id="sidebar">
+  <header>
+    <div id="switch-theme">
+      <i id="toogleTheme" class="ph-fill ph-moon" style="font-size: 2.4rem"></i>
+    </div>
+    <button id="close-btn">
+      <i class="ph-bold ph-x"></i>
+    </button>
+  </header>
+  <ul class="nav-links">
+    <a href="/">
+      <li>
+        <i id="home" class="ph-fill ph-house"> </i>
+        <p>Home</p>
+      </li>
+    </a>
+    <a href="/feed">
+      <li>
+        <i id="feed" class="ph-fill ph-newspaper"> </i>
+        <p>Feed</p>
+      </li>
+    </a>
+    <a href="/profile">
+      <li>
+        <i id="profile" class="ph-fill ph-user"> </i>
+        <p>Perfil</p>
+      </li>
+    </a>
+    <li>
+      <i id="category" class="ti ti-category-filled"> </i>
+      <p>Categorias</p>
+    </li>
+    <a href="/chat">
+      <li>
+        <i id="chat" class="ti ti-message-circle-2-filled"> </i>
+        <p>Conversas</p>
+      </li>
+    </a>
+    <li id="bag-btn">
+      <i id="bag" class="ph-fill ph-bag"> </i>
+      <p>Sacola de compras</p>
+    </li>
+    <li id="fav-btn">
+      <i id="fav" class="ph-fill ph-heart"> </i>
+      <p>Favoritos</p>
+    </li>
+  </ul>
+
+  <footer>
+    <div class="logout-case">
+      <i id="sign-out" class="ph-bold ph-sign-out"></i>
+      <p>Sair</p>
+    </div>
+    <div class="login-case">
+      <a href="/login"> </a>
+      <i id="sign-in" class="ph-bold ph-sign-in"></i>
+      <p>Entrar</p>
+    </div>
+  </footer>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+<script type="module" src="../../components/sidebar/tippy.js"></script>
+<script type="module" src="../../components/sidebar/script.js"></script>

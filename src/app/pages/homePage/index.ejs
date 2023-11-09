@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Home</title>
+    <link rel="stylesheet" href="../../pages/homePage/index.css" />
+    <link rel="stylesheet" href="../../global/global.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+  </head>
+
+  <body>
+    <div id="shadow"></div>
+    <%- include('../../components/shoppingBag/bag') %> <%-
+    include('../../components/favorite/favorite') %> <%-
+    include('../../components/sidebar/sidebar') %>
+    <main>
+      <%- include('../../components/header/header') %>
+      <swiper-container
+        class="container mySwiper"
+        pagination="true"
+        pagination-clickable="true"
+        navigation="false"
+        space-between="30"
+        centered-slides="true"
+        autoplay-delay="4000"
+        autoplay-disable-on-interaction="true"
+      >
+        <swiper-slide>Slide 1</swiper-slide>
+        <swiper-slide>Slide 2</swiper-slide>
+        <swiper-slide>Slide 3</swiper-slide>
+        <swiper-slide>Slide 4</swiper-slide>
+      </swiper-container>
+      <div id="controlls">
+        <ul>
+          <li id="order">
+            <div class="list-icons">
+              <input type="checkbox" class="icon" name="" />
+              <i class="ph-fill ph-list"></i>
+            </div>
+            <p>Ordenar</p>
+          </li>
+          <i class="divider"></i>
+          <li>
+            <p>268 Resultados</p>
+          </li>
+          <i class="divider"></i>
+          <li id="filter">
+            <i class="ph-fill ph-funnel"></i>
+            <input type="checkbox" class="icon" name="" />
+            <p>Filtrar</p>
+          </li>
+        </ul>
+      </div>
+      <section id="cards"></section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+    <script type="module" src="../../pages/homePage/js/index.js"></script>
+  </body>
+</html>

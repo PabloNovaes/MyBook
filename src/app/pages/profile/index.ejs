@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" >
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="red" >
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Perfil</title>
+    <link rel="stylesheet" href="../../pages/profile/index.css" />
+    <link rel="stylesheet" href="../../global/global.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+  </head>
+
+  <body style="height: 100vh !important">
+    <div id="shadow"></div>
+    <%- include('../../components/shoppingBag/bag') %>
+    <%-include('../../components/favorite/favorite') %>
+    <main id="main">
+      <%-include('../../components/sidebar/sidebar') %>
+      <%-include('../../components/pageLoader/index') %>
+      <%- include('../../components/header/header') %>
+      <div class="container">
+        <img id="user-img" alt="" />
+        <p id="user-name">...</p>
+
+        <div id="user-info">
+          <span id="post-quantity">
+            <p>0</p>
+            <p>Posts</p>
+          </span>
+          <i class="divider"></i>
+          <p id="name">...</p>
+        </div>
+      </div>
+
+      <nav id="navigation">
+        <header>
+          <span>
+            <p class="active" id="assessment">
+              <i class="ti ti-brand-feedly"></i>
+              Publicações
+            </p>
+          </span>
+          <span>
+            <p id="my-account">
+              <i class="ph-fill ph-user"></i>
+              Minha conta
+            </p>
+          </span>
+        </header>
+      </nav>
+
+      <section id="pages">
+        <div id="publications" class="tab-content">
+          <div id="start-post">
+              <i class="ph-bold ph-plus"></i>
+          </div>
+
+          <div id="posts-list">
+
+          </div>
+
+          <span id="message">
+            <i class="ti ti-mood-confuzed-filled"></i>
+            <p>Você não tem nunhuma publicação</p>
+          </span> 
+        </div>
+        <div id="account" class="tab-content">
+          <div id="track-purchase">
+            <header>
+              <p>Meus pedidos</p>
+              <i class="ph-bold ph-caret-right"></i>
+            </header>
+            <i class="divider"></i>
+            <nav>
+              <span>
+                <i class="ti ti-wallet"></i>
+                <p>Pagamento<br />pendente</p>
+              </span>
+              <span>
+                <i class="ti ti-package-export"></i>
+                <p>Aguardando<br />envio</p>
+              </span>
+              <span>
+                <i class="ti ti-truck-delivery"></i>
+                <p>Produto<br />enviado</p>
+              </span>
+              <span>
+                <i class="ti ti-message-2-check"></i>
+                <p>Avaliar</p>
+              </span>
+            </nav>
+          </div>
+
+          <div id="account-controlls">
+            <ul>
+              <li id="settings-tab">
+                <i class="ph-fill ph-gear"></i>
+                <p>Configurações</p>
+              </li>
+              <i class="divider"></i>
+              <li>
+                <i class="ti ti-help-octagon-filled"></i>
+                <p>Suporte</p>
+              </li>
+            </ul>
+          </div>
+
+          <div id="version">
+            Versão
+            <span>1.0</span>
+          </div>
+        </div>
+        <div id="account-settings" class="tab-content">
+          <header>
+            <i class="ph-bold ph-arrow-left" id="back-to"></i>
+            <p>Configurações</p>
+          </header>
+
+          <div id="settings">
+            <ul>
+              <li id="account-tab">
+                <i class="ti ti-user-circle"></i>
+                <p>Dados da conta</p>
+              </li>
+              <i class="divider"></i>
+              <li id="adress-tab">
+                <i class="ti ti-map-pins"></i>
+                <p>Endereços de entrega</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="view-account-data" class="tab-content">
+          <header>
+            <i class="ph-bold ph-arrow-left" id="back-to"></i>
+            <p>Dados da conta</p>
+            <i id="edit-data" class="ti ti-edit"></i>
+          </header>
+
+          <div id="data">
+            <ul>
+              <li class="account-tab">
+                <p class="property">Nome</p>
+                <p class="value" data-id="name"></p>
+              </li>
+              <i class="divider"></i>
+              <li class="account-tab">
+                <p class="property">Email</p>
+                <p class="value" data-id="email"></p>
+              </li>
+              <i class="divider"></i>
+              <li class="account-tab">
+                <p class="property">Nome de usuário</p>
+                <p class="value" data-id="nickname"></p>
+              </li>
+              <i class="divider"></i>
+              <li class="account-tab">
+                <p class="property">ID</p>
+                <p class="value" data-id="id"></p>
+              </li>
+              <i class="divider"></i>
+              <li class="account-tab">
+                <p class="property">Cpf</p>
+                <p class="value" data-id="cpf">Não informado</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="view-adress" class="tab-content">
+          <header>
+            <i class="ph-bold ph-arrow-left" id="back-to"></i>
+            <p>Endereços</p>
+            <i id="add-adress" class="ti ti-plus"></i>
+          </header>
+
+          <div id="adresses">
+            <ul>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+        <footer id="image-options">
+          <header>
+            <p>Fechar</p>
+          </header>
+          <ul>
+            <li class="option">
+              <i class="ph-fill ph-user-circle"></i>
+              <p>ver imagem</p>
+            </li>
+            <li>
+              <i class="ph-fill ph-image"></i>
+              <input id="change-img" name="photo" type="file" />
+              <label for="change-img" class="option">Escolher imagem</label>
+            </li>
+          </ul>
+        </footer>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+    <script async type="module" src="../../pages/profile/js/index.js"></script>
+    <script async type="module" src="../../pages/profile/js/scrollReveal.js"></script>
+  </body>
+</html>

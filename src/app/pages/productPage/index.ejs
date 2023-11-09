@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" id="html" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="../../pages/productPage/index.css" />
+    <link rel="stylesheet" href="../../global/global.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+  </head>
+
+  <body>
+    <div id="shadow"></div>
+    <%- include('../../components/shoppingBag/bag') %> 
+    <%- include('../../components/favorite/favorite') %>
+    <%-include('../../components/sidebar/sidebar') %>
+
+    <main id="first-main">
+      <%- include('../../components/header/header') %>
+
+      <section id="book-info">
+        <div id="book-img">
+          <div id="img">
+            <img src="" alt="book image" />
+          </div>
+        </div>
+        <div id="book-details">
+          <header>
+            <h1></h1>
+          </header>
+          <p id="author"></p>
+          <div id="book-description">
+            <span>Descrição</span>
+            <p id="description-content"></p>
+          </div>
+          <footer id="actions">
+            <span>
+              <p id="price"></p>
+              <p id="items-in-stock">32 em estoque</p>
+            </span>
+            <div class="fav-or-bag">
+              <button>
+                <i class="ph-bold ph-heart"></i>
+                <p>Adicionar aos favoritos</p>
+              </button>
+              <button>
+                <i class="ph-bold ph-bag"></i>
+                <p>Adicionar a sacola</p>
+              </button>
+              <button id="buy-now">
+                <p>Comprar agora</p>
+              </button>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+
+    <div id="all-comments">
+      <header id="comments-header">
+        <div id="close-comments">
+          <i class="ph-bold ph-caret-left"></i>
+          <p>Comentários</p>
+        </div>
+      </header>
+      <div>
+        <ul>
+          <li>
+            <img src="https://github.com/pablonovaes.png" alt="" />
+            <div class="evaluation-data">
+              <p class="name">Pablo novaes</p>
+              <div class="stars">
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-bold ph-star"></i>
+                <i id="stars" class="ph-bold ph-star"></i>
+                <i id="stars" class="ph-bold ph-star"></i>
+              </div>
+              <span class="date">2023-09-08 22:29</span>
+              <p class="assessment-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quam
+                expedita soluta quas beatae veritatis impedit at quasi. Quas
+                pariatur repellendus facere aperiam minima quaerat cum odit
+                temporibus non ad. Lorem ipsum dolor sit, amet consectetur
+                adipisicing elit. Culpa nemo dignissimos maiores, illum neque
+                iure aliquam consequatur id, facilis iste reiciendis quod ullam
+                ipsum tempore dolorum autem? A, consequuntur asperiores. Lorem
+                ipsum dolor sit, amet consectetur adipisicing elit. Ut, nam
+                excepturi! Magnam ad magni, deleniti commodi fugit quas iste,
+                exercitationem tempore eum veritatis et mollitia optio adipisci.
+                Blanditiis, quos sequi!
+              </p>
+            </div>
+          </li>
+          <li>
+            <img src="https://github.com/pablonovaes.png" alt="" />
+            <div class="evaluation-data">
+              <p class="name">Pablo novaes</p>
+              <div class="stars">
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+              </div>
+              <span class="date">2023-09-08 22:29</span>
+              <p class="assessment-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quam
+                expedita soluta quas beatae veritatis impedit at quasi. Quas
+                pariatur repellendus facere aperiam minima quaerat cum odit
+                temporibus non ad. Lorem ipsum dolor sit, amet consectetur
+                adipisicing elit. Culpa nemo dignissimos maiores, illum neque
+                iure aliquam consequatur id, facilis iste reiciendis quod ullam
+                ipsum tempore dolorum autem? A, consequuntur asperiores. Lorem
+                ipsum dolor sit, amet consectetur adipisicing elit. Ut, nam
+                excepturi! Magnam ad magni, deleniti commodi fugit quas iste,
+                exercitationem tempore eum veritatis et mollitia optio adipisci.
+                Blanditiis, quos sequi!
+              </p>
+            </div>
+          </li>
+          <li>
+            <img src="https://github.com/pablonovaes.png" alt="" />
+            <div class="evaluation-data">
+              <p class="name">Pablo novaes</p>
+              <div class="stars">
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+              </div>
+              <span class="date">2023-09-08 22:29</span>
+              <p class="assessment-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quam
+                expedita soluta quas beatae veritatis impedit at quasi. Quas
+                pariatur repellendus facere aperiam minima quaerat cum odit
+                temporibus non ad. Lorem ipsum dolor sit, amet consectetur
+                adipisicing elit. Culpa nemo dignissimos maiores, illum neque
+                iure aliquam consequatur id, facilis iste reiciendis quod ullam
+                ipsum tempore dolorum autem? A, consequuntur asperiores. Lorem
+                ipsum dolor sit, amet consectetur adipisicing elit. Ut, nam
+                excepturi! Magnam ad magni, deleniti commodi fugit quas iste,
+                exercitationem tempore eum veritatis et mollitia optio adipisci.
+                Blanditiis, quos sequi!
+              </p>
+            </div>
+          </li>
+          <li>
+            <img src="https://github.com/pablonovaes.png" alt="" />
+            <div class="evaluation-data">
+              <p class="name">Pablo novaes</p>
+              <div class="stars">
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+              </div>
+              <span class="date">2023-09-08 22:29</span>
+              <p class="assessment-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quam
+                expedita soluta quas beatae veritatis impedit at quasi. Quas
+                pariatur repellendus facere aperiam minima quaerat cum odit
+                temporibus non ad. Lorem ipsum dolor sit, amet consectetur
+                adipisicing elit. Culpa nemo dignissimos maiores, illum neque
+                iure aliquam consequatur id, facilis iste reiciendis quod ullam
+                ipsum tempore dolorum autem? A, consequuntur asperiores. Lorem
+                ipsum dolor sit, amet consectetur adipisicing elit. Ut, nam
+                excepturi! Magnam ad magni, deleniti commodi fugit quas iste,
+                exercitationem tempore eum veritatis et mollitia optio adipisci.
+                Blanditiis, quos sequi!
+              </p>
+            </div>
+          </li>
+          <li>
+            <img src="https://github.com/diego3g.png" alt="" />
+            <div class="evaluation-data">
+              <p class="name">Diego Fernandes</p>
+              <div class="stars">
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+              </div>
+              <span class="date">2023-09-08 22:29</span>
+              <p class="assessment-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quam
+                expedita soluta quas beatae veritatis impedit at quasi. Quas
+                pariatur repellendus facere aperiam minima quaerat cum odit
+                temporibus non ad. Lorem ipsum dolor sit, amet consectetur
+                adipisicing elit. Culpa nemo dignissimos maiores, illum neque
+                iure aliquam consequatur id, facilis iste reiciendis quod ullam
+                ipsum tempore dolorum autem? A, consequuntur asperiores. Lorem
+                ipsum dolor sit, amet consectetur adipisicing elit. Ut, nam
+                excepturi! Magnam ad magni, deleniti commodi fugit quas iste,
+                exercitationem tempore eum veritatis et mollitia optio adipisci.
+                Blanditiis, quos sequi!
+              </p>
+            </div>
+          </li>
+          <li>
+            <img src="https://github.com/diego3g.png" alt="" />
+            <div class="evaluation-data">
+              <p class="name">Diego Fernandes</p>
+              <div class="stars">
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-bold ph-star"></i>
+                <i id="stars" class="ph-bold ph-star"></i>
+              </div>
+              <span class="date">2023-09-08 22:29</span>
+              <p class="assessment-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quam
+                expedita soluta quas beatae veritatis impedit at quasi. Quas
+                pariatur repellendus facere aperiam minima quaerat cum odit
+                temporibus non ad. Lorem ipsum dolor sit, amet consectetur
+                adipisicing elit. Culpa nemo dignissimos maiores, illum neque
+                iure aliquam consequatur id, facilis iste reiciendis quod ullam
+                ipsum tempore dolorum autem? A, consequuntur asperiores. Lorem
+                ipsum dolor sit, amet consectetur adipisicing elit. Ut, nam
+                excepturi! Magnam ad magni, deleniti commodi fugit quas iste,
+                exercitationem tempore eum veritatis et mollitia optio adipisci.
+                Blanditiis, quos sequi!
+              </p>
+            </div>
+          </li>
+          <li>
+            <img src="https://github.com/maykbrito.png" alt="" />
+            <div class="evaluation-data">
+              <p class="name">Mayk brito</p>
+              <div class="stars">
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-fill ph-star"></i>
+                <i id="stars" class="ph-bold ph-star"></i>
+              </div>
+              <span class="date">2023-09-08 22:29</span>
+              <p class="assessment-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quam
+                expedita soluta quas beatae veritatis impedit at quasi. Quas
+                pariatur repellendus facere aperiam minima quaerat cum odit
+                temporibus non ad. Lorem ipsum dolor sit, amet consectetur
+                adipisicing elit. Culpa nemo dignissimos maiores, illum neque
+                iure aliquam consequatur id, facilis iste reiciendis quod ullam
+                ipsum tempore dolorum autem? A, consequuntur asperiores. Lorem
+                ipsum dolor sit, amet consectetur adipisicing elit. Ut, nam
+                excepturi! Magnam ad magni, deleniti commodi fugit quas iste,
+                exercitationem tempore eum veritatis et mollitia optio adipisci.
+                Blanditiis, quos sequi!
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <main id="second-main">
+      <section id="comments-and-recommended">
+        <header>
+          <p>Avaliações(26)</p>
+          <p id="show-all-comments">
+            Ver todas <i class="ph-bold ph-caret-right"></i>
+          </p>
+        </header>
+        <div id="comments">
+          <ul>
+            <li>
+              <img src="https://github.com/pablonovaes.png" alt="" />
+              <div class="evaluation-data">
+                <p class="name">Pablo novaes</p>
+                <div class="stars">
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                </div>
+                <span class="date">2023-09-08 22:29</span>
+                <p class="assessment-content">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
+                  quam expedita soluta quas beatae veritatis impedit at quasi.
+                  Quas pariatur repellendus facere aperiam minima quaerat cum
+                  odit temporibus non ad. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Culpa nemo dignissimos maiores,
+                  illum neque iure aliquam consequatur id, facilis iste
+                  reiciendis quod ullam ipsum tempore dolorum autem? A,
+                  consequuntur asperiores. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Ut, nam excepturi! Magnam ad
+                  magni, deleniti commodi fugit quas iste, exercitationem
+                  tempore eum veritatis et mollitia optio adipisci. Blanditiis,
+                  quos sequi!
+                </p>
+              </div>
+            </li>
+            <li>
+              <img src="https://github.com/pablonovaes.png" alt="" />
+              <div class="evaluation-data">
+                <p class="name">Pablo novaes</p>
+                <div class="stars">
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                </div>
+                <span class="date">2023-09-08 22:29</span>
+                <p class="assessment-content">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
+                  quam expedita soluta quas beatae veritatis impedit at quasi.
+                  Quas pariatur repellendus facere aperiam minima quaerat cum
+                  odit temporibus non ad. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Culpa nemo dignissimos maiores,
+                  illum neque iure aliquam consequatur id, facilis iste
+                  reiciendis quod ullam ipsum tempore dolorum autem? A,
+                  consequuntur asperiores. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Ut, nam excepturi! Magnam ad
+                  magni, deleniti commodi fugit quas iste, exercitationem
+                  tempore eum veritatis et mollitia optio adipisci. Blanditiis,
+                  quos sequi!
+                </p>
+              </div>
+            </li>
+            <li>
+              <img src="https://github.com/pablonovaes.png" alt="" />
+              <div class="evaluation-data">
+                <p class="name">Pablo novaes</p>
+                <div class="stars">
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                </div>
+                <span class="date">2023-09-08 22:29</span>
+                <p class="assessment-content">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
+                  quam expedita soluta quas beatae veritatis impedit at quasi.
+                  Quas pariatur repellendus facere aperiam minima quaerat cum
+                  odit temporibus non ad. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Culpa nemo dignissimos maiores,
+                  illum neque iure aliquam consequatur id, facilis iste
+                  reiciendis quod ullam ipsum tempore dolorum autem? A,
+                  consequuntur asperiores. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Ut, nam excepturi! Magnam ad
+                  magni, deleniti commodi fugit quas iste, exercitationem
+                  tempore eum veritatis et mollitia optio adipisci. Blanditiis,
+                  quos sequi!
+                </p>
+              </div>
+            </li>
+            <li>
+              <img src="https://github.com/pablonovaes.png" alt="" />
+              <div class="evaluation-data">
+                <p class="name">Pablo novaes</p>
+                <div class="stars">
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                </div>
+                <span class="date">2023-09-08 22:29</span>
+                <p class="assessment-content">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
+                  quam expedita soluta quas beatae veritatis impedit at quasi.
+                  Quas pariatur repellendus facere aperiam minima quaerat cum
+                  odit temporibus non ad. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Culpa nemo dignissimos maiores,
+                  illum neque iure aliquam consequatur id, facilis iste
+                  reiciendis quod ullam ipsum tempore dolorum autem? A,
+                  consequuntur asperiores. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Ut, nam excepturi! Magnam ad
+                  magni, deleniti commodi fugit quas iste, exercitationem
+                  tempore eum veritatis et mollitia optio adipisci. Blanditiis,
+                  quos sequi!
+                </p>
+              </div>
+            </li>
+            <li>
+              <img src="https://github.com/pablonovaes.png" alt="" />
+              <div class="evaluation-data">
+                <p class="name">Pablo novaes</p>
+                <div class="stars">
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                  <i id="stars" class="ph-bold ph-star"></i>
+                </div>
+                <span class="date">2023-09-08 22:29</span>
+                <p class="assessment-content">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
+                  quam expedita soluta quas beatae veritatis impedit at quasi.
+                  Quas pariatur repellendus facere aperiam minima quaerat cum
+                  odit temporibus non ad. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Culpa nemo dignissimos maiores,
+                  illum neque iure aliquam consequatur id, facilis iste
+                  reiciendis quod ullam ipsum tempore dolorum autem? A,
+                  consequuntur asperiores. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Ut, nam excepturi! Magnam ad
+                  magni, deleniti commodi fugit quas iste, exercitationem
+                  tempore eum veritatis et mollitia optio adipisci. Blanditiis,
+                  quos sequi!
+                </p>
+              </div>
+            </li>
+            <li>
+              <img src="https://github.com/pablonovaes.png" alt="" />
+              <div class="evaluation-data">
+                <p class="name">Pablo novaes</p>
+                <div class="stars">
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                  <i id="stars" class="ph-fill ph-star"></i>
+                </div>
+                <span class="date">2023-09-08 22:29</span>
+                <p class="assessment-content">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
+                  quam expedita soluta quas beatae veritatis impedit at quasi.
+                  Quas pariatur repellendus facere aperiam minima quaerat cum
+                  odit temporibus non ad. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Culpa nemo dignissimos maiores,
+                  illum neque iure aliquam consequatur id, facilis iste
+                  reiciendis quod ullam ipsum tempore dolorum autem? A,
+                  consequuntur asperiores. Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Ut, nam excepturi! Magnam ad
+                  magni, deleniti commodi fugit quas iste, exercitationem
+                  tempore eum veritatis et mollitia optio adipisci. Blanditiis,
+                  quos sequi!
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div id="for-you">
+          <p>
+            Para você
+            <i class="ph-bold ph-caret-right"></i>
+          </p>
+          <main id="cards"></main>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+    <script type="module" src="../../pages/productPage/js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt" id="html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Chat</title>
+    <link rel="stylesheet" href="../../global/global.css" />
+    <link rel="stylesheet" href="../pages/chatPage/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+  </head>
+
+  <body>
+    <div id="shadow"></div>
+    <%- include('../../components/shoppingBag/bag') %> <%-
+    include('../../components/favorite/favorite') %> <%-
+    include('../../components/sidebar/sidebar') %>
+
+    <main>
+      <%- include('../../components/pageLoader/index') %>
+      <div class="chat-container">
+        <div class="conversations">
+          <header>
+            <button id="sidebar_btn">
+              <i class="ti ti-menu-deep"></i>
+            </button>
+            <input type="text" id="search-user" placeholder="Buscar usuário" />
+          </header>
+          <div class="list">
+            <ul id="list-users">
+              <span id="message">
+                <i class="ti ti-mood-confuzed-filled"></i>
+                <p>Você ainda não tem nunhuma conversa</p>
+              </span>
+            </ul>
+          </div>
+        </div>
+        <div id="chat-body">
+          <header id="user-in-chat">
+            <i class="ph-bold ph-arrow-left" id="back-from-conversations"></i>
+            <img alt="" />
+            <p></p>
+          </header>
+          <div class="local-messages">
+            <ul></ul>
+          </div>
+          <footer>
+            <div>
+              <input type="search" required placeholder="Mensagem" />
+            </div>
+            <button id="sendMessage" type="submit">
+              <i class="ph-fill ph-paper-plane-right"></i>
+            </button>
+          </footer>
+        </div>
+      </div>
+    </main>
+
+   
+    <script type="module" src="../../pages/chatPage/js/index.js"></script>
+    <script type="module" src="../../pages/chatPage/js/chat.js"></script>
+  </body>
+</html>

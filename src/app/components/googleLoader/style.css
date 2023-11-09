@@ -1,0 +1,15 @@
+#c-loader {
+  animation: is-rotating .8s ease-in-out infinite;
+  border: #a279ff solid .4rem;
+  border-radius: 50%;
+  border-top-color: #3d46753a;
+  height: .8rem;
+  width: .8rem;
+  display: none;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1turn);
+  }
+}
