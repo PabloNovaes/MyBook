@@ -1,4 +1,4 @@
-import { UserRepository } from "../repositorys/userRepository.js";
+import { UserRepository } from "../repositories/userRepository.js";
 import { webpConversion } from "../utils/sharp/webpConverter.js";
 import { hashedPass } from "../utils/encrypt/bcrypt.js";
 import { generateBase62Id } from "../utils/encrypt/idGenerator.js";

@@ -1,6 +1,6 @@
 import { generateToken } from "../utils/jwt/jwt.js";
 import { comparePasswords } from "../utils/encrypt/bcrypt.js";
-import { AccountRepository } from "../repositorys/accountRepository.js";
+import { AccountRepository } from "../repositories/accountRepository.js";
 const accountRepository = new AccountRepository();
 
 export class AccountController {

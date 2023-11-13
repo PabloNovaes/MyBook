@@ -1,4 +1,4 @@
-import { AdressRepository } from "../repositorys/adressRepository.js";
+import { AdressRepository } from "../repositories/adressRepository.js";
 const adressRepository = new AdressRepository();
 
 export class AdressesController {

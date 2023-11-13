@@ -4,7 +4,7 @@ import verifyToken from "../utils/middleware/verifyToken.js";
 import { Router } from "express";
 
 const pagesController = new PagesController();
-export const pageRoutes = Router();
+const pageRoutes = Router();
 
 pageRoutes.get("/register", verifyAuthState, pagesController.registerPage);
 pageRoutes.get("/profile", verifyToken, pagesController.profilePage);
@@ -16,3 +16,5 @@ pageRoutes.get("/category", pagesController.categoryPage);
 pageRoutes.get("/users/id=:id", verifyToken, pagesController.userProfile);
 pageRoutes.get("/product", pagesController.productPage);
 pageRoutes.get("/", pagesController.homePage);
+
+export default pageRoutes;

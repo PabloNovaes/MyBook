@@ -1,2 +1,5 @@
-const HOST = "  https://a1fc-2804-14c-25-873a-7525-1e45-66cd-dcef.ngrok-free.app";
+const NGROK_HOST = "";
+const BASE_HOST = "http://localhost:5000";
+const HOST = NGROK_HOST !== "" ? NGROK_HOST : BASE_HOST;
+
 export default HOST;

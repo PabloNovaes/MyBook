@@ -12,18 +12,18 @@ datasource db {
 }
 
 model User {
-  id              String            @id
-  name            String
-  nickname        String?
-  email           String            @unique
-  avatar_url      String?           @db.Text
-  birth_year      String?
-  cpf             String?
-  password        String?
-  
+  id         String  @id
+  name       String
+  nickname   String?
+  email      String  @unique
+  avatar_url String? @db.Text
+  birth_year String?
+  cpf        String?
+  password   String?
+
   adresses        Adress_per_user[]
   posts           Post[]
-  order           Order[]
+  orders          Order[]
   ProductBag      ProductBag[]
   FavoriteProduct FavoriteProduct[]
 
@@ -31,18 +31,17 @@ model User {
 }
 
 model Product {
-  id              String            @id @default(uuid())
-  name            String
-  author          String
-  price           Float
-  category        String
-  image           String
-  description     String            @db.Text
-  
-  Order           Order?            @relation(fields: [orderId], references: [id])
-  orderId         String?
-  ProductBag      ProductBag[]
-  FavoriteProduct FavoriteProduct[]
+  id          String @id @default(uuid())
+  name        String
+  author      String
+  price       Float
+  category    String
+  image       String
+  description String @db.Text
+
+  ProductBag         ProductBag[]
+  FavoriteProduct    FavoriteProduct[]
+  Products_per_order Product_per_order[]
 
   @@map("products")
 }
@@ -100,20 +99,31 @@ model Post {
   image_url   String? @db.Text
   created_at  String
 
-  User        User?   @relation(fields: [userId], references: [id])
-  userId      String?
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
 
   @@map("posts")
 }
 
 model Order {
-  id       String    @id @default(uuid())
-  created  DateTime  @default(now())
-  status   String
-  
-  User     User      @relation(fields: [userId], references: [id])
-  userId   String
-  products Product[]
+  id      String   @id @default(uuid())
+  created DateTime @default(now())
+  status  String
+
+  User               User                 @relation(fields: [userId], references: [id])
+  userId             String
+  Products_per_order Product_per_order[]
 
   @@map("orders")
+}
+
+model Product_per_order {
+  id       String @id @default(uuid())
+  quantity Int
+
+  product Product @relation(fields: [productId], references: [id])
+  orderId String
+
+  order     Order  @relation(fields: [orderId], references: [id])
+  productId String
 }

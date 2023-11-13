@@ -1,4 +1,4 @@
-import { PostRepository } from "../repositorys/postRepository.js";
+import { PostRepository } from "../repositories/postRepository.js";
 import { webpConversion } from "../utils/sharp/webpConverter.js";
 const postRepository = new PostRepository();
 
