@@ -6,7 +6,7 @@ import { setData, recommendBooks } from "./api.js";
 
 setData();
 
-recommendBooks();
+// recommendBooks();
 
 window.addEventListener("scroll", () => {
   if (window.scrollY > 10) {

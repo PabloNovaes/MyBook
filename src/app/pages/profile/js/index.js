@@ -55,9 +55,10 @@ async function renderUserData() {
   const accountNickname = document.querySelector('[data-id="nickname"]');
   const accountEmail = document.querySelector('[data-id="email"]');
   const accountId = document.querySelector('[data-id="id"]');
+  const accountCpf = document.querySelector('[data-id="cpf"]');
 
   const userData = await user.handleUserData();
-  const { name, avatar_url, nickname, email, id } = userData.data;
+  const { name, avatar_url, nickname, email, id, cpf } = userData.data;
 
   displayName.textContent = name;
   userName.textContent = nickname;
@@ -66,6 +67,8 @@ async function renderUserData() {
   accountNickname.textContent = nickname;
   accountId.textContent = id;
   accountName.textContent = name;
+  accountCpf.textContent = cpf;
+
   return pageLoader.stopLoader();
 }
 
@@ -90,8 +93,17 @@ function openTab(event, tabName) {
 }
 
 editAccountDataBtn.addEventListener("click", async () => {
-  const currentUser = await user.handleUserData();
-  updateUserDataModal(currentUser.data);
+  const values = document.querySelectorAll(
+    "#view-account-data #data ul li p.value"
+  );
+
+  const user = new Map();
+
+  for (let i = 0; i < values.length; i++) {
+    user.set(values[i].getAttribute("data-id"), values[i].textContent);
+  }
+
+  updateUserDataModal(JSON.stringify(Object.fromEntries(user)));
 });
 
 assessmentLink.addEventListener("click", () => {
@@ -161,10 +173,11 @@ addAdressBtn.addEventListener("click", async () => {
   await registerAdressModal(renderAdresses);
 });
 
-img.addEventListener("click", viewOrHideOptions);
 viewProfileImage.addEventListener("click", () => {
   viewImageProfileModal(img.src);
 });
+
+img.addEventListener("click", viewOrHideOptions);
 
 hideImgOptions.addEventListener("click", viewOrHideOptions);
 

@@ -14,7 +14,7 @@ pageRoutes.get("/chat", verifyToken, pagesController.chatPage);
 pageRoutes.get("/feed", verifyToken, pagesController.feedPage);
 pageRoutes.get("/category", pagesController.categoryPage);
 pageRoutes.get("/users/id=:id", verifyToken, pagesController.userProfile);
-pageRoutes.get("/product", pagesController.productPage);
+pageRoutes.get("/product/id=:id", pagesController.productPage);
 pageRoutes.get("/", pagesController.homePage);
 
 export default pageRoutes;

@@ -17,7 +17,7 @@ function renderBooks(books) {
   books.forEach((book) => {
     const element = document.createElement("div");
 
-    const { name, price, author, image } = book;
+    const { name, price, author, image, id } = book;
     const formatedPrice = price.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
@@ -25,11 +25,14 @@ function renderBooks(books) {
 
     element.classList.add("card");
     element.innerHTML = `
-      <div class="img">
-              <img src="${image}" alt="">
-            </div>
+    <a href=' /product/id=${id}' id='title'>
+    
+    <div class="img">
+              <img loading="lazy" src="${image}" alt="">
+              </div>
+              </a>
             <div id="book-info">
-            <a href='/product' id='title'>${name}</a>
+            <a href=' /product/id=${id}' id='title'>${name}</a>
             <p id="author">${author}</p>
             <p id="price">${formatedPrice}</p>
             </div>
@@ -65,7 +68,7 @@ export async function getProducts(button) {
 
     button.innerText = `Mostrar mais ${totalProducts} produtos`;
     button.style.display = "flex";
-    
+
     return renderBooks(books);
   } catch (err) {
     error(`Ocorreu um erro inesperado!`);

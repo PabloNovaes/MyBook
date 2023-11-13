@@ -37,4 +37,18 @@ export class ProductRepository {
       return error;
     }
   }
+
+  async getProductById(id) {
+    try {
+      const product = await prisma.product.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      return product
+    } catch (error) {
+      return error;
+    }
+  }
 }

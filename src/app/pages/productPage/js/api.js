@@ -1,30 +1,33 @@
+import axios from "../../../services/axios/axios.js";
 const cards = document.querySelector("#cards");
 
-const getData = async () => {
-  const data = await fetch("../../pages/productPage/romance.json");
-  const response = await data.json();
-  return response;
+const getProductId = () => {
+  const locationId = window.location.href.split("/")[4];
+  let id = locationId.split("id=")[1];
+  return id;
 };
 
-const data = await getData();
+const getData = async () => {
+  const id = getProductId();
+  const response = await axios.get(`/products/id=${id}`);
+  const data = await response.data;
+  return data;
+};
 
-export function setData() {
-  const img = document.querySelector("#img img");
-  const title = document.querySelector("header h1");
-  const author = document.querySelector("#author");
-  const desc = document.querySelector("#description-content");
-  const price = document.querySelector("#book-details #price");
+export async function setData() {
+  const book = await getData();
+  const { name, author, price, image, description } = book;
+  const formatedPrice = price.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
-
-  const book = data[1];
-  const { bookName, bookAuthor, bookPrice, bookImg, description } = book;
-  img.setAttribute("src", bookImg);
-  title.textContent = bookName;
-  author.textContent = bookAuthor;
-  desc.textContent = description;
-  price.innerHTML = bookPrice;
-
-  console.log(price);
+  document.querySelector("#img img").src = image;
+  document.querySelector("header h1").textContent = name;
+  document.querySelector("#author").textContent = author;
+  document.querySelector("#description-content").textContent = description;
+  document.querySelector("#book-details #price").textContent = formatedPrice;
+  console.log(book);
 }
 
 export function recommendBooks() {

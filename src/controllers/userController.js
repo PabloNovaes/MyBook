@@ -94,4 +94,19 @@ export class UserController {
         .json({ status: "error", message: `Ocorreu um erro inesperado` });
     }
   }
+
+  async updateData(req, res) {
+    try {
+      const data = req.body;
+      const userId = req.user.sub;
+
+      console.log(data, userId);
+
+      const updateData = await userRepository.updateUserData(data, userId);
+
+      res.status(200).json({ message: "Dados atualizados", data: updateData });
+    } catch (error) {
+      res.status(400).json({ message: `Ocorreu um erro inesperado!` });
+    }
+  }
 }

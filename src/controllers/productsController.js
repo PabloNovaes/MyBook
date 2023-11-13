@@ -15,4 +15,15 @@ export class ProductController {
       res.status(400).json({ message: `Ocorreu um erro inesperado ${error}` });
     }
   }
+
+  async loadProduct(req, res) {
+    try {
+      const id = req.params.id;
+      const product = await productRepository.getProductById(id);
+
+      return res.status(200).json(product);
+    } catch (error) {
+      res.status(400).json({ message: "Ocorreu um erro inesperado!" });
+    }
+  }
 }

@@ -103,6 +103,7 @@ export class User {
 
     return data;
   }
+
   async handleUserData() {
     const result = await axios.get("/users");
     const data = await result.data;
@@ -129,12 +130,23 @@ export class User {
       console.log(imgUrl.url);
       JSON.stringify(imgUrl);
 
-      const response = await axios.post("/users/update", imgUrl);
+      const response = await axios.post("/users/update-image", imgUrl);
       const data = await response;
 
       return (img.src = reader.result);
     };
 
     reader.readAsDataURL(file);
+  }
+
+  async updateUserData(data) {
+    try {
+      JSON.stringify(data);
+      const request = await axios.post("/users/update-data", data);
+      const response = request.data;
+      return response;
+    } catch (error) {
+      return error;
+    }
   }
 }

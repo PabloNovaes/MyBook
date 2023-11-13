@@ -1,5 +1,6 @@
 import { Adress } from "../class/adress.class.js";
 import { Post } from "../class/post.class.js";
+import { User } from "../class/user.class.js";
 import { pageLoader } from "../components/pageLoader/index.js";
 import { renderPost } from "../pages/profile/js/posts.js";
 
@@ -133,7 +134,9 @@ export const viewImageProfileModal = (img) => {
   });
 };
 
-export const updateUserDataModal = async (user) => {
+export const updateUserDataModal = async (data) => {
+  const userData = JSON.parse(data);
+  const { name, email, nickname, cpf } = userData;
   Swal.fire({
     html: `
     <header>
@@ -145,7 +148,9 @@ export const updateUserDataModal = async (user) => {
       type="text"
        id="swalName" 
        class="swal2-input" 
-       placeholder="Digite seu nome" />
+       placeholder="Digite seu nome" 
+       value = ${name}
+       />
     </div>
   </div>
   <div class="swal-input-container">
@@ -154,6 +159,7 @@ export const updateUserDataModal = async (user) => {
         id="swalEmail"
         class="swal2-input"
         placeholder="Digite seu email"
+        value= ${email}
       />
     </div>
   </div>
@@ -163,6 +169,7 @@ export const updateUserDataModal = async (user) => {
         id="swalNickname"
         class="swal2-input"
         placeholder="Digite seu nome de usuário"
+        value= ${nickname}
       />
     </div>
   </div>
@@ -172,6 +179,7 @@ export const updateUserDataModal = async (user) => {
         id="swalCpf"
         class="swal2-input"
         placeholder="Digite seu CPF"
+        value= ${cpf}
       />
     </div>
   </div>
@@ -181,8 +189,23 @@ export const updateUserDataModal = async (user) => {
     background: "#ffffff21",
     confirmButtonColor: "#1A57DF",
     confirmButtonText: "Salvar",
-  }).then((result) => {
+  }).then(async (result) => {
     if (result.isConfirmed) {
+      try {
+        const data = {
+          name: document.querySelector("#swalName").value,
+          nickname: document.querySelector("#swalNickname").value,
+          cpf: document.querySelector("#swalCpf").value,
+          email: document.querySelector("#swalEmail").value,
+        };
+
+        const user = new User();
+        const sendData = await user.updateUserData(data);
+
+        return sendData;
+      } catch (err) {
+        return error(`Ocorreu um erro inesperado! ${err}`);
+      }
     }
   });
 };
@@ -271,16 +294,16 @@ export const registerAdressModal = async (loadingNewAdress) => {
 
           const { bairro, logradouro, uf, localidade } = getCep;
           city.value = localidade;
-          city.disabled = true
+          city.disabled = true;
 
           UF.value = uf;
-          UF.disabled = true
-          
+          UF.disabled = true;
+
           district.value = bairro;
-          district.disabled = true
-          
+          district.disabled = true;
+
           street.value = logradouro;
-          street.disabled = true
+          street.disabled = true;
         }
       });
     },

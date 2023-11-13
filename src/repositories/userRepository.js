@@ -55,4 +55,25 @@ export class UserRepository {
       return error;
     }
   }
+
+  async updateUserData(data, userId) {
+    try {
+      const { name, nickname, cpf, email } = data;
+      const updatedData = await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          name,
+          nickname: `@${nickname}`,
+          email,
+          cpf,
+        },
+      });
+
+      return updatedData
+    } catch (error) {
+      return error;
+    }
+  }
 }

@@ -5,5 +5,6 @@ const productController = new ProductController();
 const productRoutes = Router();
 
 productRoutes.get("/products", productController.loadProducts);
+productRoutes.get("/products/id=:id", productController.loadProduct);
 
 export default productRoutes;
