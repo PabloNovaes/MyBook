@@ -18,7 +18,8 @@
     <div id="shadow"></div>
     <%- include('../../components/shoppingBag/bag') %> <%-
     include('../../components/favorite/favorite') %> <%-
-    include('../../components/sidebar/sidebar') %>
+    include('../../components/sidebar/sidebar') %> <%-
+    include('../../components/pageLoader/index') %>
     <main>
       <%- include('../../components/header/header') %>
       <swiper-container
@@ -46,10 +47,6 @@
             <p>Ordenar</p>
           </li>
           <i class="divider"></i>
-          <li>
-            <p>268 Resultados</p>
-          </li>
-          <i class="divider"></i>
           <li id="filter">
             <i class="ph-fill ph-funnel"></i>
             <input type="checkbox" class="icon" name="" />
@@ -58,8 +55,14 @@
         </ul>
       </div>
       <section id="cards"></section>
-    </main>
 
+      <footer>
+        <button id="view-more">
+          <p>Mostrar mais</p>
+          <i class="ph-bold ph-caret-down"></i>
+        </button>
+      </footer>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
     <script type="module" src="../../pages/homePage/js/index.js"></script>
   </body>

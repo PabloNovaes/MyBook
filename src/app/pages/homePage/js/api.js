@@ -1,45 +1,99 @@
 import "https://unpkg.com/scrollreveal";
-// import "https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js";
-// import "https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js";
-
-
+import axios from "../../../services/axios/axios.js";
+import { error } from "../../../sweetAlert/sweet.js";
+import { pageLoader } from "../../../components/pageLoader/index.js";
 
 const cards = document.querySelector("#cards");
+export const sr = ScrollReveal({ reset: true });
 
-export async function getdata() {
-  const sr = ScrollReveal({ reset: true });
+//variaveis para "paginação"
 
-  fetch("../../pages/homePage/romance.json")
-    .then((res) => res.json())
-    .then((data) => {
-      const books = data;
-      books.forEach((book) => {
-        const { bookName, bookPrice, bookAuthor, bookImg } = book;
-        const card = document.createElement("div");
-        card.classList.add("card");
-        card.innerHTML = `
-            <div class="img">
-                    <img src="${bookImg}" alt="">
-                  </div>
-                  <div id="book-info">
-                  <a href='/product' id='title'>${bookName}</a>
-                  <p id="author">${bookAuthor}</p>
-                  <p id="price">${bookPrice}</p>
-                  </div>
-                </div>
-            `;
-        cards.appendChild(card);
-      });
+let totalPages;
+let totalProducts;
+let currentPage = 0;
+const productSkip = 40;
 
-      sr.reveal(".card", {
-        origin: "bottom",
-        distance: "1.5rem",
-        duration: 1800,
-        reset: false,
-        zIndex: 0,
-        beforeReveal: (card) => {
-          card.style = "";
-        },
-      });
+function renderBooks(books) {
+  books.forEach((book) => {
+    const element = document.createElement("div");
+
+    const { name, price, author, image } = book;
+    const formatedPrice = price.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
     });
+
+    element.classList.add("card");
+    element.innerHTML = `
+      <div class="img">
+              <img src="${image}" alt="">
+            </div>
+            <div id="book-info">
+            <a href='/product' id='title'>${name}</a>
+            <p id="author">${author}</p>
+            <p id="price">${formatedPrice}</p>
+            </div>
+            </div>
+            `;
+
+    sr.reveal(".card", {
+      origin: "bottom",
+      distance: "2rem",
+      reset: false,
+      easing: "cubic-bezier(0.5, 0, 0, 1)",
+      zIndex: 0,
+      beforeReveal: (card) => {
+        card.style = "";
+      },
+    });
+
+    cards.appendChild(element);
+  });
+}
+
+export async function getProducts(button) {
+  try {
+    pageLoader.startLoader();
+
+    const response = await axios.get("/products");
+    const books = await response.data.products.sort(() => Math.random() - 0.5);
+
+    totalPages = response.data.totalPages;
+    totalProducts = response.data.total;
+
+    totalProducts -= productSkip;
+
+    button.innerText = `Mostrar mais ${totalProducts} produtos`;
+    button.style.display = "flex";
+    
+    return renderBooks(books);
+  } catch (err) {
+    error(`Ocorreu um erro inesperado!`);
+  } finally {
+    return pageLoader.stopLoader();
+  }
+}
+
+export async function getProductsWithParams(button) {
+  try {
+    currentPage++;
+    totalProducts -= productSkip;
+
+    if (currentPage >= totalPages) {
+      return (button.style.display = "none");
+    }
+
+    pageLoader.startLoader();
+    const response = await axios.get(
+      `/products?skip=${productSkip * currentPage}&take=40`
+    );
+    const books = await response.data.products.sort(() => Math.random() - 0.5);
+
+    button.innerText = `Mostrar mais ${totalProducts} produtos`;
+    return renderBooks(books);
+  } catch (err) {
+    return error("Ocorreu um erro inesperado");
+  } finally {
+    pageLoader.stopLoader();
+  }
 }
