@@ -15,7 +15,7 @@
   border-radius: 50%;
   position: relative;
   animation: rotate 0.2s linear infinite;
-  margin-right: 144px;
+  /* margin-right: 144px; */
 }
 .loader::before {
   content: "";

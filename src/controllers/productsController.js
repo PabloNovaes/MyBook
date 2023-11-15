@@ -4,8 +4,7 @@ const productRepository = new ProductRepository();
 export class ProductController {
   async loadProducts(req, res) {
     try {
-      const query = req.body.query;
-
+      const query = req.params.category;
       const skip = Number(req?.query?.skip) || 0;
       const take = Number(req?.query?.take) || 40;
       const products = await productRepository.getProducts(query, skip, take);

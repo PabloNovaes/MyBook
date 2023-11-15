@@ -1,9 +1,9 @@
 import { prisma } from "../db/db.prisma.js";
 
 export class BagRepository {
-  async addItem(data) {
+  async addItem(data, userId) {
     try {
-      const { userId, productId } = data;
+      const { productId } = data;
       const insertItem = await prisma.productBag.create({
         data: {
           productId,

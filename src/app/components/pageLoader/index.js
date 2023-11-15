@@ -1,13 +1,12 @@
 export const pageLoader = {
+  element: document.querySelector("#loader-page"),
   startLoader() {
-    const loader = document.querySelector("#loader-page");
-    loader.style.display = "grid";
-    loader.classList.add("fade-in");
+    this.element.style.display = "grid";
+    this.element.classList.add("fade-in");
   },
   stopLoader() {
-    const loader = document.querySelector("#loader-page");
-    loader.classList.remove("fade-in");
-    loader.classList.add("fade-out");
-    loader.style.display = "none";
+    this.element.classList.remove("fade-in");
+    this.element.classList.add("fade-out");
+    this.element.style.display = "none";
   },
 };

@@ -42,7 +42,7 @@ export class UserController {
 
   async getUser(req, res) {
     const { email } = req.user;
-
+    console.log(req.user);
     const userAlredyExists = await userRepository.findUnique(email);
 
     if (!userAlredyExists) {

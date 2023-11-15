@@ -16,10 +16,11 @@
 
   <body>
     <div id="shadow"></div>
-    <%- include('../../components/shoppingBag/bag') %> 
-    <%- include('../../components/favorite/favorite') %>
+    <%- include('../../components/shoppingBag/bag') %> <%-
+    include('../../components/favorite/favorite') %>
     <%-include('../../components/sidebar/sidebar') %>
-
+    <%-include('../../components/pageLoader/index') %>
+    
     <main id="first-main">
       <%- include('../../components/header/header') %>
 
@@ -44,11 +45,11 @@
             </span>
             <div class="fav-or-bag">
               <button>
-                <i class="ph-bold ph-heart"></i>
+                <i class="ph ph-heart"></i>
                 <p>Adicionar aos favoritos</p>
               </button>
-              <button>
-                <i class="ph-bold ph-bag"></i>
+              <button id="bag-btn">
+                <i class="ph ph-bag"></i>
                 <p>Adicionar a sacola</p>
               </button>
               <button id="buy-now">

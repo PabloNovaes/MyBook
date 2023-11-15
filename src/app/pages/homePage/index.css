@@ -14,7 +14,7 @@ body {
   }
 }
 
-a:active{
+a:active {
   color: var(--purple);
 }
 
@@ -45,7 +45,7 @@ main {
 .container {
   display: flex;
   width: 90%;
-  height: 272px;
+  height: 23rem;
   background-color: var(--secondary);
   border-radius: 24px;
   margin: auto;
@@ -191,6 +191,10 @@ swiper-slide {
   gap: 1rem;
   padding-inline: 1rem;
   flex: 1 1 0;
+  
+  & p {
+    font-size: 1.3rem;
+  }
 }
 
 .img {
@@ -234,7 +238,7 @@ swiper-slide {
   }
 }
 
-main footer{
+main footer {
   padding-block: 1rem 4rem;
 }
 
@@ -264,11 +268,9 @@ main footer{
   }
 
   &:hover {
-    filter: brightness(.8);
+    filter: brightness(0.8);
   }
 }
-
-
 
 @media (max-width: 820px) {
   body {

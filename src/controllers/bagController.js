@@ -5,8 +5,10 @@ export class BagController {
   async addItensInBag(req, res) {
     try {
       const data = req.body;
-      const addItem = await bagRepository.addItem(data);
-      res.status(201).json({ item: addItem });
+      const userId = req.user.sub;
+
+      const addItem = await bagRepository.addItem(data, userId);
+      res.status(201).json(addItem.Product);
     } catch (error) {
       res.status(400).json({ message: `Ocorreu um erro inesperado ${error}` });
     }
@@ -14,9 +16,8 @@ export class BagController {
 
   async getItens(req, res) {
     try {
-      const { userId } = req.body;
+      const userId = req.user.sub;
       const loadProducts = await bagRepository.loadBagProducts(userId);
-
       if (loadProducts.length <= 0) {
         return res.status(200).json({ message: "O carrinho está vazio!" });
       }
@@ -25,9 +26,7 @@ export class BagController {
         return item.Product;
       });
 
-      console.log(products);
-
-      res.status(200).json({products});
+      res.status(200).json({ products });
     } catch (error) {
       res.status(400).json({ message: `Ocorreu um erro inesperado ${error}` });
     }

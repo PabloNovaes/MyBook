@@ -1,11 +1,11 @@
-localStorage.removeItem("itens");
-
 const closeBagBtn = document.querySelector("#shopping-bag .ph-x");
-const bag = document.querySelector("#shopping-bag");
+const continueBtn = document.querySelector("#init-order-btn");
 const selectAll = document.querySelector("#select-all input");
 const purchaseValue = document.querySelector("#price");
-let finalValue = 0;
-let startOrder = JSON.parse(localStorage.getItem("itens")) || [];
+const bag = document.querySelector("#shopping-bag");
+
+let products = [];
+let finalValue;
 
 export const openAndCloseBag = () => {
   if (!window.innerWidth > 664) return;
@@ -13,111 +13,129 @@ export const openAndCloseBag = () => {
   document.body.classList.toggle("hidden");
   shadow.classList.toggle("viewShadow");
   bag.classList.toggle("open-bag");
+
+  localStorage.removeItem("Products");
 };
 
-closeBagBtn.addEventListener("click", openAndCloseBag);
+export function createElement(book) {
+  let element = document.createElement("li");
+  element.classList.add("item");
 
-async function setData() {
-  const response = await axios.get("../../components/shoppingBag/romance.json");
-  const data = response.data;
-  const list = bag.querySelector("ul");
-
-  const items = data.map((book) => {
-    let item = document.createElement("li");
-    item.classList.add("item");
-
-    const { bookName, bookPrice, bookAuthor, bookImg } = book;
-
-    item.innerHTML = `
-      <div class="img">
-        <img src='${bookImg}' />
-      </div>
-      <div class="book-info">
-        <p class="title">${bookName}</p>
-        <p class="author">${bookAuthor}</p>
-        <span>
-          <p class="price">${bookPrice}</p>
-          <input type="checkbox" name="" class="checked" />
-        </span>
-      </div>
-    `;
-
-    list.appendChild(item);
-
-    return item;
+  const { name, price, author, image, id } = book;
+  const formatedPrice = price.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
   });
 
-  return items;
+  element.innerHTML = `
+    <div class="img">
+      <img src='${image}' />
+    </div>
+    <div class="book-info">
+      <p class="title">${name}</p>
+      <p class="author">${author}</p>
+      <span>
+        <p class="price" id=${id}>${formatedPrice}</p>
+        <input type="checkbox" name="" class="checked" />
+      </span>
+    </div>
+  `;
+  return element;
 }
 
-const items = await setData();
+export async function setData() {
+  const list = bag.querySelector("ul");
 
-const getCheckboxOnProducts = items.map((li) =>
-  li.querySelector(".book-info .checked")
-);
+  const response = await axios.get("/bag/get-itens");
+  const data = await response.data.products;
 
-const isAllChecked = () => {
-  const all = getCheckboxOnProducts.every((btn) => btn.checked);
-  selectAll.checked = all;
-  return all;
+  if (response.data.message) return false;
+
+  return data.map((book) => {
+    const item = createElement(book);
+    list.appendChild(item);
+    return item;
+  });
+}
+
+const setBagItens = async () => {
+  const itens = await setData();
+  if (!itens) return;
+  return itens.map((li) => li.querySelector(".book-info .checked"));
 };
 
-selectAll.addEventListener("click", function () {
-  getCheckboxOnProducts.forEach((btn) => {
-    btn.checked = this.checked;
-    const data = btn.parentElement.parentElement;
-    const book = {
-      name: data.querySelector(".title").textContent,
-      price: parseInt(data.querySelector(".price").textContent.split("R$")[1]),
+const allCheckbox = await setBagItens();
+
+const updatePurchaseValue = {
+  add(newItem) {
+    products.push(newItem);
+    const formatedPrices = products.map((item) => {
+      const price = parseFloat(item.price.replace("R$", "").replace(",", "."));
+      return price;
+    });
+    finalValue = formatedPrices.reduce((accum, item) => accum + item, 0);
+    this.setPurchaseValue(finalValue);
+  },
+  remove(product) {
+    const price = parseFloat(product.price.replace("R$", "").replace(",", "."));
+    finalValue -= price;
+    products = products.filter((item) => {
+      return item.id != product.id;
+    });
+    return this.setPurchaseValue(finalValue);
+  },
+  setPurchaseValue(value) {
+    const price = value.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    purchaseValue.textContent = price;
+  },
+  addOrRemoveItem(element) {
+    const product = {
+      price: element.parentElement.querySelector(".price").textContent,
+      id: element.parentElement.querySelector(".price").getAttribute("id"),
     };
-    if (btn.checked) {
-      unselectItem(book);
-      selectItem(book);
+    const target = element.checked;
+    if (target) {
+      return this.add(product);
     } else {
-      unselectItem(book);
+      return this.remove(product);
+    }
+  },
+};
+
+allCheckbox?.forEach((checkbox) => {
+  checkbox.addEventListener("click", (e) => {
+    const allIsChecked = allCheckbox.every((btn) => btn.checked == true);
+    updatePurchaseValue.addOrRemoveItem(e.target);
+    if (allIsChecked) {
+      return (selectAll.checked = true);
+    } else {
+      return (selectAll.checked = false);
     }
   });
 });
 
-getCheckboxOnProducts.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    isAllChecked();
-    const data = event.target.parentElement.parentElement;
-    const book = {
-      name: data.querySelector(".title").textContent,
-      price: parseInt(data.querySelector(".price").textContent.split("R$")[1]),
-    };
-    if (btn.checked) {
-      selectItem(book);
-    } else {
-      unselectItem(book);
+selectAll.addEventListener("click", (e) => {
+  const state = e.target.checked;
+  allCheckbox.forEach((btn) => {
+    if (btn.checked != state) {
+      btn.checked = state;
+      updatePurchaseValue.addOrRemoveItem(btn);
     }
   });
-});
-
-const updatePurchaseValue = () => {
-  finalValue = startOrder.reduce((accum, book) => accum + book.price, 0);
-  purchaseValue.innerHTML = `R$${finalValue},00`;
-};
-
-const selectItem = (book) => {
-  if (!book) {
+  if (!state) {
+    products = [];
+    finalValue = 0;
+    updatePurchaseValue.setPurchaseValue(finalValue);
     return;
   }
+});
 
-  const itemExists = startOrder.some((listBook) => listBook.name === book.name);
+continueBtn.addEventListener("click", () => {
+  localStorage.setItem("Products", JSON.stringify(products));
+  window.location.href = "/payment";
+});
 
-  if (!itemExists) {
-    startOrder.push(book);
-    localStorage.setItem("itens", JSON.stringify(startOrder));
-    updatePurchaseValue();
-  } else {
-    unselectItem(book);
-  }
-};
-
-const unselectItem = (book) => {
-  startOrder = startOrder.filter((listBook) => listBook.name !== book.name);
-  localStorage.setItem("itens", JSON.stringify(startOrder));
-  updatePurchaseValue();
-};
+closeBagBtn.addEventListener("click", openAndCloseBag);

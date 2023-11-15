@@ -45,9 +45,6 @@ function renderBooks(books) {
       reset: false,
       easing: "cubic-bezier(0.5, 0, 0, 1)",
       zIndex: 0,
-      beforeReveal: (card) => {
-        card.style = "";
-      },
     });
 
     cards.appendChild(element);
@@ -58,7 +55,8 @@ export async function getProducts(button) {
   try {
     pageLoader.startLoader();
 
-    const response = await axios.get("/products");
+    const response = await axios.get("/all-products");
+    console.log(response);
     const books = await response.data.products.sort(() => Math.random() - 0.5);
 
     totalPages = response.data.totalPages;
@@ -71,6 +69,7 @@ export async function getProducts(button) {
 
     return renderBooks(books);
   } catch (err) {
+    console.log(err);
     error(`Ocorreu um erro inesperado!`);
   } finally {
     return pageLoader.stopLoader();
@@ -88,7 +87,7 @@ export async function getProductsWithParams(button) {
 
     pageLoader.startLoader();
     const response = await axios.get(
-      `/products?skip=${productSkip * currentPage}&take=40`
+      `/all-products?skip=${productSkip * currentPage}&take=40`
     );
     const books = await response.data.products.sort(() => Math.random() - 0.5);
 

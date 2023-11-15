@@ -5,7 +5,7 @@ const orderItensBtn = document.querySelector("#order");
 const viewMoreBtn = document.querySelector("#view-more");
 
 sr.reveal("#view-more", {
-  origin: "right",
+  origin: "bottom",
   distance: "2rem",
   opacity: 0,
   easing: "cubic-bezier(0.5, 0, 0, 1)",

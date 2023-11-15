@@ -80,7 +80,7 @@
 
 body {
   display: flex;
-  height: 100vh;
+  height: 100vh !important;
   background-color: var(--primary);
   align-items: center;
   transition: var(--transition);
