@@ -65,7 +65,7 @@ const getData = async () => {
 
 export async function loadProduct() {
   try {
-    // pageLoader.startLoader();
+    pageLoader.startLoader();
     const book = await getData();
     const { name, author, price, image, description, category, id } = book;
     const formatedPrice = price.toLocaleString("pt-BR", {

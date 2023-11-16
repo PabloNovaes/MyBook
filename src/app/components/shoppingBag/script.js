@@ -1,6 +1,9 @@
+import { ShoppingBag } from "../../class/bag.class.js";
+import { pageLoader } from "../pageLoader/index.js";
+
 const closeBagBtn = document.querySelector("#shopping-bag .ph-x");
+const selectAll = document.querySelector(".mark-all");
 const continueBtn = document.querySelector("#init-order-btn");
-const selectAll = document.querySelector("#select-all input");
 const purchaseValue = document.querySelector("#price");
 const bag = document.querySelector("#shopping-bag");
 
@@ -18,14 +21,16 @@ export const openAndCloseBag = () => {
 };
 
 export function createElement(book) {
-  let element = document.createElement("li");
-  element.classList.add("item");
-
   const { name, price, author, image, id } = book;
   const formatedPrice = price.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
   });
+
+  let element = document.createElement("li");
+
+  element.classList.add("item");
+  element.setAttribute("data-id", id);
 
   element.innerHTML = `
     <div class="img">
@@ -38,70 +43,144 @@ export function createElement(book) {
         <p class="price" id=${id}>${formatedPrice}</p>
         <input type="checkbox" name="" class="checked" />
       </span>
+      <div class="quantity-buttons">
+  <button class="ph-bold ph-minus" data-action="decrement"></button>
+  <p class="quantity">1</p>
+  <button class="ph-bold ph-plus" data-action="increment"></button>
+</div>
     </div>
   `;
   return element;
 }
 
 export async function setData() {
+  const bagClass = new ShoppingBag();
   const list = bag.querySelector("ul");
+  list.innerHTML = "";
 
-  const response = await axios.get("/bag/get-itens");
-  const data = await response.data.products;
+  const data = await bagClass.loadItens();
+  if (data.message) return false;
 
-  if (response.data.message) return false;
-
-  return data.map((book) => {
+  return data.products.map((book) => {
     const item = createElement(book);
+    const quantityButtons = item.querySelectorAll(".quantity-buttons button");
+
+    quantityButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const checkbox = item.querySelector("input[type='checkbox']");
+        if (!checkbox.checked) return;
+        const action = button.getAttribute("data-action");
+        const data = {
+          id: e.target.parentElement.parentElement
+            .querySelector(".price")
+            .getAttribute("id"),
+        };
+
+        quantityProductControlls[action](data);
+      });
+    });
+
     list.appendChild(item);
     return item;
   });
 }
 
-const setBagItens = async () => {
+const listBagItens = async () => {
   const itens = await setData();
   if (!itens) return;
   return itens.map((li) => li.querySelector(".book-info .checked"));
 };
 
-const allCheckbox = await setBagItens();
+let allCheckbox = await listBagItens();
 
 const updatePurchaseValue = {
   add(newItem) {
     products.push(newItem);
-    const formatedPrices = products.map((item) => {
-      const price = parseFloat(item.price.replace("R$", "").replace(",", "."));
-      return price;
-    });
-    finalValue = formatedPrices.reduce((accum, item) => accum + item, 0);
-    this.setPurchaseValue(finalValue);
+    finalValue = products.reduce((accum, item) => accum + item.finalPrice, 0);
+    this.setPurchaseValue();
   },
   remove(product) {
-    const price = parseFloat(product.price.replace("R$", "").replace(",", "."));
+    const price = product.price;
     finalValue -= price;
     products = products.filter((item) => {
       return item.id != product.id;
     });
-    return this.setPurchaseValue(finalValue);
+    return this.setPurchaseValue();
   },
-  setPurchaseValue(value) {
-    const price = value.toLocaleString("pt-BR", {
+  setPurchaseValue() {
+    if (products.length <= 0) {
+      finalValue = 0;
+    }
+    const price = finalValue.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     });
     purchaseValue.textContent = price;
   },
   addOrRemoveItem(element) {
+    let price = element.parentElement.querySelector(".price").textContent;
+    price = parseFloat(price.replace("R$", "").replace(",", "."));
+
     const product = {
-      price: element.parentElement.querySelector(".price").textContent,
+      quantity: 1,
+      basePrice: price,
+      finalPrice: 0,
       id: element.parentElement.querySelector(".price").getAttribute("id"),
+      element: element.parentElement.parentElement,
     };
+    const { quantity, basePrice } = product;
+    product.finalPrice = basePrice * quantity;
+
     const target = element.checked;
     if (target) {
       return this.add(product);
     } else {
       return this.remove(product);
     }
+  },
+};
+
+const quantityProductControlls = {
+  displayValue: document.querySelector(".quantity-buttons p"),
+  list: bag.querySelector("li.item"),
+
+  increment(product) {
+    const position = products.findIndex((item) => item.id == product.id);
+    const item = products.splice(position)[0];
+    item.quantity += 1;
+
+    const { basePrice, quantity } = item;
+
+    item.finalPrice = basePrice * quantity;
+    updatePurchaseValue.add(item);
+    return this.updateQuantityValue(quantity);
+  },
+
+  async decrement(product) {
+    const position = products.findIndex((item) => item.id == product.id);
+    const item = products.splice(position)[0];
+    item.quantity -= 1;
+
+    const { basePrice, quantity, id, element } = item;
+
+    if (quantity <= 0) {
+      bag.querySelector("ul").removeChild(element.parentElement);
+
+      const bagClass = new ShoppingBag();
+      const removedItem = await bagClass.removeItem({ productId: id });
+
+      updatePurchaseValue.addOrRemoveItem(element);
+      return;
+    }
+
+    item.finalPrice = basePrice * quantity;
+    updatePurchaseValue.add(item);
+    
+    return this.updateQuantityValue(quantity);
+  },
+
+  updateQuantityValue(quantity) {
+    this.displayValue.innerText = quantity;
   },
 };
 

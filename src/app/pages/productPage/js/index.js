@@ -1,15 +1,14 @@
 import { setData } from "../../../components/shoppingBag/script.js";
-import axios from "../../../services/axios/axios.js";
 import { error, success } from "../../../sweetAlert/sweet.js";
 import { getProductId, loadProduct } from "./api.js";
+import { ShoppingBag } from "../../../class/bag.class.js";
 
 const closeCommentsBtn = document.querySelector("#close-comments");
 const viewAll = document.querySelector("#show-all-comments");
 const bagBtn = document.querySelector("button#bag-btn");
 const header = document.querySelector("#main-header");
-const list = document.querySelector("#bagList-itens");
 
-loadProduct()
+loadProduct();
 
 window.addEventListener("scroll", () => {
   if (window.scrollY > 10) {
@@ -31,9 +30,8 @@ const showAllComments = () => {
 const saveProduct = {
   async inBag(product) {
     try {
-      const response = await axios.post("/bag/add-item", product);
-      const item = await response.data;
-      return item;
+      const bag = new ShoppingBag();
+      return await bag.addItem(product);
     } catch (error) {
       return error;
     }
@@ -44,15 +42,17 @@ viewAll.addEventListener("click", showAllComments);
 
 closeCommentsBtn.addEventListener("click", showAllComments);
 
-
 bagBtn.addEventListener("click", async () => {
   try {
     const product = { productId: getProductId() };
     const addItem = await saveProduct.inBag(product);
+    const { message } = addItem;
+
+    if (message) return error(message);
+
     await setData();
     return success("Produto adicionado ao carrinho");
   } catch (err) {
-    console.log(err);
     return error("Ocorreu um erro inesperado!");
   }
 });

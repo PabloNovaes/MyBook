@@ -20,6 +20,21 @@ export class BagRepository {
     }
   }
 
+  async removeItemInBag(product, userId) {
+    try {
+      const removedItem = await prisma.productBag.deleteMany({
+        where: {
+          productId: product,
+          userId,
+        },
+      });
+
+      return removedItem
+    } catch (error) {
+      return error;
+    }
+  }
+
   async loadBagProducts(userId) {
     try {
       const userProductsBag = await prisma.productBag.findMany({
