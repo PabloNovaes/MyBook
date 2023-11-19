@@ -21,7 +21,6 @@ export class ProductRepository {
             author: true,
             category: true,
             image: true,
-            description: true,
             price: true,
           },
           skip,

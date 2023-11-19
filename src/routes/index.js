@@ -1,3 +1,4 @@
+import checkoutRoutes from "./checkout.routes.js";
 import productRoutes from "./products.routes.js";
 import accountRoutes from "./account.routes.js";
 import adressRoutes from "./adress.routes.js";
@@ -10,6 +11,7 @@ import bagRoutes from "./bag.routes.js";
 import { Router } from "express";
 const routes = Router();
 
+routes.use(checkoutRoutes);
 routes.use(productRoutes);
 routes.use(accountRoutes);
 routes.use(adressRoutes);

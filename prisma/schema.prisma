@@ -106,11 +106,12 @@ model Post {
 }
 
 model Order {
-  id      String   @id @default(uuid())
-  created DateTime @default(now())
-  status  String
+  id            String   @id @default(uuid())
+  created       DateTime @default(now())
+  paymentMethod String
+  status        String
 
-  User               User                 @relation(fields: [userId], references: [id])
+  User               User                @relation(fields: [userId], references: [id])
   userId             String
   Products_per_order Product_per_order[]
 

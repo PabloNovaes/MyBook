@@ -15,6 +15,7 @@ pageRoutes.get("/feed", verifyToken, pagesController.feedPage);
 pageRoutes.get("/category", pagesController.categoryPage);
 pageRoutes.get("/users/id=:id", verifyToken, pagesController.userProfile);
 pageRoutes.get("/product/id=:id", pagesController.productPage);
+pageRoutes.get("/order-test", pagesController.orderTest);
 pageRoutes.get("/", pagesController.homePage);
 
 export default pageRoutes;

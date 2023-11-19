@@ -378,3 +378,71 @@ export const commentsModal = async (user) => {
     },
   });
 };
+
+export const setPaymentMethods = (element) => {
+  Swal.fire({
+    showCancelButton: false,
+    confirmButtonText: "Confirmar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#1A57DF",
+    html: `
+    <header>
+    <h1>Métodos de pagamento</h1>
+    <p>
+    <i class="ti ti-shield-check-filled"></i>
+      Esolha um método para prosseguir 
+    </p>
+    </header>
+    <div>
+  <ul>
+    <li>
+      <input type="checkbox" name="" id="card">
+      <span class="method-data">
+        <i class="ph-fill ph-credit-card"></i>
+        <p>Cartao de crédito</p>
+      </span>
+    </li>
+    <li>
+      <input type="checkbox" name="" id="boleto" >
+      <span class="method-data">
+        <i class="ph-fill ph-barcode"></i>
+        <p>Boleto</p>
+      </span>
+    </li>
+  </ul>
+</div>
+    `,
+    didRender: () => {
+      const paymentnModal = document.querySelector(".swal2-popup");
+      paymentnModal.classList.add("payment-modal");
+
+      const inputs = paymentnModal.querySelectorAll("ul li input");
+
+      inputs.forEach((input) => {
+        input.addEventListener("click", (e) => {
+          inputs.forEach((checkbox) => (checkbox.checked = false));
+          e.target.checked = true;
+        });
+      });
+    },
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const options = {
+        boleto: ` <i class="ph-fill ph-barcode"></i>
+        <p>Boleto</p>`,
+        card: ` <i class="ph-fill ph-credit-card"></i>
+        <p>Cartão de crédito</p>`,
+      };
+
+      const inputs = document.querySelectorAll(".payment-modal li input");
+      const checkedInput = Array.from(inputs).filter((checkbox) => {
+        return checkbox.checked == true;
+      });
+
+      const method = checkedInput[0].getAttribute("id");
+      element.removeAttribute("method");
+      element.setAttribute("method", method);
+      return (element.querySelector("span").innerHTML = options[method]);
+    }
+  });
+};

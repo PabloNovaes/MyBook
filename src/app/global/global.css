@@ -50,7 +50,7 @@
       1 86.4%,
       1 100%
     );
-  font-size: 56.5%;
+  font-size: 62.5%;
 }
 
 .light {
@@ -398,5 +398,16 @@ h2.swal2-title {
   & img#post-image {
     max-width: 30rem !important;
     margin: 0 auto;
+  }
+}
+
+
+.payment-modal .swal2-actions{
+  width: 100%;
+  margin: 0;
+
+  & .swal2-confirm{
+    width: 100%;
+    border-radius: 1rem;
   }
 }

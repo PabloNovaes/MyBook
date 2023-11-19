@@ -1,15 +1,16 @@
 import { prisma } from "../db/db.prisma.js";
 
 export class OrderRepostitory {
-  async createOrder(data) {
+  async createOrder(data, userId) {
     try {
       const status = "AWAITING_PAYMENT";
-      const { products, user } = data;
+      const { products, paymentMethod } = data;
 
       const order = await prisma.order.create({
         data: {
+          paymentMethod,
           status,
-          userId: user.id,
+          userId,
         },
       });
 

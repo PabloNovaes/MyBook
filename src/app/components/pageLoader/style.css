@@ -4,7 +4,6 @@
   position: fixed;
   background-color: var(--primary);
   z-index: 10;
-  opacity: 0;
   display: none;
   place-content: center;
 }
@@ -15,7 +14,6 @@
   border-radius: 50%;
   position: relative;
   animation: rotate 0.2s linear infinite;
-  /* margin-right: 144px; */
 }
 .loader::before {
   content: "";
@@ -38,6 +36,7 @@
   animation-duration: 0.5s;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
+  display: grid;
 }
 
 .fade-out {
@@ -45,6 +44,7 @@
   animation-duration: 0.5s;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
+  display: none;
 }
 
 @keyframes fadeIn {

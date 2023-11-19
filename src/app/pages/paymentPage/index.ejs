@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <title>Document</title>
+  <link rel="stylesheet" href="../../global/global.css">
   <link rel="stylesheet" href="../../pages/paymentPage/index.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
@@ -31,15 +32,15 @@
                 São Paulo - SP, 05570-030
               </span>
             </div>
-            <div id="payment-methods">
+            <div id="payment-methods"  method="unselected">
               <header>
-                <h1>Metodos de pagamento</h1>
+                <h1>Metodo de pagamento</h1>
               </header>
               <span>Selecione um metodo de pagamento</span>
             </div>
             <div class="list-case">
               <ul id="itens">
-             
+                
               </ul>
             </div>
           </div>
@@ -49,7 +50,7 @@
             </header>
             <span>
               <p>Subtotal</p>
-              <p>R$ 126,00</p>
+              <p id="sub-total">...</p>
             </span>
             <span>
               <p>Desconto</p>
@@ -62,7 +63,7 @@
             <div id="buy-now">
               <span>
                 <p>Total</p>
-                <p>R$ 148,00</p>
+                <p id="total">...</p>
               </span>
               <button>
                 <p>Fazer pedido</p>
@@ -73,6 +74,7 @@
         </div>
 
     </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
     <script type="module" src="../../pages/paymentPage/js/index.js"></script>
 </body>

@@ -5,6 +5,7 @@ export class OrderController {
   async createOrder(req, res) {
     try {
       const data = req.body;
+      const { sub } = req.user;
 
       if (!data) {
         return res
@@ -12,10 +13,11 @@ export class OrderController {
           .json({ message: `Ocorreu um erro inesperado! ${error}` });
       }
 
-      const order = await orderRepostitory.createOrder(data);
+      const order = await orderRepostitory.createOrder(data, sub);
 
       res.status(201).json({ message: "Pedido realizado com sucesso!", order });
     } catch (error) {
+      console.log(error);
       res.status(400).json({ message: `Ocorreu um erro inesperado! ${error}` });
     }
   }

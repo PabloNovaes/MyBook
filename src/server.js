@@ -29,8 +29,8 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 app.use(cookieParser());
 
-app.use(cors());
 app.use(routes);
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, "app")));
 app.set("views", path.join(__dirname, "app"));

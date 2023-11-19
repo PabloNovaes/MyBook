@@ -32,8 +32,15 @@
     justify-content: center;
     flex-direction: column;
     flex: 1;
+    overflow-y: auto;
     gap: 1rem;
     padding-inline: 1rem;
+  }
+
+  & li summary{
+    display: flex;
+    gap: 12px;
+    align-items: center;
   }
 }
 

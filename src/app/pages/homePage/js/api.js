@@ -56,7 +56,6 @@ export async function getProducts(button) {
     pageLoader.startLoader();
 
     const response = await axios.get("/all-products");
-    console.log(response);
     const books = await response.data.products.sort(() => Math.random() - 0.5);
 
     totalPages = response.data.totalPages;

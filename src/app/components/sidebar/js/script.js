@@ -1,10 +1,8 @@
-import { User } from "../../class/user.class.js";
+import { User } from "../../../class/user.class.js";
 import { setSidebarTooltips } from "./tippy.js";
-import { openAndCloseFavorite } from "../favorite/script.js";
-import { openAndCloseBag } from "../shoppingBag/script.js";
-import { success } from "../../sweetAlert/sweet.js";
-
-setSidebarTooltips()
+import { openAndCloseFavorite } from "../../favorite/script.js";
+import { openAndCloseBag } from "../../shoppingBag/script.js";
+import { success } from "../../../sweetAlert/sweet.js";
 
 const openFavoriteBtn = document.querySelector("#fav-btn");
 const logoutBtn = document.querySelector(".logout-case");
@@ -22,7 +20,6 @@ function verifyAuthState() {
 
   const getCookie = { auth: cookies[0] };
   const cookie = getCookie.auth == undefined ? false : true;
-  (cookie)
   if (cookie) {
     return (
       loginBtn.classList.toggle("ocult-login"),
@@ -30,8 +27,6 @@ function verifyAuthState() {
     );
   }
 }
-
-document.addEventListener("DOMContentLoaded", verifyAuthState);
 
 links.forEach((li) => {
   li.addEventListener("click", () => {
@@ -76,3 +71,6 @@ logoutBtn.addEventListener("click", (e) => {
     }, 1000);
   }, 600);
 });
+
+setSidebarTooltips()
+verifyAuthState()

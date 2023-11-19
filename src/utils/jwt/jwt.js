@@ -1,17 +1,42 @@
 import jwt from "jsonwebtoken";
 
-export const generateToken = async (data) => {
-  const { email, id, name } = data;
-  const token = jwt.sign(
-    {
-      sub: id,
-      email,
-      name,
-    },
-    process.env.SECRET_KEY,
-    {
-      expiresIn: "14days",
+export class JWTGenerate {
+  async userToken(data) {
+    try {
+      const { email, id, name } = data;
+      const token = jwt.sign(
+        {
+          sub: id,
+          email,
+          name,
+        },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "14days",
+        }
+      );
+
+      return token;
+    } catch (err) {
+      return err;
     }
-  );
-  return token;
-};
+  }
+
+  async paymentOrderToken(products) {
+    try {
+      const token = jwt.sign(
+        {
+          products,
+        },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "1m",
+        }
+      );
+
+      return token;
+    } catch (err) {
+      return err;
+    }
+  }
+}

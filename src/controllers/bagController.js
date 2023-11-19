@@ -31,7 +31,7 @@ export class BagController {
       const userId = req.user.sub;
       const loadProducts = await bagRepository.loadBagProducts(userId);
       if (loadProducts.length <= 0) {
-        return res.status(200).json({ message: "O carrinho está vazio!" });
+        return res.status(200).json(loadProducts);
       }
 
       const products = loadProducts.map((item) => {

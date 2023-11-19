@@ -1,7 +1,9 @@
-import { generateToken } from "../utils/jwt/jwt.js";
+import { JWTGenerate } from "../utils/jwt/jwt.js";
 import { comparePasswords } from "../utils/encrypt/bcrypt.js";
 import { AccountRepository } from "../repositories/accountRepository.js";
+
 const accountRepository = new AccountRepository();
+const jwtGenerate = new JWTGenerate();
 
 export class AccountController {
   async singInWithGoogle(req, res) {
@@ -17,7 +19,7 @@ export class AccountController {
       return;
     }
 
-    const token = await generateToken(accountAllReadyExists);
+    const token = await jwtGenerate.userToken(accountAllReadyExists);
 
     res.cookie("Auth", token, { maxAge: 3600000 * 24 * 14 });
     res.status(200).json({ status: "success", user: accountAllReadyExists });
@@ -55,7 +57,7 @@ export class AccountController {
       });
     }
 
-    const token = await generateToken(accountAllReadyExists);
+    const token = await jwtGenerate.userToken(accountAllReadyExists);
     res.cookie("Auth", token, { maxAge: 3600000 * 24 });
     res.json({ status: "success", user: accountAllReadyExists });
   }

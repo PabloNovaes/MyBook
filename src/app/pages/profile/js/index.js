@@ -48,28 +48,32 @@ function renderAdresses(adress) {
 }
 
 async function renderUserData() {
-  pageLoader.startLoader();
-  const displayName = document.querySelector("#name");
-  const userName = document.querySelector("#user-name");
-  const accountName = document.querySelector('[data-id="name"]');
-  const accountNickname = document.querySelector('[data-id="nickname"]');
-  const accountEmail = document.querySelector('[data-id="email"]');
-  const accountId = document.querySelector('[data-id="id"]');
-  const accountCpf = document.querySelector('[data-id="cpf"]');
+  try {
+    pageLoader.startLoader();
+    const displayName = document.querySelector("#name");
+    const userName = document.querySelector("#user-name");
+    const accountName = document.querySelector('[data-id="name"]');
+    const accountNickname = document.querySelector('[data-id="nickname"]');
+    const accountEmail = document.querySelector('[data-id="email"]');
+    const accountId = document.querySelector('[data-id="id"]');
+    const accountCpf = document.querySelector('[data-id="cpf"]');
 
-  const userData = await user.handleUserData();
-  const { name, avatar_url, nickname, email, id, cpf } = userData.data;
+    const userData = await user.handleUserData();
+    const { name, avatar_url, nickname, email, id, cpf } = userData.data;
 
-  displayName.textContent = name;
-  userName.textContent = nickname;
-  img.src = avatar_url;
-  accountEmail.textContent = email;
-  accountNickname.textContent = nickname;
-  accountId.textContent = id;
-  accountName.textContent = name;
-  accountCpf.textContent = cpf;
-
-  return pageLoader.stopLoader();
+    displayName.textContent = name;
+    userName.textContent = nickname;
+    img.src = avatar_url;
+    accountEmail.textContent = email;
+    accountNickname.textContent = nickname;
+    accountId.textContent = id;
+    accountName.textContent = name;
+    accountCpf.textContent = cpf;
+  } catch (error) {
+    return err;
+  } finally {
+    return pageLoader.stopLoader();
+  }
 }
 
 function openTab(event, tabName) {

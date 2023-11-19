@@ -1,5 +1,4 @@
 import { ShoppingBag } from "../../class/bag.class.js";
-import { pageLoader } from "../pageLoader/index.js";
 
 const closeBagBtn = document.querySelector("#shopping-bag .ph-x");
 const selectAll = document.querySelector(".mark-all");
@@ -59,7 +58,8 @@ export async function setData() {
   list.innerHTML = "";
 
   const data = await bagClass.loadItens();
-  if (data.message) return false;
+
+  if (data.products.length <= 0) return false;
 
   return data.products.map((book) => {
     const item = createElement(book);
@@ -76,7 +76,7 @@ export async function setData() {
             .getAttribute("id"),
         };
 
-        quantityProductControlls[action](data);
+        quantityProductControlls[action](data, e.target.parentElement);
       });
     });
 
@@ -100,7 +100,7 @@ const updatePurchaseValue = {
     this.setPurchaseValue();
   },
   remove(product) {
-    const price = product.price;
+    const price = product.finalPrice;
     finalValue -= price;
     products = products.filter((item) => {
       return item.id != product.id;
@@ -128,10 +128,11 @@ const updatePurchaseValue = {
       id: element.parentElement.querySelector(".price").getAttribute("id"),
       element: element.parentElement.parentElement,
     };
+
     const { quantity, basePrice } = product;
     product.finalPrice = basePrice * quantity;
 
-    const target = element.checked;
+    const target = element.checked == undefined ? false : element.checked;
     if (target) {
       return this.add(product);
     } else {
@@ -141,10 +142,9 @@ const updatePurchaseValue = {
 };
 
 const quantityProductControlls = {
-  displayValue: document.querySelector(".quantity-buttons p"),
   list: bag.querySelector("li.item"),
 
-  increment(product) {
+  increment(product, target) {
     const position = products.findIndex((item) => item.id == product.id);
     const item = products.splice(position)[0];
     item.quantity += 1;
@@ -153,10 +153,10 @@ const quantityProductControlls = {
 
     item.finalPrice = basePrice * quantity;
     updatePurchaseValue.add(item);
-    return this.updateQuantityValue(quantity);
+    return this.updateQuantityValue(quantity, target);
   },
 
-  async decrement(product) {
+  async decrement(product, target) {
     const position = products.findIndex((item) => item.id == product.id);
     const item = products.splice(position)[0];
     item.quantity -= 1;
@@ -165,22 +165,23 @@ const quantityProductControlls = {
 
     if (quantity <= 0) {
       bag.querySelector("ul").removeChild(element.parentElement);
+      element.querySelector("input[type='checkbox']").checked = false;
+      updatePurchaseValue.addOrRemoveItem(element);
 
       const bagClass = new ShoppingBag();
-      const removedItem = await bagClass.removeItem({ productId: id });
 
-      updatePurchaseValue.addOrRemoveItem(element);
-      return;
+      return await bagClass.removeItem({ productId: id });
     }
 
     item.finalPrice = basePrice * quantity;
     updatePurchaseValue.add(item);
-    
-    return this.updateQuantityValue(quantity);
+
+    return this.updateQuantityValue(quantity, target);
   },
 
-  updateQuantityValue(quantity) {
-    this.displayValue.innerText = quantity;
+  updateQuantityValue(quantity, target) {
+    const displayValue = target.querySelector(".quantity-buttons p");
+    displayValue.innerText = quantity;
   },
 };
 
@@ -205,9 +206,8 @@ selectAll.addEventListener("click", (e) => {
     }
   });
   if (!state) {
-    products = [];
-    finalValue = 0;
-    updatePurchaseValue.setPurchaseValue(finalValue);
+    btn.checked = state;
+    updatePurchaseValue.addOrRemoveItem(btn);
     return;
   }
 });
