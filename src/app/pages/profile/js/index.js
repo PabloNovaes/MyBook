@@ -8,24 +8,33 @@ import {
 import { User } from "../../../class/user.class.js";
 import { Adress } from "../../../class/adress.class.js";
 import { getPostsByUser } from "./posts.js";
+import {
+  getOrders,
+  renderOrders,
+  setOrdersQuantityPerStatus,
+} from "./orders.js";
 import { pageLoader } from "../../../components/pageLoader/index.js";
 
-const img = document.querySelector("#user-img");
-const input = document.querySelector("#change-img");
-const imgOptions = document.querySelector("#image-options");
-const viewProfileImage = document.querySelector("#image-options ul li");
-const controllsOptions = imgOptions.querySelectorAll("ul .option");
-const hideImgOptions = imgOptions.querySelector("header");
-const accountLink = document.querySelector("#my-account");
-const assessmentLink = document.querySelector("#assessment");
-const settingsBtn = document.querySelector("#settings-tab");
-const openAccountData = document.querySelector("#account-tab");
+const awaitPaymentOrderBtn = document.querySelector("#pending-payment");
+const ordersControll = document.querySelectorAll("#track-purchase nav span")
+const tabsBtn = document.querySelectorAll("#navigation p");
 const openAccountAdresses = document.querySelector("#adress-tab");
 const editAccountDataBtn = document.querySelector("#edit-data");
-const addAdressBtn = document.querySelector("#add-adress");
+const openAccountData = document.querySelector("#account-tab");
+const assessmentLink = document.querySelector("#assessment");
 const adressesList = document.querySelector("#adresses ul");
+const settingsBtn = document.querySelector("#settings-tab");
+const addAdressBtn = document.querySelector("#add-adress");
 const startPostBtn = document.querySelector("#start-post");
-const tabsBtn = document.querySelectorAll("#navigation p");
+const accountLink = document.querySelector("#my-account");
+
+const input = document.querySelector("#change-img");
+const img = document.querySelector("#user-img");
+
+const viewProfileImage = document.querySelector("#image-options ul li");
+const imgOptions = document.querySelector("#image-options");
+const hideImgOptions = imgOptions.querySelector("header");
+const controllsOptions = imgOptions.querySelectorAll("ul .option");
 
 const user = new User();
 const adress = new Adress();
@@ -128,6 +137,15 @@ settingsBtn.addEventListener("click", () => {
   });
 });
 
+awaitPaymentOrderBtn.addEventListener("click", () => {
+  const page = openTab(event, "order-pending-payment");
+  const backBtn = document.querySelector(`#${page}`).querySelector("#back-to");
+
+  backBtn.addEventListener("click", () => {
+    openTab(event, "account");
+  });
+});
+
 openAccountData.addEventListener("click", () => {
   const page = openTab(event, "view-account-data");
   const backBtn = document.querySelector(`#${page}`).querySelector("#back-to");
@@ -186,11 +204,20 @@ img.addEventListener("click", viewOrHideOptions);
 
 hideImgOptions.addEventListener("click", viewOrHideOptions);
 
+async function loadOrders() {
+  const orders = await getOrders();
+  setOrdersQuantityPerStatus(orders, ordersControll);
+  orders.forEach((order) => {
+    return renderOrders(order);
+  });
+}
+
 try {
   await Promise.allSettled([
     getPostsByUser(),
     renderUserData(),
     adress.getAdress(renderAdresses),
+    loadOrders(),
   ]);
 } catch (err) {
   error(`Ocorreu um erro inesperado! ${err}`);

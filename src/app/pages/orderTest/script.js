@@ -9,6 +9,7 @@ const order = new Order()
 
 try {
   const orders= await order.getOrders()
+  console.log(orders);
 } catch (error) {
   console.log(error);
 }

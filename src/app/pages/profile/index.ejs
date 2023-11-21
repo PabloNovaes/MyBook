@@ -4,9 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" >
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="red" >
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="cyan"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="red"
+    />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Perfil</title>
     <link rel="stylesheet" href="../../pages/profile/index.css" />
     <link rel="stylesheet" href="../../global/global.css" />
@@ -18,12 +26,12 @@
 
   <body style="height: 100vh !important">
     <div id="shadow"></div>
-    <%-include('../../components/pageLoader/index') %>
-    <%- include('../../components/shoppingBag/bag') %>
+    <%-include('../../components/pageLoader/index') %> <%-
+    include('../../components/shoppingBag/bag') %>
     <%-include('../../components/favorite/favorite') %>
     <main id="main">
-      <%-include('../../components/sidebar/sidebar') %>
-      <%- include('../../components/header/header') %>
+      <%-include('../../components/sidebar/sidebar') %> <%-
+      include('../../components/header/header') %>
       <div class="container">
         <img id="user-img" alt="" />
         <p id="user-name">...</p>
@@ -58,18 +66,17 @@
       <section id="pages">
         <div id="publications" class="tab-content">
           <div id="start-post">
-              <i class="ph-bold ph-plus"></i>
+            <i class="ph-bold ph-plus"></i>
           </div>
 
-          <div id="posts-list">
-
-          </div>
+          <div id="posts-list"></div>
 
           <span id="message">
             <i class="ti ti-mood-confuzed-filled"></i>
             <p>Você não tem nunhuma publicação</p>
-          </span> 
+          </span>
         </div>
+
         <div id="account" class="tab-content">
           <div id="track-purchase">
             <header>
@@ -78,19 +85,20 @@
             </header>
             <i class="divider"></i>
             <nav>
-              <span>
+              <span data-id="AWAITING_PAYMENT" id="pending-payment">
+                <div class="order-quantity"></div>
                 <i class="ti ti-wallet"></i>
                 <p>Pagamento<br />pendente</p>
               </span>
-              <span>
+              <span data-id="AWAITING_SENT" id="await-send">
                 <i class="ti ti-package-export"></i>
                 <p>Aguardando<br />envio</p>
               </span>
-              <span>
+              <span data-id="ORDER_DISPATCHED" id="sent-product">
                 <i class="ti ti-truck-delivery"></i>
                 <p>Produto<br />enviado</p>
               </span>
-              <span>
+              <span data-id="VALUATE_PRODUCT" id="assessment">
                 <i class="ti ti-message-2-check"></i>
                 <p>Avaliar</p>
               </span>
@@ -116,6 +124,7 @@
             <span>1.0</span>
           </div>
         </div>
+
         <div id="account-settings" class="tab-content">
           <header>
             <i class="ph-bold ph-arrow-left" id="back-to"></i>
@@ -182,11 +191,20 @@
           </header>
 
           <div id="adresses">
-            <ul>
-            </ul>
+            <ul></ul>
           </div>
         </div>
-      </div>
+
+        <div id="order-pending-payment" class="tab-content">
+          <header>
+            <i class="ph-bold ph-arrow-left" id="back-to"></i>
+            <p>Pagamento pendente</p>
+          </header>
+
+          <div class="orders">
+            <ul></ul>
+          </div>
+        </div>
 
         <footer id="image-options">
           <header>
@@ -209,6 +227,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
     <script async type="module" src="../../pages/profile/js/index.js"></script>
-    <script async type="module" src="../../pages/profile/js/scrollReveal.js"></script>
+    <script
+      async
+      type="module"
+      src="../../pages/profile/js/scrollReveal.js"
+    ></script>
   </body>
 </html>

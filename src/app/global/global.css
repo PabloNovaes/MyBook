@@ -402,7 +402,7 @@ h2.swal2-title {
 }
 
 
-.payment-modal, .adress-modal .swal2-actions{
+.payment-modal .swal2-actions, .adress-modal .swal2-actions{
   width: 100%;
   margin: 0;
 

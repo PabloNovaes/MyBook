@@ -479,7 +479,7 @@ export const setAdressFromOrder = (element, adresses) => {
         li.innerHTML = `
         <input type="checkbox" name="" id=${id}>
       <span class="adress-data">
-        <p>  ${street}, ${number}, <br>${district}, ${city}, ${uf}, ${cep}</p>
+        <p> ${street}, ${number}, <br>${district}, ${city}, ${uf}, ${cep}</p>
       </span>
         `;
 

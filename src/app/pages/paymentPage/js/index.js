@@ -1,3 +1,4 @@
+import { pageLoader } from "../../../components/pageLoader/index.js";
 import {
   setPaymentMethods,
   setAdressFromOrder,
@@ -57,28 +58,36 @@ function setOrderValues(products) {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  const productsList = document.querySelector(".list-case ul");
-  const data = JSON.parse(localStorage.getItem("Products"));
+  try {
+    pageLoader.startLoader();
 
-  const [products, adresses] = await Promise.all([
-    loadOrderProducts(data),
-    loadUserAdresses(),
-  ]);
+    const productsList = document.querySelector(".list-case ul");
+    const data = JSON.parse(localStorage.getItem("Products"));
 
-  selectAdressOrder.addEventListener("click", () =>
-    setAdressFromOrder(selectAdressOrder, adresses)
-  );
+    const [products, adresses] = await Promise.all([
+      loadOrderProducts(data),
+      loadUserAdresses(),
+    ]);
 
-  products.forEach((product) => {
-    const element = renderProduct(product);
-    return productsList.appendChild(element);
-  });
+    selectPaymentMethod.addEventListener("click", () => {
+      setPaymentMethods(selectPaymentMethod);
+    });
 
-  setOrderValues(products);
-});
+    selectAdressOrder.addEventListener("click", () =>
+      setAdressFromOrder(selectAdressOrder, adresses)
+    );
 
-selectPaymentMethod.addEventListener("click", () => {
-  setPaymentMethods(selectPaymentMethod);
+    products.forEach((product) => {
+      const element = renderProduct(product);
+      return productsList.appendChild(element);
+    });
+
+    setOrderValues(products);
+  } catch (err) {
+    return error(`Ocorreu um erro inesperado! ${err}`);
+  } finally {
+    return pageLoader.stopLoader();
+  }
 });
 
 makeOrder.addEventListener("click", async () => {
