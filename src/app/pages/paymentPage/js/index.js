@@ -1,11 +1,13 @@
 import {
   setPaymentMethods,
+  setAdressFromOrder,
   error,
   success,
 } from "../../../sweetAlert/sweet.js";
-import { creatOrder, loadOrderProducts } from "./api.js";
+import { creatOrder, loadOrderProducts, loadUserAdresses } from "./api.js";
 
 const selectPaymentMethod = document.querySelector("#payment-methods");
+const selectAdressOrder = document.querySelector("#address");
 const makeOrder = document.querySelector("#buy-values button");
 
 function renderProduct(product) {
@@ -57,7 +59,15 @@ function setOrderValues(products) {
 window.addEventListener("DOMContentLoaded", async () => {
   const productsList = document.querySelector(".list-case ul");
   const data = JSON.parse(localStorage.getItem("Products"));
-  const products = await loadOrderProducts(data);
+
+  const [products, adresses] = await Promise.all([
+    loadOrderProducts(data),
+    loadUserAdresses(),
+  ]);
+
+  selectAdressOrder.addEventListener("click", () =>
+    setAdressFromOrder(selectAdressOrder, adresses)
+  );
 
   products.forEach((product) => {
     const element = renderProduct(product);
@@ -67,7 +77,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   setOrderValues(products);
 });
 
-selectPaymentMethod.addEventListener("click", async (e) => {
+selectPaymentMethod.addEventListener("click", () => {
   setPaymentMethods(selectPaymentMethod);
 });
 
@@ -81,13 +91,15 @@ makeOrder.addEventListener("click", async () => {
     if (selectPaymentMethod.getAttribute("method") == "unselected") return;
 
     const methodType = selectPaymentMethod.getAttribute("method");
-    const method = paymentMethods[methodType];
 
+    const method = paymentMethods[methodType];
+    const adressId = selectAdressOrder.getAttribute("adress-id");
     const products = JSON.parse(localStorage.getItem("Products"));
 
-    const execute = await creatOrder(method, products);
+    const execute = await creatOrder(method, products, adressId);
     return success("Pedido relizado com sucesso!");
   } catch (err) {
+    console.log(error);
     return error(`Ocorreu um erro inesperado! ${err}`);
   }
 });

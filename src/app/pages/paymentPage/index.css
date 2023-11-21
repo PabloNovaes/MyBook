@@ -85,14 +85,14 @@ main {
         font-weight: 400;
         display: flex;
         align-items: center;
-        gap: .6rem;
-        opacity: .8;
+        gap: 0.6rem;
+        opacity: 0.8;
 
-        & i{
+        & i {
           font-size: 2rem;
         }
 
-        & p{
+        & p {
           font-weight: 400;
         }
       }
@@ -192,7 +192,7 @@ main {
       height: 100%;
       width: 10rem;
       display: flex;
-      
+
       & img {
         padding: 0.7rem;
         object-fit: cover;
@@ -313,7 +313,8 @@ main {
   }
 }
 
-.payment-modal {
+.payment-modal,
+.adress-modal {
   border-radius: 1.4rem !important;
   width: calc(100% - 5vw);
 
@@ -340,7 +341,8 @@ main {
     flex-direction: column;
     gap: 0.6rem;
     padding-block: 1.6em !important;
-    padding-inline: .5rem;
+    padding-inline: 0.5rem;
+    list-style: none;
 
     & li {
       display: flex;
@@ -401,4 +403,8 @@ main {
       }
     }
   }
+}
+
+.adress-modal ul li p {
+  text-align: start;
 }

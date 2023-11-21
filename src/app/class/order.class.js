@@ -3,10 +3,12 @@ import axios from "../services/axios/axios.js";
 export class Order {
   paymentMethod;
   products;
+  adressId;
 
-  constructor(paymentMethod, products) {
+  constructor(paymentMethod, products, adressId) {
     this.paymentMethod = paymentMethod;
     this.products = products;
+    this.adressId = adressId;
   }
 
   async createOrder(data) {
@@ -25,7 +27,6 @@ export class Order {
     try {
       const response = await axios.get("/order/get-orders");
       const data = await response.data;
-      console.log(data);
       return data;
     } catch (error) {
       return error;

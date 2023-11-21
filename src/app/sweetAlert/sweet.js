@@ -446,3 +446,69 @@ export const setPaymentMethods = (element) => {
     }
   });
 };
+
+export const setAdressFromOrder = (element, adresses) => {
+  Swal.fire({
+    showCancelButton: false,
+    confirmButtonText: "Confirmar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#1A57DF",
+    html: `
+    <header>
+    <h1>Endereços de entrega</h1>
+    <p>
+    <i class="ti ti-package"></i>
+      Esolha um endereço para prosseguir 
+    </p>
+    </header>
+    <div>
+  <ul id="adress-list">
+   
+  </ul>
+</div>
+    `,
+    didRender: () => {
+      const setAddressModal = document.querySelector(".swal2-popup");
+      setAddressModal.classList.add("adress-modal");
+
+      const adressList = setAddressModal.querySelector("#adress-list");
+
+      adresses.forEach((adress) => {
+        const { street, district, cep, number, id, uf, city } = adress;
+        const li = document.createElement("li");
+        li.innerHTML = `
+        <input type="checkbox" name="" id=${id}>
+      <span class="adress-data">
+        <p>  ${street}, ${number}, <br>${district}, ${city}, ${uf}, ${cep}</p>
+      </span>
+        `;
+
+        adressList.appendChild(li);
+      });
+
+      const inputs = setAddressModal.querySelectorAll("ul li input");
+
+      inputs.forEach((input) => {
+        input.addEventListener("click", (e) => {
+          inputs.forEach((checkbox) => (checkbox.checked = false));
+          e.target.checked = true;
+        });
+      });
+    },
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const inputs = document.querySelectorAll(".adress-modal li input");
+
+      const checkedInput = Array.from(inputs).filter((checkbox) => {
+        return checkbox.checked == true;
+      });
+
+      element.setAttribute("adress-id", checkedInput[0].getAttribute("id"));
+
+      const selectedAdressData =
+        checkedInput[0].parentElement.querySelector("p").textContent;
+
+      return (element.querySelector("span").innerHTML = selectedAdressData);
+    }
+  });
+};

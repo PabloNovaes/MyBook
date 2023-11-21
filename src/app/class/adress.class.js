@@ -29,7 +29,10 @@ export class Adress {
     try {
       const request = axios.get("/adress/handle");
       const response = await request;
+
       const adresses = response.data.adresses;
+
+      if (!renderAdresses) return adresses;
 
       const handleUserAdresses = async () => {
         adresses.forEach((adress) => renderAdresses(adress));
