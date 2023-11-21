@@ -68,7 +68,6 @@ export async function getProducts(button) {
 
     return renderBooks(books);
   } catch (err) {
-    console.log(err);
     error(`Ocorreu um erro inesperado!`);
   } finally {
     return pageLoader.stopLoader();

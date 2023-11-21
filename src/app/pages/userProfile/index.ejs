@@ -26,11 +26,11 @@
 
   <body style="height: 100vh !important">
     <div id="shadow"></div>
-    <%- include('../../components/shoppingBag/bag') %>
+    <%-include('../../components/pageLoader/index') %> <%-
+    include('../../components/shoppingBag/bag') %>
     <%-include('../../components/favorite/favorite') %>
     <main id="main">
-      <%-include('../../components/sidebar/sidebar') %>
-      <%-include('../../components/pageLoader/index') %> <%-
+      <%-include('../../components/sidebar/sidebar') %> <%-
       include('../../components/header/header') %>
       <div class="container">
         <img id="user-img" src="" alt="" />
@@ -93,6 +93,5 @@
       type="module"
       src="../../pages/userProfile/js/index.js"
     ></script>
-   
   </body>
 </html>

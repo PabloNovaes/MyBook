@@ -50,7 +50,6 @@ export class CheckoutController {
 
       res.status(201).json(checkout);
     } catch (error) {
-      console.log(error);
       res.status(400).json({ message: "Ocorreu um erro inesperado" });
     }
   }

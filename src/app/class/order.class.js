@@ -21,6 +21,17 @@ export class Order {
     }
   }
 
+  async getOrders() {
+    try {
+      const response = await axios.get("/order/get-orders");
+      const data = await response.data;
+      console.log(data);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async loadOrderProducts(data) {
     try {
       const products = [];

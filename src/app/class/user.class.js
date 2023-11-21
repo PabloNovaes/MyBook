@@ -127,7 +127,6 @@ export class User {
         url: result,
       };
 
-      console.log(imgUrl.url);
       JSON.stringify(imgUrl);
 
       const response = await axios.post("/users/update-image", imgUrl);

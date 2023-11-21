@@ -67,7 +67,7 @@ async function renderPost(post, user) {
 }
 
 async function getData() {
-  let userName, postQuantity, userImg;
+  let userName, postQuantity, userImg, nickName;
 
   pageLoader.startLoader();
 
@@ -76,9 +76,10 @@ async function getData() {
 
   const userData = data.user;
   const posts = data.posts;
-  const { avatar_url, name } = userData;
+  const { avatar_url, name, nickname } = userData;
 
   userName = document.querySelector("#name").innerText = name;
+  nickName = document.querySelector("#user-name").innerText = nickname
   userImg = document.querySelector("#user-img").src = avatar_url;
   postQuantity = document.querySelector("#post-quantity p").innerText =
     posts.length;

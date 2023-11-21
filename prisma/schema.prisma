@@ -78,6 +78,7 @@ model Adress {
   uf       String
 
   users Adress_per_user[]
+  Order Order[]
 
   @@map("adresses")
 }
@@ -110,8 +111,10 @@ model Order {
   created       DateTime @default(now())
   paymentMethod String
   status        String
+  adressId      String?
 
   User               User                @relation(fields: [userId], references: [id])
+  Adress             Adress?             @relation(fields: [adressId], references: [id])
   userId             String
   Products_per_order Product_per_order[]
 

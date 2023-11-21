@@ -1,8 +1,18 @@
 import { Checkout } from "../../class/checkout.class.js";
+import { Order } from "../../class/order.class.js";
 import { error, setPaymentMethods } from "../../sweetAlert/sweet.js";
 const submitBtn = document.querySelector("button");
 const KEY =
   "pk_test_51O9cVZF0DgXzIgTTyFmby9sYaoZD0GIQA4udOzugv2ZzvO7sm08sJUH7YW1X5rc00NDozrpbHDUSmP9YpMmCsF1g00NcEpcmB9";
+
+const order = new Order()
+
+try {
+  const orders= await order.getOrders()
+  console.log(orders);
+} catch (error) {
+  console.log(error);
+}
 
 async function setProductsToken() {
   try {
@@ -10,7 +20,7 @@ async function setProductsToken() {
     if (!products) return alert("sem produtos");
     const checkout = new Checkout();
     const setToken = await checkout.setTokenToProducts(products);
-    return console.log(setToken);
+    return setToken;
   } catch (error) {
     return error;
   }

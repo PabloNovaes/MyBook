@@ -1,11 +1,11 @@
-const loader = document.getElementById("loader-page");
-
 export const pageLoader = {
+  element: document.querySelector("#loader-page"),
+
   startLoader() {
-    loader.classList.add("fade-in");
+    this.element.classList.add("fade-in");
   },
   stopLoader() {
-    loader.classList.remove("fade-in");
-    loader.classList.add("fade-out");
+    this.element.classList.remove("fade-in");
+    this.element.classList.add("fade-out");
   },
 };

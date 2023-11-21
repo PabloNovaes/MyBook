@@ -93,7 +93,6 @@ const converseList = {
     let itens = [...chatList];
 
     itens.sort((current, next) => {
-      console.log(current);
       const timeCurrent = current.querySelector(
         ".final-message > .send-in"
       ).textContent;
@@ -140,9 +139,9 @@ const converseList = {
 
     const sendIn = finalMessage.created.split(",")[1].split(":");
     localSendIn.innerText = `${sendIn[0]}:${sendIn[1]}`;
-    if (time > 1) {
-      localSendIn.innerText = "Ontem";
-    } else if (time >= 2) {
+    if (time <= 2 && time > 1) {
+      return (localSendIn.innerText = "Ontem");
+    } else if (time > 2) {
       const sendIn = finalMessage.created.split(",")[0];
       localSendIn.innerText = sendIn;
     }
@@ -184,5 +183,7 @@ const converseList = {
   },
 };
 
-searchUserInput.addEventListener("keyup", converseList.searchUserInList);
-document.addEventListener("DOMContentLoaded", converseList.listingUsers);
+await Promise.allSettled([
+  searchUserInput.addEventListener("keyup", converseList.searchUserInList),
+  document.addEventListener("DOMContentLoaded", converseList.listingUsers),
+]);

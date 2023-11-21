@@ -15,11 +15,11 @@
   </head>
 
   <body>
+    <%-include('../../components/pageLoader/index') %>
     <div id="shadow"></div>
     <%- include('../../components/shoppingBag/bag') %> <%-
     include('../../components/favorite/favorite') %> <%-
-    include('../../components/sidebar/sidebar') %> <%-
-    include('../../components/pageLoader/index') %>
+    include('../../components/sidebar/sidebar') %>
     <main>
       <%- include('../../components/header/header') %>
       <swiper-container
@@ -58,7 +58,7 @@
 
       <footer>
         <button id="view-more">
-          <img src="" alt="">
+          <img src="" alt="" />
           <p>Mostrar mais</p>
           <i class="ph-bold ph-caret-down"></i>
         </button>

@@ -35,14 +35,12 @@ export class UserController {
         user: createUser,
       });
     } catch (err) {
-      console.log(err);
       res.status(200).send(err);
     }
   }
 
   async getUser(req, res) {
     const { email } = req.user;
-    console.log(req.user);
     const userAlredyExists = await userRepository.findUnique(email);
 
     if (!userAlredyExists) {
@@ -67,7 +65,6 @@ export class UserController {
 
       res.status(200).json({ status: "sucess", message: "imagem atualizada" });
     } catch (error) {
-      console.log(error);
       res.status(200).json({ status: "error" });
     }
   }
@@ -99,8 +96,6 @@ export class UserController {
     try {
       const data = req.body;
       const userId = req.user.sub;
-
-      console.log(data, userId);
 
       const updateData = await userRepository.updateUserData(data, userId);
 

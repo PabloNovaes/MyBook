@@ -5,28 +5,25 @@ export class OrderController {
   async createOrder(req, res) {
     try {
       const data = req.body;
-      const { sub } = req.user;
+      const { userId } = data;
 
       if (!data) {
-        return res
-          .status(400)
-          .json({ message: `Ocorreu um erro inesperado! ${error}` });
+        return res.status(400).json({ message: `Ocorreu um erro inesperado!` });
       }
 
-      const order = await orderRepostitory.createOrder(data, sub);
+      const order = await orderRepostitory.createOrder(data, userId);
 
       res.status(201).json({ message: "Pedido realizado com sucesso!", order });
     } catch (error) {
-      console.log(error);
       res.status(400).json({ message: `Ocorreu um erro inesperado! ${error}` });
     }
   }
 
   async getUserOrders(req, res) {
     try {
-      const user = req.body.user;
+      const { sub } = req.user;
 
-      const getUserOrders = await orderRepostitory.getOrders(user);
+      const getUserOrders = await orderRepostitory.getOrders(sub);
 
       const orders = getUserOrders.map((order) => {
         const { Products_per_order, ...all } = order;

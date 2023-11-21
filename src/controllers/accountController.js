@@ -37,8 +37,7 @@ export class AccountController {
       });
       return;
     }
-    console.log(accountAllReadyExists);
-
+    
     if (!accountAllReadyExists.password) {
       return res.status(200).json({
         status: "error",

@@ -1,12 +1,16 @@
+import { pageLoader } from "../../../components/pageLoader/index.js";
 import { Order } from "../../../class/order.class.js";
 
 export async function creatOrder(paymentMethod, products) {
   try {
+    pageLoader.startLoader();
     const orderClass = new Order(paymentMethod, products);
     const create = orderClass.createOrder(orderClass);
     return create;
   } catch (error) {
     return error;
+  } finally {
+    return pageLoader.stopLoader();
   }
 }
 

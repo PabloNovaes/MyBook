@@ -19,7 +19,7 @@ export class PostRepository {
 
       return newPost;
     } catch (error) {
-      return console.log(error);
+      return error;
     }
   }
 

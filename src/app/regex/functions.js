@@ -1,7 +1,6 @@
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const testEmail = (email) => {
-  console.log(emailRegex.test(email));
   return emailRegex.test(email);
 };
 

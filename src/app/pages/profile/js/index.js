@@ -3,6 +3,7 @@ import {
   registerAdressModal,
   startPost,
   viewImageProfileModal,
+  error,
 } from "../../../sweetAlert/sweet.js";
 import { User } from "../../../class/user.class.js";
 import { Adress } from "../../../class/adress.class.js";
@@ -185,6 +186,12 @@ img.addEventListener("click", viewOrHideOptions);
 
 hideImgOptions.addEventListener("click", viewOrHideOptions);
 
-await renderUserData();
-await getPostsByUser();
-await adress.getAdress(renderAdresses);
+try {
+  await Promise.allSettled([
+    getPostsByUser(),
+    renderUserData(),
+    adress.getAdress(renderAdresses),
+  ]);
+} catch (err) {
+  error(`Ocorreu um erro inesperado! ${err}`);
+}
