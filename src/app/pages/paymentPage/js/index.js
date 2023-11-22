@@ -91,6 +91,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 makeOrder.addEventListener("click", async () => {
+  pageLoader.startLoader();
   const paymentMethods = {
     boleto: "boleto",
     card: "card",
@@ -108,7 +109,8 @@ makeOrder.addEventListener("click", async () => {
     const execute = await creatOrder(method, products, adressId);
     return success("Pedido relizado com sucesso!");
   } catch (err) {
-    console.log(error);
     return error(`Ocorreu um erro inesperado! ${err}`);
+  } finally {
+    return pageLoader.stopLoader();
   }
 });

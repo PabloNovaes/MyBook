@@ -1,5 +1,14 @@
 import { Order } from "../../../class/order.class.js";
-const orderList = document.querySelector(".orders ul");
+import { Checkout } from "../../../class/checkout.class.js";
+import {
+  orderAwaitingPaymentTemplate,
+  communTemplate,
+} from "./html-templates.js";
+import { pageLoader } from "../../../components/pageLoader/index.js";
+
+localStorage.removeItem("orders");
+
+const orderPages = document.querySelectorAll(".order-page");
 
 export async function getOrders() {
   try {
@@ -13,68 +22,69 @@ export async function getOrders() {
   }
 }
 
-export async function renderOrders(order) {
-  const methods = {
-    card: "Cartão",
-    boleto: "Boleto",
-  };
-
-  const orderStatus = {
-    AWAITING_PAYMENT: "Pendente",
-    AWAITING_SENT: "Preparando envio",
-  };
-
+async function setProductsToken(orders, orderId) {
   try {
-    const { products, paymentMethod, created, status, deliveryAdress, id } =
-      order;
-    const { street, number, district, city, uf, cep } = deliveryAdress;
-    const date = new Date(created).toLocaleString("pt-BR");
-    const quantity = products.length;
+    let orderProducts = orders.filter((order) => {
+      if (order.id === orderId) {
+        return order;
+      }
+    });
+
+    const checkout = new Checkout();
+    const reponse = await checkout.setTokenToProducts(orderProducts[0]);
+    const setToken = await reponse;
+    return setToken;
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function renderOrders(order) {
+  try {
+    const { products, id, status } = order;
 
     const li = document.createElement("li");
     li.setAttribute("order-id", id);
-    li.innerHTML = `
-    <header>
-    <span>
-      <p>Pedido com ${quantity} ${quantity > 1 ? "produtos" : "produto"}</p>
-      <p>Feito em ${date}</p>
-    </span>
-    <i class="ph-bold ph-caret-down"></i>
-  </header>
+    li.innerHTML =
+      status == "AWAITING_PAYMENT"
+        ? orderAwaitingPaymentTemplate(order)
+        : communTemplate(order);
 
-  <input type="checkbox" />
-  <div class="content">
-    <div class="order-datails">
-      <span>
-        <p>Status</p>
-        <p class="status">${orderStatus[status]}</p>
-      </span>
-      <span>
-        <p>Data</p>
-        <p>12/11/2023</p>
-      </span>
-      <span>
-        <p>Pagamento</p>
-        <p>${methods[paymentMethod]}</p>
-      </span>
-    </div>
+    orderPages.forEach((page) => {
+      if (page.getAttribute("data-id") === status) {
+        page.querySelector(".dont-have-orders").style.display = "none";
+        return page.querySelector(".orders ul").appendChild(li);
+      }
+    });
 
-    <div class="adress-order">
-    Endereço de entrega:
-    ${street}, ${number}, ${district}, ${city}, ${uf}, ${cep}
-    </div>
+    li.querySelectorAll(".pay-now").forEach((button) => {
+      button.addEventListener("click", async (e) => {
+        pageLoader.startLoader();
+        try {
+          let orderId = e.target.parentElement.parentElement.parentElement;
+          orderId = orderId.getAttribute("order-id");
 
-    <ul class="products">
-    </ul>
-  </div>
-    `;
-
-    orderList.appendChild(li);
+          const createOrderToken = await setProductsToken(
+            JSON.parse(localStorage.getItem("orders")),
+            orderId
+          );
+          if (createOrderToken?.created) {
+            const checkout = new Checkout();
+            const data = await checkout.init();
+            return data;
+          }
+        } catch (error) {
+          throw new Error(err);
+        } finally {
+          return pageLoader.stopLoader();
+        }
+      });
+    });
 
     if (products.length > 1) {
       products.forEach((product, indx) => {
         const dividerControll = indx + 1 == products.length;
-        const { image, name, price } = product;
+        const { image, name, price, productId = id } = product;
 
         const formattedPrice = price.toLocaleString("pt-BR", {
           style: "currency",
@@ -82,6 +92,7 @@ export async function renderOrders(order) {
         });
 
         const productElement = document.createElement("li");
+        productElement.setAttribute("product-id", productId);
         productElement.classList.add("product-detail");
         productElement.innerHTML = `
         <img src=${image} alt="ft do livro" />
@@ -94,8 +105,9 @@ export async function renderOrders(order) {
         const divider = document.createElement("i");
         divider.classList.add("divider");
 
-        const getCurrentElement = document.querySelectorAll(".orders ul li");
-        getCurrentElement.forEach((element) => {
+        const currentPage = document.querySelector(`div[data-id=${status}]`);
+        const listInPage = currentPage.querySelectorAll(".orders  ul li");
+        listInPage.forEach((element) => {
           if (element.getAttribute("order-id") === id) {
             element.querySelector("ul.products").appendChild(productElement);
             if (!dividerControll) {
@@ -105,7 +117,7 @@ export async function renderOrders(order) {
         });
       });
     } else {
-      const { image, name, price } = products[0];
+      const { image, name, price, productId = id } = products[0];
 
       const formattedPrice = price.toLocaleString("pt-BR", {
         style: "currency",
@@ -113,6 +125,7 @@ export async function renderOrders(order) {
       });
 
       const productElement = document.createElement("li");
+      productElement.setAttribute("product-id", productId);
       productElement.classList.add("product-detail");
       productElement.innerHTML = `
       <img src=${image} alt="ft do livro" />
@@ -130,20 +143,20 @@ export async function renderOrders(order) {
       });
     }
   } catch (error) {
-    throw new Error("Erro inesperado!");
+    throw new Error(error);
   }
 }
 
 export function setOrdersQuantityPerStatus(orders, elements) {
-  let orderQuantity = 0;
   return orders.forEach((order) => {
+    let orderQuantity = 0;
     const { status } = order;
 
     const orderStatus = Array.from(elements).filter((element) => {
       return element.getAttribute("data-id") == status;
     });
 
-    if (orderStatus != 0) {
+    if (orderStatus[0]) {
       orderQuantity += 1;
       const element = orderStatus[0];
       element.classList.add("have");

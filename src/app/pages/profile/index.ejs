@@ -90,15 +90,18 @@
                 <i class="ti ti-wallet"></i>
                 <p>Pagamento<br />pendente</p>
               </span>
-              <span data-id="AWAITING_SENT" id="await-send">
+              <span data-id="AWAITING_SENT" id="await-sent">
+                <div class="order-quantity"></div>
                 <i class="ti ti-package-export"></i>
                 <p>Aguardando<br />envio</p>
               </span>
               <span data-id="ORDER_DISPATCHED" id="sent-product">
+                <div class="order-quantity"></div>
                 <i class="ti ti-truck-delivery"></i>
                 <p>Produto<br />enviado</p>
               </span>
-              <span data-id="VALUATE_PRODUCT" id="assessment">
+              <span data-id="EVALUATE_PRODUCT" id="assessment">
+                <div class="order-quantity"></div>
                 <i class="ti ti-message-2-check"></i>
                 <p>Avaliar</p>
               </span>
@@ -195,14 +198,91 @@
           </div>
         </div>
 
-        <div id="order-pending-payment" class="tab-content">
+        <div
+          id="order-pending-payment"
+          class="tab-content order-page"
+          data-id="AWAITING_PAYMENT"
+        >
           <header>
             <i class="ph-bold ph-arrow-left" id="back-to"></i>
             <p>Pagamento pendente</p>
           </header>
 
           <div class="orders">
-            <ul></ul>
+            <ul>
+              <li class="dont-have-orders">
+                <span>
+                  <i class="ph-fill ph-smiley-sad"></i>
+                  <p>Você ainda não tem pedidos</p>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          id="order-awaiting-sent"
+          class="tab-content order-page"
+          data-id="AWAITING_SENT"
+        >
+          <header>
+            <i class="ph-bold ph-arrow-left" id="back-to"></i>
+            <p>Preparando envio</p>
+          </header>
+
+          <div class="orders">
+            <ul>
+              <li class="dont-have-orders">
+                <span>
+                  <i class="ph-fill ph-smiley-sad"></i>
+                  <p>Você ainda não tem pedidos</p>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          id="order-dispatched"
+          class="tab-content order-page"
+          data-id="ORDER_DISPATCHED"
+        >
+          <header>
+            <i class="ph-bold ph-arrow-left" id="back-to"></i>
+            <p>Pedido enviado</p>
+          </header>
+
+          <div class="orders">
+            <ul>
+              <li class="dont-have-orders">
+                <span>
+                  <i class="ph-fill ph-smiley-sad"></i>
+                  <p>Você ainda não tem pedidos</p>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          id="order-evaluate-product"
+          class="tab-content order-page"
+          data-id="EVALUATE_PRODUCT"
+        >
+          <header>
+            <i class="ph-bold ph-arrow-left" id="back-to"></i>
+            <p>Avaliar</p>
+          </header>
+
+          <div class="orders">
+            <ul>
+              <li class="dont-have-orders">
+                <span>
+                  <i class="ph-fill ph-smiley-sad"></i>
+                  <p>Você ainda não tem pedidos</p>
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
 

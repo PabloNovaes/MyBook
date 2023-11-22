@@ -59,7 +59,7 @@ export async function setData() {
 
   const data = await bagClass.loadItens();
 
-  if (data.products.length <= 0) return false;
+  if (!data.products) return false;
 
   return data.products.map((book) => {
     const item = createElement(book);

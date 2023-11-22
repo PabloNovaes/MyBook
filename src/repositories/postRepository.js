@@ -32,9 +32,6 @@ export class PostRepository {
         include: {
           User: true,
         },
-        orderBy: {
-          created_at: "desc",
-        },
       });
       return posts;
     } catch (error) {

@@ -12,13 +12,16 @@ export class Checkout {
       const { url } = data;
       return (window.location.href = url);
     } catch (err) {
-      return err;
+      throw new Error(err);
     }
   }
 
-  async setTokenToProducts(products) {
+  async setTokenToProducts({ products, paymentMethod }) {
     try {
-      const response = await axios.post("/checkout-token", { products });
+      const response = await axios.post("/checkout-token", {
+        paymentMethod,
+        products,
+      });
       const data = await response.data;
       return data;
     } catch (error) {

@@ -163,8 +163,8 @@ swiper-slide {
     font-weight: 500;
     font-size: 1.3rem;
     align-self: flex-start;
-    display: -webkit-box;
     overflow-y: hidden;
+    display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }

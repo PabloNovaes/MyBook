@@ -15,8 +15,13 @@ import {
 } from "./orders.js";
 import { pageLoader } from "../../../components/pageLoader/index.js";
 
-const awaitPaymentOrderBtn = document.querySelector("#pending-payment");
-const ordersControll = document.querySelectorAll("#track-purchase nav span")
+//order navigation buttons
+const awaitPaymentOrderPageBtn = document.querySelector("#pending-payment");
+const evaluateProductPageBtn = document.querySelector("span#assessment");
+const awaitSentOrderPageBtn = document.querySelector("#await-sent");
+const sentProductPageBtn = document.querySelector("#sent-product");
+
+const ordersControll = document.querySelectorAll("#track-purchase nav span");
 const tabsBtn = document.querySelectorAll("#navigation p");
 const openAccountAdresses = document.querySelector("#adress-tab");
 const editAccountDataBtn = document.querySelector("#edit-data");
@@ -137,8 +142,36 @@ settingsBtn.addEventListener("click", () => {
   });
 });
 
-awaitPaymentOrderBtn.addEventListener("click", () => {
+awaitSentOrderPageBtn.addEventListener("click", () => {
+  const page = openTab(event, "order-awaiting-sent");
+  const backBtn = document.querySelector(`#${page}`).querySelector("#back-to");
+
+  backBtn.addEventListener("click", () => {
+    openTab(event, "account");
+  });
+});
+
+awaitPaymentOrderPageBtn.addEventListener("click", () => {
   const page = openTab(event, "order-pending-payment");
+  const backBtn = document.querySelector(`#${page}`).querySelector("#back-to");
+
+  backBtn.addEventListener("click", () => {
+    openTab(event, "account");
+  });
+});
+
+sentProductPageBtn.addEventListener("click", () => {
+  const page = openTab(event, "order-dispatched");
+  const backBtn = document.querySelector(`#${page}`).querySelector("#back-to");
+
+  backBtn.addEventListener("click", () => {
+    openTab(event, "account");
+  });
+});
+
+evaluateProductPageBtn.addEventListener("click", () => {
+  console.log("oi");
+  const page = openTab(event, "order-evaluate-product");
   const backBtn = document.querySelector(`#${page}`).querySelector("#back-to");
 
   backBtn.addEventListener("click", () => {
@@ -206,19 +239,28 @@ hideImgOptions.addEventListener("click", viewOrHideOptions);
 
 async function loadOrders() {
   const orders = await getOrders();
+
+  if (!orders) return;
+
+  localStorage.setItem("orders", JSON.stringify(orders));
   setOrdersQuantityPerStatus(orders, ordersControll);
+
   orders.forEach((order) => {
-    return renderOrders(order);
+    try {
+      renderOrders(order);
+    } catch (error) {
+      console.log(error);
+    }
   });
 }
 
 try {
   await Promise.allSettled([
-    getPostsByUser(),
     renderUserData(),
-    adress.getAdress(renderAdresses),
     loadOrders(),
+    getPostsByUser(),
+    adress.getAdress(renderAdresses),
   ]);
 } catch (err) {
-  error(`Ocorreu um erro inesperado! ${err}`);
+  throw new Error(err);
 }

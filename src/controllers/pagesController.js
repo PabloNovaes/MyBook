@@ -29,7 +29,4 @@ export class PagesController {
   async userProfile(req, res) {
     res.render("pages/userProfile/index");
   }
-  async orderTest(req, res) {
-    res.render("pages/ordertest/index");
-  }
 }
