@@ -13,6 +13,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 <b><p> Express</p></b>
 <b><p> JavaScript</p></b>
 <b><p> Prisma</p></b>
+<b><p> Stripe</p></b>
 <b><p> PostgreSQL</p></b>
 <b><p> Neon</p></b>
 <b><p> Firebase</p></b>
