@@ -79,14 +79,13 @@ export class CheckoutController {
 
   async updateOrderStatus(req, res) {
     const signature = req.headers["stripe-signature"];
-    // const rawBody = await getRawBody(req);
-    
+    const rawBody = await getRawBody(req);
     if (!signature) {
       return res.status(400).end();
     }
 
     const hooKey = process.env.STRIPE_WEBHOOK_KEY;
-    const event = stripe.webhooks.constructEvent(req.body, signature, hooKey);
+    const event = stripe.webhooks.constructEvent(rawBody, signature, hooKey);
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
