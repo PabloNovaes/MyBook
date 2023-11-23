@@ -28,11 +28,7 @@ const app = express();
 app.use(timeout(20000));
 
 //webhook-route
-app.post(
-  "/checkout-succeded",
-  express.raw({ type: "application/json" }),
-  checkoutController.updateOrderStatus
-);
+app.post("/checkout-succeded", checkoutController.updateOrderStatus);
 
 app.use(express.json());
 app.use(cookieParser());
