@@ -93,7 +93,7 @@ export class CheckoutController {
       const userId = session["metadata"]["userId"];
       const productsId = JSON.parse(session["metadata"]["productsId"]);
 
-      await Promise.all([
+      await Promise.allSettled([
         checkoutRepository.updateOrderStatus(orderId),
         checkoutRepository.removeItensToBag(productsId, userId),
       ]);
