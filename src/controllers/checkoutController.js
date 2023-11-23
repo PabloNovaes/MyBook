@@ -80,8 +80,13 @@ export class CheckoutController {
   async updateOrderStatus(req, res) {
     const signature = req.headers["stripe-signature"];
     const rawBody = await getRawBody(req);
+    
     if (!signature) {
       return res.status(400).end();
+    }
+
+    if(!rawBody){
+      return res.status(200).json(rawBody)
     }
 
     const hooKey = process.env.STRIPE_WEBHOOK_KEY;
