@@ -17,6 +17,8 @@ export class BagRepository {
       return insertItem;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -29,9 +31,11 @@ export class BagRepository {
         },
       });
 
-      return removedItem
+      return removedItem;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -49,6 +53,8 @@ export class BagRepository {
       return userProductsBag;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

@@ -11,6 +11,8 @@ export class AccountRepository {
       return user;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

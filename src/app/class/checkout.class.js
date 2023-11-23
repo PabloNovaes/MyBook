@@ -16,11 +16,12 @@ export class Checkout {
     }
   }
 
-  async setTokenToProducts({ products, paymentMethod }) {
+  async setTokenToProducts({ products, paymentMethod, id }) {
     try {
       const response = await axios.post("/checkout-token", {
         paymentMethod,
         products,
+        orderId: id,
       });
       const data = await response.data;
       return data;

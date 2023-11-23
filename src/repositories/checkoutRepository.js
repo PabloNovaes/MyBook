@@ -30,6 +30,28 @@ export class CheckoutRepository {
       return data;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
+
+  async updateOrderStatus(orderId) {
+    try {
+      const status = "AWAITING_SENT";
+      const order = await prisma.order.update({
+        where: {
+          id: orderId,
+        },
+        data: {
+          status,
+        },
+      });
+
+      return order;
+    } catch (error) {
+      return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

@@ -34,6 +34,8 @@ export class ProductRepository {
       return { total, products, totalPages };
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -45,9 +47,11 @@ export class ProductRepository {
         },
       });
 
-      return product
+      return product;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

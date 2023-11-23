@@ -8,7 +8,6 @@ export async function creatOrder(paymentMethod, products, adressId) {
     return create;
   } catch (error) {
     return error;
-  } finally {
   }
 }
 

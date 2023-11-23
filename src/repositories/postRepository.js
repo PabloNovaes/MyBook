@@ -20,6 +20,8 @@ export class PostRepository {
       return newPost;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -36,6 +38,8 @@ export class PostRepository {
       return posts;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 

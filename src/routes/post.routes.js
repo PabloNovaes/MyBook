@@ -1,6 +1,6 @@
-import { Router } from "express";
 import { PostController } from "../controllers/postController.js";
 import verifyToken from "../utils/middleware/verifyToken.js";
+import { Router } from "express";
 
 const postController = new PostController();
 const postRoutes = Router();

@@ -4,7 +4,6 @@ export class OrderRepostitory {
   async createOrder(data, userId) {
     try {
       const status = "AWAITING_PAYMENT";
-      console.log(data);
       const { products, paymentMethod, adressId } = data;
 
       const order = await prisma.order.create({
@@ -30,8 +29,9 @@ export class OrderRepostitory {
 
       return orderProducts;
     } catch (error) {
-      console.log(error);
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -71,6 +71,8 @@ export class OrderRepostitory {
       return orders;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

@@ -170,7 +170,6 @@ sentProductPageBtn.addEventListener("click", () => {
 });
 
 evaluateProductPageBtn.addEventListener("click", () => {
-  console.log("oi");
   const page = openTab(event, "order-evaluate-product");
   const backBtn = document.querySelector(`#${page}`).querySelector("#back-to");
 
@@ -249,7 +248,7 @@ async function loadOrders() {
     try {
       renderOrders(order);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   });
 }

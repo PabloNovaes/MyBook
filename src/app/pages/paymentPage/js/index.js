@@ -91,13 +91,13 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 makeOrder.addEventListener("click", async () => {
-  pageLoader.startLoader();
-  const paymentMethods = {
-    boleto: "boleto",
-    card: "card",
-  };
-
   try {
+    pageLoader.startLoader();
+    const paymentMethods = {
+      boleto: "boleto",
+      card: "card",
+    };
+
     if (selectPaymentMethod.getAttribute("method") == "unselected") return;
 
     const methodType = selectPaymentMethod.getAttribute("method");
@@ -107,7 +107,8 @@ makeOrder.addEventListener("click", async () => {
     const products = JSON.parse(localStorage.getItem("Products"));
 
     const execute = await creatOrder(method, products, adressId);
-    return success("Pedido relizado com sucesso!");
+    success("Pedido relizado com sucesso!");
+    return window.location.href = "/profile"
   } catch (err) {
     return error(`Ocorreu um erro inesperado! ${err}`);
   } finally {

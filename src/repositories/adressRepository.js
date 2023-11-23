@@ -17,23 +17,31 @@ export class AdressRepository {
       return createAdress;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
   async getAll(userId) {
-    const adressesId = await prisma.adress_per_user.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        Adress: true,
-      },
-    });
+    try {
+      const adressesId = await prisma.adress_per_user.findMany({
+        where: {
+          userId,
+        },
+        include: {
+          Adress: true,
+        },
+      });
 
-    const adresses = adressesId.map((item) => {
-      return item.Adress;
-    });
+      const adresses = adressesId.map((item) => {
+        return item.Adress;
+      });
 
-    return adresses;
+      return adresses;
+    } catch (error) {
+      return error;
+    } finally {
+      await prisma.$disconnect();
+    }
   }
 }

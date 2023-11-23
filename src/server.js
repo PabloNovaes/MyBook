@@ -4,13 +4,15 @@ import timeout from "connect-timeout";
 import express from "express";
 import cors from "cors";
 import path from "path";
+import { CheckoutController } from "./controllers/checkoutController.js";
+
+const checkoutController = new CheckoutController();
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const TIMEOUT = 300000;
 const app = express();
 
 // const allowOnlyHost = (req, res, next) => {
@@ -23,12 +25,17 @@ const app = express();
 // };
 
 // app.use(allowOnlyHost);
-app.use(timeout(TIMEOUT));
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(timeout(20000));
 
+//webhook-route
+app.post(
+  "/checkout-succeded",
+  express.raw({ type: "application/json" }),
+  checkoutController.updateOrderStatus
+);
+
+app.use(express.json());
 app.use(cookieParser());
-
 app.use(routes);
 app.use(cors());
 

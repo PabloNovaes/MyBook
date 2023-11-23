@@ -7,6 +7,8 @@ export class UserRepository {
       return newUser;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -20,6 +22,8 @@ export class UserRepository {
       return user;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -37,6 +41,8 @@ export class UserRepository {
       return setImg;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -53,6 +59,8 @@ export class UserRepository {
       return user;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -71,9 +79,11 @@ export class UserRepository {
         },
       });
 
-      return updatedData
+      return updatedData;
     } catch (error) {
       return error;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

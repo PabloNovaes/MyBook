@@ -28,7 +28,7 @@ const getVisitedUserId = () => {
   return id;
 };
 
-async function renderPost(post, user) {
+function renderPost(post, user) {
   const postsLocation = document.querySelector("#posts-list");
   const { created_at, description, image_url } = post;
   const { name, avatar_url } = user;
@@ -79,13 +79,13 @@ async function getData() {
   const { avatar_url, name, nickname } = userData;
 
   userName = document.querySelector("#name").innerText = name;
-  nickName = document.querySelector("#user-name").innerText = nickname
+  nickName = document.querySelector("#user-name").innerText = nickname;
   userImg = document.querySelector("#user-img").src = avatar_url;
   postQuantity = document.querySelector("#post-quantity p").innerText =
     posts.length;
 
-  posts.forEach(async (post) => {
-    await renderPost(post, userData);
+  posts.forEach((post) => {
+    renderPost(post, userData);
     pageLoader.stopLoader();
   });
 }
@@ -145,4 +145,5 @@ img.addEventListener("click", viewOrHideOptions);
 viewProfileImage.addEventListener("click", () => {
   viewImageProfileModal(img.src);
 });
+
 getData();

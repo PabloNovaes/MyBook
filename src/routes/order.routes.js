@@ -1,6 +1,6 @@
-import { Router } from "express";
 import { OrderController } from "../controllers/orderController.js";
 import verifyToken from "../utils/middleware/verifyToken.js";
+import { Router } from "express";
 
 const orderController = new OrderController();
 const orderRoutes = Router();

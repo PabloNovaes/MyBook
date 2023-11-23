@@ -56,12 +56,12 @@ async function recommendBooks(category) {
   });
 }
 
-const getData = async () => {
+async function getData() {
   const id = getProductId();
   const response = await axios.get(`/products/id=${id}`);
   const data = await response.data;
   return data;
-};
+}
 
 export async function loadProduct() {
   try {

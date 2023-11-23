@@ -1,6 +1,6 @@
-import { Router } from "express";
 import { AdressesController } from "../controllers/adressesController.js";
 import verifyToken from "../utils/middleware/verifyToken.js";
+import { Router } from "express";
 
 const adressController = new AdressesController();
 const adressRoutes = Router();
