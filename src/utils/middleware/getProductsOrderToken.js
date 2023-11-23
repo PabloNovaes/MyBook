@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dayjs from "dayjs";
 
 export default function tokenProducts(req, res, next) {
-  const token = req.cookies.Products;
+  const token = req.cookies.Order_token;
   if (!token) {
     return res.status(200).end();
   }
@@ -16,7 +16,7 @@ export default function tokenProducts(req, res, next) {
     const testDate = tokenExpiresIn < unixCurrentDate;
 
     if (!testDate) {
-      req.products = decode;
+      req.order = decode;
       next();
     }
   });

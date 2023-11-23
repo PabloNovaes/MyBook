@@ -15,6 +15,7 @@ export class CheckoutRepository {
             name: true,
             image: true,
             price: true,
+            id: true,
           },
         });
 
@@ -22,6 +23,7 @@ export class CheckoutRepository {
           name: productData.name,
           image: productData.image,
           price: productData.price,
+          id: productData.id,
           quantity,
         };
 
@@ -52,6 +54,26 @@ export class CheckoutRepository {
       return error;
     } finally {
       await prisma.$disconnect();
+    }
+  }
+
+  async removeItensToBag(products, userId) {
+    try {
+      const data = [];
+
+      for (const productId of products) {
+        const removedProduct = await prisma.productBag.deleteMany({
+          where: {
+            productId,
+            userId,
+          },
+        });
+
+        data.push(removedProduct);
+      }
+      return data;
+    } catch (error) {
+      return error;
     }
   }
 }

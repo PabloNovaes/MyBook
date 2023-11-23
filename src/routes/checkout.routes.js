@@ -12,12 +12,6 @@ checkoutRoutes.post(
   checkoutController.setProductsToken
 );
 
-// checkoutRoutes.post(
-//   "",
-
-//   checkoutController.updateOrderStatus
-// );
-
 checkoutRoutes.get(
   "/init-checkout",
   verifyToken,

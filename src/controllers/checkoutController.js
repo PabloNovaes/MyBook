@@ -13,6 +13,7 @@ export class CheckoutController {
   async setProductsToken(req, res) {
     try {
       const { products, paymentMethod, orderId } = req.body;
+      const { sub } = req.user;
       const orderProducts = await checkoutRepository.loadCheckoutProducts(
         products
       );
@@ -20,11 +21,12 @@ export class CheckoutController {
       const token = await jwtGenerate.paymentOrderToken(
         orderProducts,
         paymentMethod,
-        orderId
+        orderId,
+        sub
       );
 
       res
-        .cookie("Products", token, { maxAge: 60000 })
+        .cookie("Order_token", token, { maxAge: 60000 })
         .status(201)
         .json({ created: true });
     } catch (error) {
@@ -34,18 +36,22 @@ export class CheckoutController {
 
   async initSession(req, res) {
     try {
-      const { products, method, orderId } = req.products;
+      const { products, method, orderId, userId } = req.order;
 
       const checkout = await stripe.checkout.sessions.create({
         payment_method_types: [method],
         metadata: {
-          order_id: orderId,
+          orderId,
+          userId,
+          productsId: JSON.stringify(
+            products.map((product) => {
+              return product.id;
+            })
+          ),
         },
         mode: "payment",
-        success_url:
-          "https://b1c4-2804-388-c2ac-c683-472-3697-43c9-9f35.ngrok-free.app/profile",
-        cancel_url:
-          "https://b1c4-2804-388-c2ac-c683-472-3697-43c9-9f35.ngrok-free.app/profile",
+        success_url: "http://192.168.0.174:5500/profile",
+        cancel_url: "http://192.168.0.174:5500/profile",
         line_items: products.map((product) => {
           const { price, quantity, name, image } = product;
           return {
@@ -64,12 +70,12 @@ export class CheckoutController {
 
       res.status(201).json(checkout);
     } catch (error) {
+      console.log(error);
       res.status(400).json({ message: "Ocorreu um erro inesperado" });
     }
   }
 
   async updateOrderStatus(req, res) {
-    let orderId;
     const signature = req.headers["stripe-signature"];
 
     if (!signature) {
@@ -79,11 +85,18 @@ export class CheckoutController {
     const hooKey = process.env.STRIPE_WEBHOOK_KEY;
     const event = stripe.webhooks.constructEvent(req.body, signature, hooKey);
 
-    console.log(event);
-
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      orderId = session["metadata"].order_id;
+      const orderId = session["metadata"]["orderId"];
+      const userId = session["metadata"]["userId"];
+      const productsId = JSON.parse(session["metadata"]["productsId"]);
+
+      const [order, products] = await Promise.all([
+        checkoutRepository.updateOrderStatus(orderId),
+        checkoutRepository.removeItensToBag(productsId, userId),
+      ]);
+
+      console.log(order, products);
     }
 
     res.json({ received: true });

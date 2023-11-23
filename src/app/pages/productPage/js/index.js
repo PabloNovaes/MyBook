@@ -1,4 +1,4 @@
-import { setData } from "../../../components/shoppingBag/script.js";
+import { listBagItens } from "../../../components/shoppingBag/script.js";
 import { error, success } from "../../../sweetAlert/sweet.js";
 import { getProductId, loadProduct } from "./api.js";
 import { ShoppingBag } from "../../../class/bag.class.js";
@@ -8,7 +8,7 @@ const viewAll = document.querySelector("#show-all-comments");
 const bagBtn = document.querySelector("button#bag-btn");
 const header = document.querySelector("#main-header");
 
-loadProduct();
+await Promise.all([listBagItens(), loadProduct()]);
 
 window.addEventListener("scroll", () => {
   if (window.scrollY > 10) {
@@ -50,7 +50,7 @@ bagBtn.addEventListener("click", async () => {
 
     if (message) return error(message);
 
-    await setData();
+    await listBagItens();
     return success("Produto adicionado ao carrinho");
   } catch (err) {
     return error("Ocorreu um erro inesperado!");

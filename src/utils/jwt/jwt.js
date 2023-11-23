@@ -22,13 +22,14 @@ export class JWTGenerate {
     }
   }
 
-  async paymentOrderToken(products, method, orderId) {
+  async paymentOrderToken(products, method, orderId, userId) {
     try {
       const token = jwt.sign(
         {
           orderId,
           products,
           method,
+          userId,
         },
         process.env.SECRET_KEY,
         {

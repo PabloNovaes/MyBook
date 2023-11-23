@@ -6,6 +6,7 @@ const continueBtn = document.querySelector("#init-order-btn");
 const purchaseValue = document.querySelector("#price");
 const bag = document.querySelector("#shopping-bag");
 
+let allCheckbox;
 let products = [];
 let finalValue;
 
@@ -85,13 +86,40 @@ export async function setData() {
   });
 }
 
-const listBagItens = async () => {
+export const listBagItens = async () => {
   const itens = await setData();
-  if (!itens) return;
-  return itens.map((li) => li.querySelector(".book-info .checked"));
-};
 
-let allCheckbox = await listBagItens();
+  if (!itens) return;
+
+  allCheckbox = itens.map((li) => li.querySelector(".book-info .checked"));
+
+  allCheckbox?.forEach((checkbox) => {
+    checkbox.addEventListener("click", (e) => {
+      const allIsChecked = allCheckbox.every((btn) => btn.checked == true);
+      updatePurchaseValue.addOrRemoveItem(e.target);
+      if (allIsChecked) {
+        return (selectAll.checked = true);
+      } else {
+        return (selectAll.checked = false);
+      }
+    });
+  });
+
+  selectAll.addEventListener("click", (e) => {
+    const state = e.target.checked;
+    allCheckbox.forEach((btn) => {
+      if (btn.checked != state) {
+        btn.checked = state;
+        updatePurchaseValue.addOrRemoveItem(btn);
+      }
+      if (!state) {
+        e.target.checked = state;
+        updatePurchaseValue.addOrRemoveItem(btn);
+        return;
+      }
+    });
+  });
+};
 
 const updatePurchaseValue = {
   add(newItem) {
@@ -99,6 +127,7 @@ const updatePurchaseValue = {
     finalValue = products.reduce((accum, item) => accum + item.finalPrice, 0);
     this.setPurchaseValue();
   },
+
   remove(product) {
     const price = product.finalPrice;
     finalValue -= price;
@@ -107,6 +136,7 @@ const updatePurchaseValue = {
     });
     return this.setPurchaseValue();
   },
+
   setPurchaseValue() {
     if (products.length <= 0) {
       finalValue = 0;
@@ -117,6 +147,7 @@ const updatePurchaseValue = {
     });
     purchaseValue.textContent = price;
   },
+
   addOrRemoveItem(element) {
     let price = element.parentElement.querySelector(".price").textContent;
     price = parseFloat(price.replace("R$", "").replace(",", "."));
@@ -185,36 +216,13 @@ const quantityProductControlls = {
   },
 };
 
-allCheckbox?.forEach((checkbox) => {
-  checkbox.addEventListener("click", (e) => {
-    const allIsChecked = allCheckbox.every((btn) => btn.checked == true);
-    updatePurchaseValue.addOrRemoveItem(e.target);
-    if (allIsChecked) {
-      return (selectAll.checked = true);
-    } else {
-      return (selectAll.checked = false);
-    }
-  });
-});
-
-selectAll.addEventListener("click", (e) => {
-  const state = e.target.checked;
-  allCheckbox.forEach((btn) => {
-    if (btn.checked != state) {
-      btn.checked = state;
-      updatePurchaseValue.addOrRemoveItem(btn);
-    }
-  });
-  if (!state) {
-    btn.checked = state;
-    updatePurchaseValue.addOrRemoveItem(btn);
-    return;
-  }
-});
-
 continueBtn.addEventListener("click", () => {
   localStorage.setItem("Products", JSON.stringify(products));
   window.location.href = "/payment";
 });
 
 closeBagBtn.addEventListener("click", openAndCloseBag);
+
+if (!window.location.href.includes("/product")) {
+  await listBagItens();
+}
