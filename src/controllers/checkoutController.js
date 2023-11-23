@@ -50,8 +50,8 @@ export class CheckoutController {
           ),
         },
         mode: "payment",
-        success_url: "http://192.168.0.174:5500/profile",
-        cancel_url: "http://192.168.0.174:5500/profile",
+        success_url: "https://my-book-ten.vercel.app/profile",
+        cancel_url: "https://my-book-ten.vercel.app/profile",
         line_items: products.map((product) => {
           const { price, quantity, name, image } = product;
           return {
