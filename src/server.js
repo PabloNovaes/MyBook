@@ -30,7 +30,8 @@ app.use(timeout(20000));
 //webhook-route
 app.post("/checkout-succeded", checkoutController.updateOrderStatus);
 
-app.use(express.json());
+app.use(express.json({ limit: "20mb" }));
+app.use(express.urlencoded({ limit: "20mb", extended: true }));
 app.use(cookieParser());
 app.use(routes);
 app.use(cors());
