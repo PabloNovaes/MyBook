@@ -27,6 +27,8 @@ const app = express();
 // app.use(allowOnlyHost);
 app.use(timeout(20000));
 
+app.use(express.urlencoded({ limit: "20mb", extended: true }));
+app.use(express.json({ limit: "20mb" }));
 //webhook-route
 app.post(
   "/checkout-succeded",
@@ -34,8 +36,6 @@ app.post(
   checkoutController.updateOrderStatus
 );
 
-app.use(express.urlencoded({ limit: "20mb", extended: true }));
-app.use(express.json({ limit: "20mb" }));
 app.use(cookieParser());
 app.use(routes);
 app.use(cors());
