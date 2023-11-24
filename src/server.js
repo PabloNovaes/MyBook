@@ -15,18 +15,24 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
 
+// Configuração de timeout para todas as solicitações
 app.use(timeout(20000));
+
+// Middleware para verificar se é a rota "/checkout-succeded" e aplicar json parsing apenas para essa rota
 app.use((req, res, next) => {
   if (req.originalUrl === "/checkout-succeded") {
-    next();
-  } else {
-    express.json({ limit: "20mb" })(req, res, next);
+    return checkoutController.updateOrderStatus(req, res, next);
   }
+  express.json({ limit: "20mb" })(req, res, next);
 });
 
-//webhook-route
-app.post("/checkout-succeded", checkoutController.updateOrderStatus);
+// Rota do webhook
+app.post("/checkout-succeded", (req, res) => {
+  // Aqui você pode adicionar lógica adicional, se necessário
+  res.sendStatus(200);
+});
 
+// Restante do middleware e configurações
 app.use(express.urlencoded({ limit: "20mb", extended: true }));
 app.use(cookieParser());
 app.use(routes);
