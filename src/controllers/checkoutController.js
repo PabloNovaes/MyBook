@@ -83,12 +83,6 @@ export class CheckoutController {
       return res.status(400).end();
     }
 
-    // const body = await getRawBody(req.body);
-
-    if (!body) {
-      return res.status(200).json("erro");
-    }
-
     const hooKey = process.env.STRIPE_WEBHOOK_KEY;
     const event = stripe.webhooks.constructEvent(req.rawbody, signature, hooKey);
 

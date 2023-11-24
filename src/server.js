@@ -27,6 +27,9 @@ const app = express();
 // app.use(allowOnlyHost);
 app.use(timeout(20000));
 
+//webhook-route
+app.post("/checkout-succeded", express.raw({type: "application/json"}),checkoutController.updateOrderStatus);
+
 app.use(
   express.json({
     verify: (req, res, buf) => {
