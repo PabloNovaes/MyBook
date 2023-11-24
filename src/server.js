@@ -1,5 +1,6 @@
 import cookieParser from "cookie-parser";
 import routes from "./routes/index.js";
+import timeout from "connect-timeout";
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -14,24 +15,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
 
-// Remova o middleware global de timeout
+app.use(express.urlencoded({ limit: "20mb", extended: true }));
+app.use(express.json({ limit: "20mb" }));
 
-// Middleware para verificar se é a rota "/checkout-succeded" e aplicar json parsing apenas para essa rota
-app.use(
+//webhook-route
+app.post(
   "/checkout-succeded",
-  express.json({ limit: "20mb" }),
-  (req, res, next) => {
-    checkoutController.updateOrderStatus(req, res, next);
-  }
+  express.raw({ type: "application/json" }),
+  checkoutController.updateOrderStatus
 );
 
-// Rota do webhook
-app.post("/checkout-succeded", checkoutController.updateOrderStatus);
-
-// Restante do middleware e configurações
-app.use(express.urlencoded({ limit: "20mb", extended: true }));
 app.use(cookieParser());
+app.use(routes);
 app.use(cors());
+
 app.use(express.static(path.join(__dirname, "app")));
 app.set("views", path.join(__dirname, "app"));
 app.set("view engine", "ejs");
