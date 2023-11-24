@@ -1,6 +1,6 @@
 import cookieParser from "cookie-parser";
 import routes from "./routes/index.js";
-import timeout from "connect-timeout";
+import getRawBody from "raw-body";
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -20,12 +20,30 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
+//webhook-middleware
+
+app.use("/checkout-succeded", (req, res, next) => {
+  getRawBody(
+    req,
+    {
+      length: req.headers["content-length"],
+      limit: "1mb", // Defina um limite se necessário
+      encoding: "utf-8", // Especifique a codificação, se aplicável
+    },
+    (err, string) => {
+      if (err) return next(err);
+
+      // O corpo bruto está disponível em `string`
+      req.bodyRaw = string;
+
+      // Continue o fluxo normal do middleware
+      next();
+    }
+  );
+});
+
 //webhook-route
-app.post(
-  "/checkout-succeded",
-  express.raw({ type: "application/json" }),
-  checkoutController.updateOrderStatus
-);
+app.post("/checkout-succeded", checkoutController.updateOrderStatus);
 app.use(routes);
 
 app.use(express.static(path.join(__dirname, "app")));

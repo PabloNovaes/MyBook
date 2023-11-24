@@ -79,18 +79,14 @@ export class CheckoutController {
   async updateOrderStatus(req, res) {
     try {
       const signature = req.headers["stripe-signature"];
-      const body = req.body;
+      const body = req.rawBody;
 
       if (!signature) {
         return res.status(400).end();
       }
 
       const hookKey = process.env.STRIPE_WEBHOOK_KEY;
-      const event = stripe.webhooks.constructEvent(
-        body,
-        signature,
-        hookKey
-      );
+      const event = stripe.webhooks.constructEvent(body, signature, hookKey);
 
       if (event.type === "checkout.session.completed") {
         const session = event.data.object;
@@ -102,10 +98,10 @@ export class CheckoutController {
           await checkoutRepository.updateOrderStatus(orderId),
           await checkoutRepository.removeItensToBag(productsId, userId),
         ]);
-        res.json({ received: true, body: req.body });
+        res.status(200).json({ received: true });
       }
     } catch (error) {
-      res.status(401).json({ body: req.body });
+      res.status(401).send({ body: req.body });
     }
   }
 }
