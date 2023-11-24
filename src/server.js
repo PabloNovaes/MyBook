@@ -18,9 +18,6 @@ app.use(cookieParser());
 app.use(cors());
 
 //webhook-route
-app.use("/checkout-succeded", express.raw({ type: "application/json" }));
-
-app.post("/checkout-succeded", checkoutController.updateOrderStatus);
 
 app.use(routes);
 
