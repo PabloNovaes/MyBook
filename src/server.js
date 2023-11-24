@@ -34,9 +34,6 @@ app.post(
   "/checkout-succeded",
   express.raw({
     type: "application/json",
-    verify: (req, res, buf) => {
-      req.rawBody = buf.toString(); // Converte o buffer para uma string
-    },
   }),
   checkoutController.updateOrderStatus
 );
