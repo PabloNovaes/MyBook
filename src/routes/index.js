@@ -8,19 +8,17 @@ import postRoutes from "./post.routes.js";
 import userRoutes from "./user.routes.js";
 import bagRoutes from "./bag.routes.js";
 
-import express from "express";
 import { Router } from "express";
-
 const routes = Router();
 
 routes.use(checkoutRoutes);
-routes.use(productRoutes, express.json());
-routes.use(accountRoutes, express.json());
-routes.use(adressRoutes, express.json());
-routes.use(orderRoutes, express.json());
-routes.use(postRoutes, express.json());
-routes.use(userRoutes, express.json());
-routes.use(pageRoutes, express.json());
-routes.use(bagRoutes, express.json());
+routes.use(productRoutes);
+routes.use(accountRoutes);
+routes.use(adressRoutes);
+routes.use(orderRoutes);
+routes.use(postRoutes);
+routes.use(userRoutes);
+routes.use(pageRoutes);
+routes.use(bagRoutes);
 
 export default routes;
