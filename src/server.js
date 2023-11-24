@@ -21,25 +21,26 @@ app.use(cookieParser());
 app.use(cors());
 
 //webhook-middleware
+app.use("/checkout-succeded", async (req, res, next) => {
+  try {
+    if (
+      req.method === "POST" &&
+      req.headers["content-type"] === "application/json"
+    ) {
+      req.bodyRaw = await getRawBody(req, {
+        length: req.headers["content-length"],
+        limit: "1mb",
+        encoding: "utf-8",
+      });
 
-app.use("/checkout-succeded", (req, res, next) => {
-  getRawBody(
-    req,
-    {
-      length: req.headers["content-length"],
-      limit: "1mb", // Defina um limite se necessário
-      encoding: "utf-8", // Especifique a codificação, se aplicável
-    },
-    (err, string) => {
-      if (err) return next(err);
-
-      // O corpo bruto está disponível em `string`
-      req.bodyRaw = string;
-
-      // Continue o fluxo normal do middleware
+      next();
+    } else {
       next();
     }
-  );
+  } catch (error) {
+    console.error(error);
+    res.status(500).end();
+  }
 });
 
 //webhook-route
