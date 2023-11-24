@@ -20,7 +20,7 @@ app.use(cors());
 //webhook-route
 app.post(
   "/checkout-succeded",
-  express.raw(),
+  express.raw({ type: "application/json" }),
   checkoutController.updateOrderStatus
 );
 
