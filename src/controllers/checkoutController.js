@@ -78,14 +78,14 @@ export class CheckoutController {
 
   async updateOrderStatus(req, res) {
     const signature = req.headers["stripe-signature"];
-    const body = req.body
-    
+    const body = req.body;
+
     if (!signature) {
       return res.status(400).end();
     }
 
-    if(!body){
-      return res.status(200).json(body)
+    if (!body) {
+      return res.status(200).json(body);
     }
 
     const hooKey = process.env.STRIPE_WEBHOOK_KEY;
@@ -97,8 +97,10 @@ export class CheckoutController {
       const userId = session["metadata"]["userId"];
       const productsId = JSON.parse(session["metadata"]["productsId"]);
 
-      await checkoutRepository.updateOrderStatus(orderId)
-      await checkoutRepository.removeItensToBag(productsId, userId)
+      Promise.allSettled([
+        await checkoutRepository.updateOrderStatus(orderId),
+        await checkoutRepository.removeItensToBag(productsId, userId),
+      ]);
     }
 
     res.json({ received: true });
