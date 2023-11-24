@@ -16,7 +16,7 @@ checkoutRoutes.post(
 
 checkoutRoutes.post(
   "/checkout-succeded",
-  express.raw({ type: "application/json" }),
+  express.text({ type: "*/*" }),
   checkoutController.updateOrderStatus
 );
 
