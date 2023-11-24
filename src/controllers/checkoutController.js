@@ -90,7 +90,7 @@ export class CheckoutController {
     }
 
     const hooKey = process.env.STRIPE_WEBHOOK_KEY;
-    const event = stripe.webhooks.constructEvent(req.body, signature, hooKey);
+    const event = stripe.webhooks.constructEvent(req.rawbody, signature, hooKey);
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
