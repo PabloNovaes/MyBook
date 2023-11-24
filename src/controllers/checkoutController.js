@@ -83,7 +83,7 @@ export class CheckoutController {
       return res.status(400).end();
     }
 
-    const body = await getRawBody(req.body);
+    // const body = await getRawBody(req.body);
 
     if (!body) {
       return res.status(200).json("erro");
