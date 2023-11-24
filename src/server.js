@@ -31,6 +31,7 @@ app.use(express.json({ limit: "20mb" }));
 //webhook-route
 app.post(
   "/checkout-succeded",
+  express.raw({ type: "application/json" }),
   checkoutController.updateOrderStatus
 );
 

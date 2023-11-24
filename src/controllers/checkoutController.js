@@ -1,6 +1,5 @@
 import { CheckoutRepository } from "../repositories/checkoutRepository.js";
 import { JWTGenerate } from "../utils/jwt/jwt.js";
-import getRawBody from "raw-body";
 
 import Stripe from "stripe";
 
@@ -79,18 +78,18 @@ export class CheckoutController {
 
   async updateOrderStatus(req, res) {
     const signature = req.headers["stripe-signature"];
-    const rawBody = await getRawBody(req);
+    const body = req.body
     
     if (!signature) {
       return res.status(400).end();
     }
 
-    if(!rawBody){
-      return res.status(200).json(rawBody)
+    if(!body){
+      return res.status(200).json(body)
     }
 
     const hooKey = process.env.STRIPE_WEBHOOK_KEY;
-    const event = stripe.webhooks.constructEvent(rawBody, signature, hooKey);
+    const event = stripe.webhooks.constructEvent(body, signature, hooKey);
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
