@@ -15,16 +15,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
 
-// const allowOnlyHost = (req, res, next) => {
-//   const allowedHost = "cd2c-177-95-142-90.ngrok-free.app";
-//   if (req.headers.host !== allowedHost) {
-//     res.status(403).end();
-//   } else {
-//     next();
-//   }
-// };
-
-// app.use(allowOnlyHost);
 app.use(timeout(20000));
 app.use((req, res, next) => {
   if (req.originalUrl === "/checkout-succeded") {
@@ -35,15 +25,7 @@ app.use((req, res, next) => {
 });
 
 //webhook-route
-
-//webhook-route
-app.post(
-  "/checkout-succeded",
-  express.raw({
-    type: "application/json",
-  }),
-  checkoutController.updateOrderStatus
-);
+app.post("/checkout-succeded", checkoutController.updateOrderStatus);
 
 app.use(express.urlencoded({ limit: "20mb", extended: true }));
 app.use(cookieParser());
