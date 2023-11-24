@@ -3,9 +3,6 @@ import routes from "./routes/index.js";
 import express from "express";
 import cors from "cors";
 import path from "path";
-import { CheckoutController } from "./controllers/checkoutController.js";
-
-const checkoutController = new CheckoutController();
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -17,19 +14,12 @@ export const app = express();
 app.use(cookieParser());
 app.use(cors());
 
-//webhook-route
-app.post(
-  "/checkout-succeded",
-  express.raw({ type: "application/json" }),
-  checkoutController.updateOrderStatus
-);
-
 app.use((req, res, next) => {
   if (req.originalUrl === "/checkout-succeded") {
     next();
   } else {
     express.json()(req, res, next);
-    // express.urlencoded({ limit: "20mb", extended: true });
+    express.urlencoded({ limit: "20mb", extended: true });
   }
 });
 

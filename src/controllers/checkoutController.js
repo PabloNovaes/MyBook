@@ -1,6 +1,5 @@
 import { CheckoutRepository } from "../repositories/checkoutRepository.js";
 import { JWTGenerate } from "../utils/jwt/jwt.js";
-import getRawBody from "raw-body";
 import Stripe from "stripe";
 
 const checkoutRepository = new CheckoutRepository();
