@@ -78,7 +78,7 @@ export class CheckoutController {
 
   async updateOrderStatus(req, res) {
     const signature = req.headers["stripe-signature"];
-    const body = await req.rawBody;
+    const body = req.bodyRaw;
 
     if (!signature) {
       return res.status(400).end();
