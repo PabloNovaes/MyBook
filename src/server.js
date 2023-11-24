@@ -24,8 +24,14 @@ app.post(
   checkoutController.updateOrderStatus
 );
 
-app.use(express.urlencoded({ limit: "20mb", extended: true }));
-app.use(express.json());
+app.use((req, res, next) => {
+  if (req.originalUrl === "/checkout-succeded") {
+    next();
+  } else {
+    express.json()(req, res, next);
+    // express.urlencoded({ limit: "20mb", extended: true });
+  }
+});
 
 app.use(routes);
 
