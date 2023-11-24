@@ -18,11 +18,9 @@ app.use(cookieParser());
 app.use(cors());
 
 //webhook-route
-app.post(
-  "/checkout-succeded",
-  express.raw({ type: "application/json" }),
-  checkoutController.updateOrderStatus
-);
+app.use("/checkout-succeded", express.raw({ type: "application/json" }));
+
+app.post("/checkout-succeded", checkoutController.updateOrderStatus);
 
 app.use(express.urlencoded({ limit: "20mb", extended: true }));
 app.use(express.json());
