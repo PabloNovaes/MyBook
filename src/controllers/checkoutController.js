@@ -77,32 +77,35 @@ export class CheckoutController {
   }
 
   async updateOrderStatus(req, res) {
-    const signature = req.headers["stripe-signature"];
-    const body = req.body;
+    try {
+      const signature = req.headers["stripe-signature"];
+      const body = req.body;
 
-    if (!signature) {
-      return res.status(400).end();
+      if (!signature) {
+        return res.status(400).end();
+      }
+
+      const hookKey = process.env.STRIPE_WEBHOOK_KEY;
+      const event = stripe.webhooks.constructEvent(
+        body,
+        signature,
+        hookKey
+      );
+
+      if (event.type === "checkout.session.completed") {
+        const session = event.data.object;
+        const orderId = session["metadata"]["orderId"];
+        const userId = session["metadata"]["userId"];
+        const productsId = JSON.parse(session["metadata"]["productsId"]);
+
+        Promise.allSettled([
+          await checkoutRepository.updateOrderStatus(orderId),
+          await checkoutRepository.removeItensToBag(productsId, userId),
+        ]);
+        res.json({ received: true, body: req.body });
+      }
+    } catch (error) {
+      res.status(401).json({ body: req.body });
     }
-
-    const hookKey = process.env.STRIPE_WEBHOOK_KEY;
-    const event = stripe.webhooks.constructEvent(
-      body.toString("utf-8"),
-      signature,
-      hookKey
-    );
-
-    if (event.type === "checkout.session.completed") {
-      const session = event.data.object;
-      const orderId = session["metadata"]["orderId"];
-      const userId = session["metadata"]["userId"];
-      const productsId = JSON.parse(session["metadata"]["productsId"]);
-
-      Promise.allSettled([
-        await checkoutRepository.updateOrderStatus(orderId),
-        await checkoutRepository.removeItensToBag(productsId, userId),
-      ]);
-    }
-
-    res.json({ received: true, body: req.body });
   }
 }
