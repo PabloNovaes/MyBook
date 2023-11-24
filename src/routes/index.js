@@ -12,13 +12,13 @@ import { Router } from "express";
 const routes = Router();
 
 routes.use(checkoutRoutes);
-routes.use(productRoutes);
-routes.use(accountRoutes);
-routes.use(adressRoutes);
-routes.use(orderRoutes);
-routes.use(postRoutes);
-routes.use(userRoutes);
-routes.use(pageRoutes);
-routes.use(bagRoutes);
+routes.use(productRoutes, app.use(express.json()));
+routes.use(accountRoutes, app.use(express.json()));
+routes.use(adressRoutes, app.use(express.json()));
+routes.use(orderRoutes, app.use(express.json()));
+routes.use(postRoutes, app.use(express.json()));
+routes.use(userRoutes, app.use(express.json()));
+routes.use(pageRoutes, app.use(express.json()));
+routes.use(bagRoutes, app.use(express.json()));
 
 export default routes;

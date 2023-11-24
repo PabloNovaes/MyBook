@@ -22,9 +22,6 @@ app.use("/checkout-succeded", express.raw({ type: "application/json" }));
 
 app.post("/checkout-succeded", checkoutController.updateOrderStatus);
 
-app.use(express.urlencoded({ limit: "20mb", extended: true }));
-app.use(express.json());
-
 app.use(routes);
 
 app.use(express.static(path.join(__dirname, "app")));

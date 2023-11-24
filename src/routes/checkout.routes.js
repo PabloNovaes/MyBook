@@ -8,12 +8,14 @@ const checkoutController = new CheckoutController();
 
 checkoutRoutes.post(
   "/checkout-token",
+  app.use(express.json()),
   verifyToken,
   checkoutController.setProductsToken
 );
 
 checkoutRoutes.get(
   "/init-checkout",
+  app.use(express.json()),
   verifyToken,
   getProductsToToken,
   checkoutController.initSession
