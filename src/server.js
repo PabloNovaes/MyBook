@@ -33,7 +33,7 @@ app.use(timeout(20000));
 app.post(
   "/checkout-succeded",
   express.raw({
-    type: "application/json",
+    type: "*/*",
   }),
   checkoutController.updateOrderStatus
 );
