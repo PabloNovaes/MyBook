@@ -28,12 +28,12 @@ const app = express();
 app.use(timeout(20000));
 
 //webhook-route
-
 app.use(
-  express.json({
+  express.raw({
     limit: "20mb",
+    type: "application/json",
     verify: (req, res, buf) => {
-      req.rawBody = buf.toString();
+      req.rawBody = buf.toString(); // Converte o buffer para uma string
     },
   })
 );
