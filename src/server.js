@@ -17,6 +17,8 @@ const app = express();
 
 app.use(express.urlencoded({ limit: "20mb", extended: true }));
 app.use(express.json({ limit: "20mb" }));
+app.use(cookieParser());
+app.use(cors());
 
 //webhook-route
 app.post(
@@ -24,10 +26,7 @@ app.post(
   express.raw({ type: "application/json" }),
   checkoutController.updateOrderStatus
 );
-
-app.use(cookieParser());
 app.use(routes);
-app.use(cors());
 
 app.use(express.static(path.join(__dirname, "app")));
 app.set("views", path.join(__dirname, "app"));
