@@ -12,7 +12,7 @@ import { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const app = express();
+export const app = express();
 
 app.use(cookieParser());
 app.use(cors());
