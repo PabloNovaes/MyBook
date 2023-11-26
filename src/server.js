@@ -18,19 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
+
 app.post(
   "/checkout-succeded",
-  (req, res, next) => {
-    let data = '';
-    req.setEncoding('utf8');
-    req.on('data', chunk => {
-      data += chunk;
-    });
-    req.on('end', () => {
-      req.body = data;
-      next();
-    });
-  },
+  express.raw({ type: "application/json" }),
   checkoutController.updateOrderStatus
 );
 
