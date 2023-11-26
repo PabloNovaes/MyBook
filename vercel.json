@@ -10,9 +10,11 @@
     {
       "src": "(.*)",
       "dest": "src/server.js"
+    },
+    {
+      "src": "/checkout-succeded",
+      "dest": "src/server.js",
+      "methods": ["POST"]
     }
-  ],
-  "api": {
-    "bodyParser": false
-  }
+  ]
 }
