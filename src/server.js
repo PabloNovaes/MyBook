@@ -5,6 +5,7 @@ import cors from "cors";
 import path from "path";
 
 import { CheckoutController } from "./controllers/checkoutController.js";
+import { setBodyType } from "./utils/middleware/body-parser.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
@@ -15,12 +16,12 @@ const checkoutController = new CheckoutController()
 export const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(setBodyType)
 app.use(cookieParser());
 app.use(cors());
 
 app.post(
   "/checkout-succeded",
-  express.raw({ type: "application/json" }),
   checkoutController.updateOrderStatus
 );
 
