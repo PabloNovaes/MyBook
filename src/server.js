@@ -18,32 +18,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-app.use((req, res, next) => {
-  let data = '';
-  req.setEncoding('utf8');
-  req.on('data', chunk => {
-    data += chunk;
-  });
-  req.on('end', () => {
-    req.body = data;
-    next();
-  });
-});
-
-
 app.post(
   "/checkout-succeded",
+  (req, res, next) => {
+    let data = '';
+    req.setEncoding('utf8');
+    req.on('data', chunk => {
+      data += chunk;
+    });
+    req.on('end', () => {
+      req.body = data;
+      next();
+    });
+  },
   checkoutController.updateOrderStatus
 );
-
-// app.use((req, res, next) => {
-//   if (req.originalUrl == "/checkout-succeded") {
-//     // express.raw({ type: "application/json" })(req, res, next)
-//     next()
-//   } else (
-//     express.json()(req, res, next)
-//   )
-// })
 
 app.use(express.json())
 app.use(routes);
