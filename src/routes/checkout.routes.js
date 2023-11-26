@@ -14,12 +14,6 @@ checkoutRoutes.post(
   checkoutController.setProductsToken
 );
 
-checkoutRoutes.post(
-  "/checkout-succeded",
-  express.raw({ type: "application/json" }),
-  checkoutController.updateOrderStatus
-);
-
 checkoutRoutes.get(
   "/init-checkout",
   verifyToken,
