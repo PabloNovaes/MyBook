@@ -1,10 +1,9 @@
 {
   "version": 2,
   "builds": [
-    { 
-      "src": "src/server.js", 
-      "use": "@vercel/node",
-      "config": { "api": { "bodyParser": false } }
+    {
+      "src": "src/server.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -12,5 +11,8 @@
       "src": "(.*)",
       "dest": "src/server.js"
     }
-  ]
+  ],
+  "api": {
+    "bodyParser": false
+  }
 }
