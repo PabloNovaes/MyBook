@@ -16,5 +16,8 @@
       "dest": "src/server.js",
       "methods": ["POST"]
     }
-  ]
+  ],
+  "middlewares": {
+    "api": "./src/utils/middleware/body-parser.js"
+  }
 }

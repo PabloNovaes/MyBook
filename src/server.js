@@ -11,8 +11,10 @@ import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const checkoutController = new CheckoutController()
+
 export const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
@@ -21,8 +23,6 @@ app.post(
   express.raw({ type: "application/json" }),
   checkoutController.updateOrderStatus
 );
-
-app.use(express.json())
 
 app.use(routes);
 
