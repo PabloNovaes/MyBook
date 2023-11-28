@@ -30,7 +30,7 @@ export class CheckoutController {
         .status(201)
         .json({ created: true });
     } catch (error) {
-      res.status(400).send();
+      res.status(400).send(error);
     }
   }
 
@@ -71,7 +71,7 @@ export class CheckoutController {
 
       res.status(201).json(checkout);
     } catch (error) {
-      res.status(400).json({ message: "Ocorreu um erro inesperado" });
+      res.status(400).send(error);
     }
   }
 
