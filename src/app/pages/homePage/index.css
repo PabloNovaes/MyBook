@@ -149,6 +149,7 @@ swiper-slide {
   row-gap: 1.8rem;
   column-gap: 1.5rem;
   padding-bottom: 2rem;
+  z-index: -1;
 }
 
 .card {
@@ -221,9 +222,13 @@ swiper-slide {
     display: flex;
     border-radius: 14px;
     background-color: var(--secondary);
-    min-height: 16rem;
+    min-height: 14rem;
     min-width: 17rem;
     align-items: center;
+
+    & a {
+      height: 100%;
+    }
 
     & .img {
       width: fit-content;

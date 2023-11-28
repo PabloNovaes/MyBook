@@ -1,11 +1,10 @@
-const orderBtn = document.querySelector("#order");
-
 import { getdata } from "./api.js";
 
+const orderBtn = document.querySelector("#order");
 
 orderBtn.addEventListener("click", () => {
   cards.classList.toggle("list-mode");
 });
 
 
-getdata();
+document.addEventListener("DOMContentLoaded", getdata)

@@ -30,6 +30,7 @@ function verifyAuthState() {
 
 links.forEach((li) => {
   li.addEventListener("click", () => {
+    if (li.getAttribute("id") == "select-category") return
     setTimeout(() => {
       if (sidebar.classList.contains("open-nav")) {
         shadow.classList.toggle("viewShadow");

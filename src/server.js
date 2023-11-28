@@ -18,14 +18,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-
 app.post(
   "/checkout-succeded",
   express.raw({ type: "application/json" }),
   checkoutController.updateOrderStatus
 );
 
-app.use(express.json())
+app.use(express.json({limit: "20mb"}))
 app.use(routes);
 
 app.use(express.static(path.join(__dirname, "app")));

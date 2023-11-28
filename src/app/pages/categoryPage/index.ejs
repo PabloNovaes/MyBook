@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Livros por categoria</title>
     <link rel="stylesheet" href="../../pages/categoryPage/index.css" />
+    <link rel="stylesheet" href="../../global/global.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
@@ -15,6 +16,7 @@
 
   <body>
     <div id="shadow"></div>
+    <%- include('../../components/pageLoader/index') %>
     <%- include('../../components/shoppingBag/bag') %>
     <%- include('../../components/favorite/favorite') %>
     <%-include('../../components/sidebar/sidebar') %>
@@ -22,7 +24,7 @@
     <main>
       <%- include('../../components/header/header') %>
 
-      <h1 id="category">Suspense</h1>
+      <h1 id="category"><%= category %></h1>
 
       <div id="controlls">
         <ul>
@@ -34,8 +36,8 @@
             <p>Ordenar</p>
           </li>
           <i class="divider"></i>
-          <li>
-            <p>268 Resultados</p>
+          <li id="results">
+            <p>...</p>
           </li>
           <i class="divider"></i>
           <li id="filter">

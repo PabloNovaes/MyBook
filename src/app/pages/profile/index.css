@@ -837,7 +837,7 @@ main {
 
           & img {
             height: 10rem;
-            width: 10rem;
+            width: 7rem;
             object-fit: cover;
             border-radius: 0.8rem;
           }

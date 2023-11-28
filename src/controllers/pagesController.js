@@ -3,7 +3,8 @@ export class PagesController {
     res.render("pages/homePage/index");
   }
   async categoryPage(req, res) {
-    res.render("pages/categoryPage/index");
+    const category = req.params.category
+    res.render("pages/categoryPage/index", { category });
   }
   async productPage(req, res) {
     res.render("pages/productPage/index");

@@ -5,8 +5,9 @@ import { ShoppingBag } from "../../../class/bag.class.js";
 
 const closeCommentsBtn = document.querySelector("#close-comments");
 const viewAll = document.querySelector("#show-all-comments");
-const bagBtn = document.querySelector("button#bag-btn");
+const addProductBagBtn = document.querySelector("button#bag-btn");
 const header = document.querySelector("#main-header");
+const buyNowBtn = document.querySelector("#buy-now")
 
 await Promise.all([listBagItens(), loadProduct()]);
 
@@ -42,13 +43,13 @@ viewAll.addEventListener("click", showAllComments);
 
 closeCommentsBtn.addEventListener("click", showAllComments);
 
-bagBtn.addEventListener("click", async () => {
+addProductBagBtn.addEventListener("click", async () => {
   try {
     const product = { productId: getProductId() };
     const addItem = await saveProduct.inBag(product);
-    const { message } = addItem;
+    const { message, status } = addItem;
 
-    if (message) return error(message);
+    if (status) return error(message);
 
     await listBagItens();
     return success("Produto adicionado ao carrinho");
@@ -56,3 +57,10 @@ bagBtn.addEventListener("click", async () => {
     return error("Ocorreu um erro inesperado!");
   }
 });
+
+buyNowBtn.addEventListener("click", () => {
+  const productId = getProductId()
+
+  localStorage.setItem("Products", JSON.stringify([{ id: productId, quantity: 1 }]))
+  window.location.href = "/payment"
+})
