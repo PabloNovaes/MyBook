@@ -37,7 +37,8 @@ export class CheckoutController {
   async initSession(req, res) {
     try {
       const { products, method, orderId, userId } = req.order;
-
+      const pageUrl = process.env.STRIPE_PAGE_URL
+      
       const checkout = await stripe.checkout.sessions.create({
         payment_method_types: [method],
         metadata: {
@@ -50,8 +51,8 @@ export class CheckoutController {
           ),
         },
         mode: "payment",
-        success_url: "https://my-book-ten.vercel.app/profile",
-        cancel_url: "https://my-book-ten.vercel.app/profile",
+        success_url: pageUrl,
+        cancel_url: pageUrl,
         line_items: products.map((product) => {
           const { price, quantity, name, image } = product;
           return {
