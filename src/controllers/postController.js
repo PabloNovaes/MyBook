@@ -4,6 +4,7 @@ const postRepository = new PostRepository();
 
 import { testDate } from "../utils/momentJs/index.js";
 import moment from "moment";
+moment.tz.setDefault("America/Sao_Paulo")
 
 export class PostController {
   async createPost(req, res) {
