@@ -1,4 +1,5 @@
 import { CheckoutRepository } from "../repositories/checkoutRepository.js";
+import { Buffer } from "node:buffer"
 import { JWTGenerate } from "../utils/jwt/jwt.js";
 import Stripe from "stripe";
 
@@ -38,7 +39,7 @@ export class CheckoutController {
     try {
       const { products, method, orderId, userId } = req.order;
       const pageUrl = process.env.STRIPE_PAGE_URL
-      
+
       const checkout = await stripe.checkout.sessions.create({
         payment_method_types: [method],
         metadata: {
@@ -82,8 +83,10 @@ export class CheckoutController {
       return res.status(400).end();
     }
 
+    const body = Buffer.from(req.body)
+
     const hookKey = process.env.STRIPE_WEBHOOK_KEY;
-    const event = stripe.webhooks.constructEvent(req.body, signature, hookKey);
+    const event = stripe.webhooks.constructEvent(body, signature, hookKey);
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
