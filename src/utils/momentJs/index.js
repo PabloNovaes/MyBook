@@ -2,7 +2,7 @@ import moment from "moment-timezone";
 
 export function testDate(date) {
   try {
-    moment.tz.setDefault("America")
+    moment.tz.setDefault("America/Sao_Paulo")
 
     const current = moment();
     const difference = moment.duration(current.diff(date));
