@@ -5,7 +5,8 @@
   background-color: var(--primary);
   z-index: 10;
   display: none;
-  place-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .loader {
@@ -13,7 +14,7 @@
   height: 40px;
   border-radius: 50%;
   position: relative;
-  animation: rotate 0.2s linear infinite;
+  animation: rotate 0.4s linear infinite;
 }
 .loader::before {
   content: "";
@@ -60,7 +61,7 @@
     1 100%
   );
   animation-fill-mode: forwards;
-  display: grid !important;
+  display: flex !important;
 }
 
 .fade-out {

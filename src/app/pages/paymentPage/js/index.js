@@ -2,6 +2,7 @@ import { pageLoader } from "../../../components/pageLoader/index.js";
 import {
   setPaymentMethods,
   setAdressFromOrder,
+  registerAdressModal,
   error,
   success,
 } from "../../../sweetAlert/sweet.js";
@@ -10,6 +11,8 @@ import { creatOrder, loadOrderProducts, loadUserAdresses } from "./api.js";
 const selectPaymentMethod = document.querySelector("#payment-methods");
 const selectAdressOrder = document.querySelector("#address");
 const makeOrder = document.querySelector("#buy-values button");
+
+localStorage.removeItem("newAdress")
 
 function renderProduct(product) {
   const { price, name, image, author } = product;
@@ -44,9 +47,9 @@ function setOrderValues(products) {
 
   const subTotal = (document.querySelector("#sub-total").innerHTML = `
     ${values.sub.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
+    style: "currency",
+    currency: "BRL",
+  })}
   `);
 
   const total = (document.querySelector("#total").innerHTML = `
@@ -69,13 +72,23 @@ window.addEventListener("DOMContentLoaded", async () => {
       loadUserAdresses(),
     ]);
 
+    const createAdressOnBuy = (adress) => {
+      selectAdressOrder.addEventListener("click", () => {
+        setAdressFromOrder(selectAdressOrder, [adress])
+      });
+    }
+
     selectPaymentMethod.addEventListener("click", () => {
       setPaymentMethods(selectPaymentMethod);
     });
 
-    selectAdressOrder.addEventListener("click", () =>
-      setAdressFromOrder(selectAdressOrder, adresses)
-    );
+    if (adresses.length == 0) {
+      await registerAdressModal(createAdressOnBuy)
+    } else {
+      selectAdressOrder.addEventListener("click", () => {
+        setAdressFromOrder(selectAdressOrder, adresses)
+      });
+    }
 
     products.forEach((product) => {
       const element = renderProduct(product);
@@ -91,6 +104,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 makeOrder.addEventListener("click", async () => {
+  const validate = selectPaymentMethod.getAttribute("method") === "unselected" && selectAdressOrder.getAttribute("adress") === "unselected"
+  if (validate) {
+    return error("Preencha todas as informações para realizar um pedido!")
+  };
+
   try {
     pageLoader.startLoader();
     const paymentMethods = {
@@ -98,7 +116,6 @@ makeOrder.addEventListener("click", async () => {
       card: "card",
     };
 
-    if (selectPaymentMethod.getAttribute("method") == "unselected") return;
 
     const methodType = selectPaymentMethod.getAttribute("method");
 
@@ -106,7 +123,8 @@ makeOrder.addEventListener("click", async () => {
     const adressId = selectAdressOrder.getAttribute("adress-id");
     const products = JSON.parse(localStorage.getItem("Products"));
 
-    const execute = await creatOrder(method, products, adressId);
+    await creatOrder(method, products, adressId);
+
     success("Pedido relizado com sucesso!");
     return window.location.href = "/profile"
   } catch (err) {

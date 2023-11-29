@@ -10,7 +10,7 @@ export const error = (message) => {
     position: "bottom-right",
     color: "#e6e6e6",
     showConfirmButton: false,
-    timer: 4000,
+    timer: 1800,
     timerProgressBar: true,
   });
 
@@ -27,7 +27,7 @@ export const success = (message) => {
     position: "bottom-right",
     color: "#e6e6e6",
     showConfirmButton: false,
-    timer: 4000,
+    timer: 1800,
     timerProgressBar: true,
   });
 
@@ -327,10 +327,8 @@ export const registerAdressModal = async (loadingNewAdress) => {
         if (response.status == "error") {
           return error(response.message);
         }
-        setTimeout(() => {
-          loadingNewAdress(response.adress);
-          success(response.message);
-        }, 500);
+        loadingNewAdress(response.adress);
+        success(response.message);
         return adress;
       } catch (error) {
         throw new Error(error);
@@ -503,10 +501,12 @@ export const setAdressFromOrder = (element, adresses) => {
         return checkbox.checked == true;
       });
 
+      element.removeAttribute("adress")
       element.setAttribute("adress-id", checkedInput[0].getAttribute("id"));
 
       const selectedAdressData =
         checkedInput[0].parentElement.querySelector("p").textContent;
+
 
       return (element.querySelector("span").innerHTML = selectedAdressData);
     }

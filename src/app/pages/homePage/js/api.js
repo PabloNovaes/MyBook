@@ -45,6 +45,9 @@ function renderBooks(books) {
       reset: false,
       easing: "cubic-bezier(0.5, 0, 0, 1)",
       zIndex: 0,
+      beforeReveal: (card) => {
+        card.style = "";
+      },
     });
 
     cards.appendChild(element);

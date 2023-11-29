@@ -217,6 +217,8 @@ const quantityProductControlls = {
 };
 
 continueBtn.addEventListener("click", () => {
+  if (products.length == 0) return
+  
   localStorage.setItem("Products", JSON.stringify(products));
   window.location.href = "/payment";
 });

@@ -50,7 +50,6 @@ main {
   border-radius: 24px;
   margin: auto;
   overflow: hidden;
-  z-index: -1;
 }
 
 swiper-slide {
@@ -149,7 +148,6 @@ swiper-slide {
   row-gap: 1.8rem;
   column-gap: 1.5rem;
   padding-bottom: 2rem;
-  z-index: -1;
 }
 
 .card {
@@ -192,7 +190,7 @@ swiper-slide {
   gap: 1rem;
   padding-inline: 1rem;
   flex: 1 1 0;
-  
+
   & p {
     font-size: 1.3rem;
   }

@@ -24,13 +24,13 @@ export class AdressesController {
       }
     }
 
-    const createAdress = await adressRepository.create(sub, data);
+    const createdAdress = await adressRepository.create(sub, data);
     return res
       .status(200)
       .json({
         status: "success",
         message: "Endereço cadastrado com sucesso",
-        adress: createAdress,
+        adress: createdAdress,
       });
   }
 
