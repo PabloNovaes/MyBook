@@ -1,9 +1,9 @@
-import moment from "moment";
+import moment from "moment-timezone";
 
 export function testDate(date) {
   try {
-    moment.locale("pt-br")
-    
+    moment.tz.setDefault("America")
+
     const current = moment();
     const difference = moment.duration(current.diff(date));
 
