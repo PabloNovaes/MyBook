@@ -4,27 +4,23 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 
-import { CheckoutController } from "./controllers/checkoutController.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const checkoutController = new CheckoutController()
-
-export const app = express();
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-app.post(
-  "/checkout-succeded",
-  express.raw({ type: "application/json" }),
-  checkoutController.updateOrderStatus
-);
+app.use((req, res, next) => {
+  if (req.originalUrl == "/checkout-succeded") { next() } else {
+    express.json({ limit: "20mb" })(req, res, next)
+  }
+})
 
-app.use(express.json({limit: "20mb"}))
 app.use(routes);
 
 app.use(express.static(path.join(__dirname, "app")));

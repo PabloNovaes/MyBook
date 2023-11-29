@@ -33,7 +33,7 @@
 
 .fade-in {
   animation-name: fadeIn;
-  animation-duration: 0.2s !important;
+  animation-duration: 0.4s !important;
   animation-timing-function: linear(
     0 0%,
     0 1.8%,

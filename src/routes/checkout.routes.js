@@ -3,7 +3,6 @@ import { Router } from "express";
 
 import getProductsToToken from "../utils/middleware/getProductsOrderToken.js";
 import verifyToken from "../utils/middleware/verifyToken.js";
-import express from "express";
 
 const checkoutRoutes = Router();
 const checkoutController = new CheckoutController();
@@ -12,6 +11,12 @@ checkoutRoutes.post(
   "/checkout-token",
   verifyToken,
   checkoutController.setProductsToken
+);
+
+checkoutRoutes.post(
+  "/checkout-succeded",
+  express.raw({ type: "application/json" }),
+  checkoutController.updateOrderStatus
 );
 
 checkoutRoutes.get(
