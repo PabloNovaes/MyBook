@@ -63,7 +63,7 @@ export async function getdata() {
 
     const { data } = response
 
-    const resultQuantity = document.querySelector("#results p").innerText = `Resultados ${data.length}`
+    const resultQuantity = document.querySelector("#results p").innerText = `${data.length} resultados`
 
     return renderBooks(books)
   } catch (err) {
