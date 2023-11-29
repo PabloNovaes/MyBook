@@ -1,5 +1,6 @@
 import { CheckoutController } from "../controllers/checkoutController.js";
 import { Router } from "express";
+import express from "express";
 
 import getProductsToToken from "../utils/middleware/getProductsOrderToken.js";
 import verifyToken from "../utils/middleware/verifyToken.js";
