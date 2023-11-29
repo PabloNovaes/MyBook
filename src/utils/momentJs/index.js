@@ -2,6 +2,8 @@ import moment from "moment";
 
 export function testDate(date) {
   try {
+    moment.locale("pt-br")
+    
     const current = moment();
     const difference = moment.duration(current.diff(date));
 
