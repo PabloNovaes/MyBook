@@ -1,9 +1,10 @@
 import { PostRepository } from "../repositories/postRepository.js";
 import { webpConversion } from "../utils/sharp/webpConverter.js";
-const postRepository = new PostRepository();
-
 import { testDate } from "../utils/momentJs/index.js";
 import moment from "moment";
+
+const postRepository = new PostRepository();
+
 moment.tz.setDefault("America/Sao_Paulo")
 
 export class PostController {

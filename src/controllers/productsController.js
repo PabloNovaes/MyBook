@@ -25,4 +25,21 @@ export class ProductController {
       res.status(400).json({ message: "Ocorreu um erro inesperado!" });
     }
   }
+
+  async findBook(req, res) {
+    try {
+      const { query } = req.params
+
+      const book = await productRepository.findBookByName(query.toUpperCase())
+
+      if (!book && book == null) {
+        return res.status(200).json({ message: "Livro não encontrado!" })
+      }
+
+      return res.status(200).json({book})
+
+    } catch (error) {
+      return res.status(400).json({ message: "Ocorreu um erro inesperado" })
+    }
+  }
 }

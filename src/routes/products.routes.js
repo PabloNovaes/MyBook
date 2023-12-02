@@ -6,5 +6,6 @@ const productRoutes = Router();
 
 productRoutes.get("/all-products/:category?", productController.loadProducts);
 productRoutes.get("/products/id=:id", productController.loadProduct);
+productRoutes.get("/products/:query", productController.findBook);
 
 export default productRoutes;

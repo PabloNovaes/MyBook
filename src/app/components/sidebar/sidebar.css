@@ -328,6 +328,7 @@ header {
       flex-direction: column !important;
       gap: 0;
       transition: all 120ms linear;
+      position: relative;
 
       & span i:nth-child(3) {
         width: 100%;
@@ -339,11 +340,17 @@ header {
         }
       }
 
-      & span:hover + div {
+      & input[type="checkbox"] {
+        all: unset;
+        inset: 0;
+        position: absolute;
+      }
+
+      & input[type="checkbox"]:checked + div {
         height: 39.5rem;
       }
 
-      & span:hover i:nth-child(3)::before {
+      &:has(input:checked) span i:nth-child(3)::before {
         transform: rotate(180deg);
       }
 
@@ -360,7 +367,6 @@ header {
         background-color: var(--primary);
         width: 100%;
         padding: 0.8rem;
-        
       }
     }
   }

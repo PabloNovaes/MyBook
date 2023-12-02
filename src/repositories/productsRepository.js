@@ -54,4 +54,18 @@ export class ProductRepository {
       await prisma.$disconnect();
     }
   }
+
+  async findBookByName(query) {
+    try {
+      const book = await prisma.product.findMany({
+        where: {
+          name: query
+        }
+      })
+
+      return book
+    } catch (err) {
+      return err
+    }
+  }
 }
