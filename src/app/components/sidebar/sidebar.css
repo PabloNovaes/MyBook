@@ -93,6 +93,12 @@ footer i {
 #select-category {
   & span i:nth-child(3) {
     display: none;
+
+    & input[type="checkbox"] {
+      all: unset;
+      inset: 0;
+      position: absolute;
+    }
   }
 
   & div {
@@ -338,12 +344,6 @@ header {
         &::before {
           transition: all 125ms;
         }
-      }
-
-      & input[type="checkbox"] {
-        all: unset;
-        inset: 0;
-        position: absolute;
       }
 
       & input[type="checkbox"]:checked + div {
