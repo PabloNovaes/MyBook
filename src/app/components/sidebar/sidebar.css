@@ -93,12 +93,12 @@ footer i {
 #select-category {
   & span i:nth-child(3) {
     display: none;
+  }
 
-    & input[type="checkbox"] {
-      all: unset;
-      inset: 0;
-      position: absolute;
-    }
+  & input[type="checkbox"] {
+    all: unset;
+    inset: 0;
+    position: absolute;
   }
 
   & div {
