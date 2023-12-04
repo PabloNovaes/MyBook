@@ -1,9 +1,14 @@
 import { Post } from "../../../class/post.class.js";
 import { pageLoader } from "../../../components/pageLoader/index.js";
-import { commentsModal, error } from "../../../sweetAlert/sweet.js";
+import { openCommentsModal } from "../../feedPage/js/api.js"
+import { initCreateCommentBtn } from "../../feedPage/js/index.js"
+import { error } from "../../../sweetAlert/sweet.js";
 import "https://unpkg.com/scrollreveal";
 
-export const postWithoutImage = (avatar_url, name, created_at, description) => {
+const modalCase = document.querySelector("#comment-modal-case")
+
+
+export const postWithoutImage = (avatar_url, name, created_at, description, id) => {
   return `<header>
   <img
     class="user-img"
@@ -20,7 +25,7 @@ export const postWithoutImage = (avatar_url, name, created_at, description) => {
   <p>${description}</p>
 </span>
 <i class="divider"></i>
-<footer>
+<footer post-id=${id}>
   <ul>
     <li>
       <i class="ti ti-thumb-up"></i>
@@ -39,7 +44,8 @@ export const postWithImage = (
   name,
   created_at,
   description,
-  image_url
+  image_url,
+  id
 ) => {
   return `  <header>
   <img
@@ -67,7 +73,7 @@ export const postWithImage = (
 </div>
 <i class="divider"></i>
 
-<footer>
+<footer post-id=${id}>
   <ul>
     <li>
       <i class="ti ti-thumb-up"></i>
@@ -82,18 +88,22 @@ export const postWithImage = (
 };
 
 export async function renderPost(post) {
+
   const postsLocation = document.querySelector("#posts-list");
-  const { created_at, description, image_url } = post;
-  const { name, avatar_url } = post.User;
+  const { created_at, description, image_url, id } = post;
+  const { name, avatar_url, id: userId } = post.User;
 
   const postElement = document.createElement("div");
+  modalCase.querySelector("header").setAttribute("post-id", id)
+
   postElement.classList.add("post");
   if (image_url == "" || image_url == null) {
     postElement.innerHTML = postWithoutImage(
       avatar_url,
       name,
       created_at,
-      description
+      description,
+      id
     );
     postsLocation.appendChild(postElement);
   } else {
@@ -102,10 +112,14 @@ export async function renderPost(post) {
       name,
       created_at,
       description,
-      image_url
+      userId,
+      image_url,
+      id
     );
     postsLocation.appendChild(postElement);
   }
+
+  initCreateCommentBtn()
 
   const postText = postElement.querySelector(".post-text p");
 
@@ -113,19 +127,28 @@ export async function renderPost(post) {
     postElement.removeChild(postElement.querySelector(".post-text"));
   }
 
-  const commentBtn = postElement.querySelector("#comment-btn");
-  commentBtn.addEventListener("click", commentsModal);
   const sr = ScrollReveal({ reset: true });
+  const commentBtn = postElement.querySelector("#comment-btn");
+
+  commentBtn.addEventListener("click", (e) => {
+    if (e.target.nodeName !== "I") return
+    openCommentsModal(id)
+  });
 
   sr.reveal(".post", {
     origin: "bottom",
     distance: "1.5rem",
     duration: 600,
     reset: false,
-    beforeReveal: (element) => {
-      element.style = `visibility: visible; opacity: 1; transition: opacity 0.6s cubic-bezier(0.5, 0, 0, 1) 0s, transform 0.6s cubic-bezier(0.5, 0, 0, 1) 0s;`;
+    zIndex: 0,
+    beforeReveal: (post) => {
+      post.style = `
+      visibility: visible; opacity: 1; transition: opacity 0.6s cubic-bezier(0.5, 0, 0, 1) 0s, transform 0.6s cubic-bezier(0.5, 0, 0, 1) 0s;
+      `;
+      pageLoader.stopLoader();
     },
   });
+
 }
 
 export async function getPostsByUser() {

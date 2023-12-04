@@ -1,8 +1,13 @@
-import "https://unpkg.com/scrollreveal";
-import { Post } from "../../../class/post.class.js";
-import { commentsModal } from "../../../sweetAlert/sweet.js";
 import { pageLoader } from "../../../components/pageLoader/index.js";
 import { Comment } from "../../../class/comments.class.js"
+import { Post } from "../../../class/post.class.js";
+
+import "https://unpkg.com/scrollreveal";
+
+const modalElement = document.querySelector("#comment-modal")
+ const commentsList = modalElement.querySelector("ul#comments")
+const modalCase = document.querySelector("#comment-modal-case")
+
 
 const postWithoutImage = (id, avatar_url, name, created_at, description, postId) => {
   return ` <header>
@@ -93,51 +98,78 @@ const postWithImage = (
 </footer>`;
 };
 
-function renderCommentsByPost(comment) {
+export function renderCommentsByPost(comment) {
   const { User, content, created } = comment
   const { name, avatar_url } = User
 
   const li = document.createElement("li")
   li.innerHTML = `
     <img src=${avatar_url} alt="" />
-              <div class="content">
-                <span class="user-name">${name}</span>
-                <span class="text-box">${content}</span>
-              </div>
+           <div>
+           <div class="content">
+           <span class="user-name">${name}</span>
+           <span class="text-box">${content}</span>
+         </div>
+         <span class="created">${created}</span>
+           </div>
     `
 
-  return li
+  return commentsList.appendChild(li)
 }
 
+export async function openCommentsModal(postId) {
+  const modal = {
+    postId: postId,
 
-async function openCommentsModal(postId) {
+    openModal() {
+      shadow.classList.toggle("viewShadow");
+      modalElement.classList.toggle("open")
+      document.documentElement.classList.toggle("hidden")
+      document.documentElement.classList.toggle("shadow")
+    },
+    closeModal() {
+      const commentsList = modalElement.querySelector("ul#comments")
+      modalElement.classList.remove("dont-have-comments")
+
+      commentsList.innerHTML = ""
+
+      modalElement.classList.remove("open")
+      shadow.classList.remove("viewShadow");
+      document.documentElement.classList.remove("hidden")
+      document.documentElement.classList.remove("shadow")
+
+      setTimeout(() => {
+        modalCase.style.display = "none"
+      }, 200);
+    },
+    async init() {
+      const closeModalBtn = document.querySelector("#close-modal")
+
+      modalElement.querySelector("header").setAttribute("post-id", postId)
+      modalCase.style.display = "flex"
+
+      const commentsClass = new Comment()
+      const comments = await commentsClass.getComments(postId)
+
+      if (comments.length == 0) {
+        this.openModal()
+        closeModalBtn.addEventListener("click", this.closeModal)
+        return modalElement.classList.toggle("dont-have-comments")
+      }
+
+      comments.forEach(comment => {
+        renderCommentsByPost(comment)
+      })
+
+      commentsList.scrollTo(0, commentsList.scrollHeight + 1000);
+
+      this.openModal()
+      closeModalBtn.addEventListener("click", this.closeModal)
+    }
+  }
   try {
     pageLoader.startLoader()
-
-    const commentMobileModal = document.querySelector("#comment-mobile-modal")
-    const closeModalBtn = document.querySelector("#close-modal")
-
-    const commentsClass = new Comment()
-    const comments = await commentsClass.getComments(postId)
-
-    if (window.innerWidth > 820) {
-      return commentsModal()
-    } else {
-      const commentsList = commentMobileModal.querySelector("ul#comments")
-      comments.forEach(comment => {
-        const element = renderCommentsByPost(comment)
-        commentsList.appendChild(element)
-      })
-
-      commentMobileModal.classList.toggle("open")
-      document.documentElement.classList.toggle("hidden")
-
-      closeModalBtn.addEventListener("click", () => {
-        commentsList.innerHTML = ""
-        commentMobileModal.classList.remove("open")
-        document.documentElement.classList.remove("hidden")
-      })
-    }
+    await modal.init()
   } catch (error) {
     throw new Error(error)
   } finally {
@@ -153,31 +185,32 @@ export async function renderPosts() {
 
   allPosts.posts.reverse().forEach((post) => {
     const postsLocation = document.querySelector("#posts-list");
-    const { created_at, description, image_url, id: postId } = post;
-    const { name, avatar_url, id } = post.User;
+    const { created_at, description, image_url, id } = post;
+    const { name, avatar_url, id: userId } = post.User;
 
     const postElement = document.createElement("div");
+    modalCase.querySelector("header").setAttribute("post-id", id)
 
     postElement.classList.add("post");
     if (image_url == "" || image_url == null) {
       postElement.innerHTML = postWithoutImage(
-        id,
+        userId,
         avatar_url,
         name,
         created_at,
         description,
-        postId
+        id
       );
       postsLocation.appendChild(postElement);
     } else {
       postElement.innerHTML = postWithImage(
-        id,
+        userId,
         avatar_url,
         name,
         created_at,
         description,
         image_url,
-        postId
+        id
       );
       postsLocation.appendChild(postElement);
     }
@@ -192,8 +225,8 @@ export async function renderPosts() {
     const commentBtn = postElement.querySelector("#comment-btn");
 
     commentBtn.addEventListener("click", (e) => {
-      const postId = e.target.parentElement.parentElement.parentElement.getAttribute("post-id")
-      openCommentsModal(postId)
+      if (e.target.nodeName !== "I") return
+      openCommentsModal(id)
     });
 
     sr.reveal(".post", {

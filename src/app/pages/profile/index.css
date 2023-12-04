@@ -12,6 +12,11 @@ main {
   padding-inline: 30px;
 }
 
+section#pages {
+  display: flex;
+  justify-content: center;
+}
+
 #main {
   display: flex;
   flex-direction: column;
@@ -515,6 +520,7 @@ main {
   margin: 0 auto;
   max-width: 70rem;
   gap: 1.4rem;
+  width: 100%;
 
   display: none;
   animation-duration: 0.5s;

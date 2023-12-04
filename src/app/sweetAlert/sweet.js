@@ -2,7 +2,6 @@ import { Adress } from "../class/adress.class.js";
 import { Post } from "../class/post.class.js";
 import { User } from "../class/user.class.js";
 import { pageLoader } from "../components/pageLoader/index.js";
-import { renderPost } from "../pages/profile/js/posts.js";
 
 export const error = (message) => {
   const Toast = Swal.mixin({
@@ -339,42 +338,6 @@ export const registerAdressModal = async (loadingNewAdress) => {
   });
 
   return html;
-};
-
-export const commentsModal = async (user) => {
-  Swal.fire({
-    html: `
-    <header>
-    <h2>Comentários</h2>
-  </header>
-  <div class="swal-comments-container">
-   <ul id="comments">
-    <li>
-      <img src="https://github.com/pablonovaes.png">
-      <div class="comment-content">
-        <p class="user-name">Pablo Novaes</p>
-        <p class="comment-text">livro ruimzao</p>
-      </div>
-    </li>
-   
-   </ul>
-  </div>
-  <i class="divider"></i>
- <footer>
-    <div id="input-case">
-      <input type ="text" placeholder="Faça um comentário"/>
-    </div>
-    <button>
-      <i class="ph-fill ph-paper-plane-right"></i>
-    </button>
- </footer>
-  `,
-    showConfirmButton: false,
-    didRender: (e) => {
-      const modal = document.querySelector(".swal2-modal");
-      modal.setAttribute("id", "comment-modal");
-    },
-  });
 };
 
 export const setPaymentMethods = (element) => {

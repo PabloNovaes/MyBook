@@ -1,7 +1,7 @@
 import { PostRepository } from "../repositories/postRepository.js";
 import { webpConversion } from "../utils/sharp/webpConverter.js";
 import { testDate } from "../utils/momentJs/index.js";
-import moment from "moment";
+import moment from "moment-timezone";
 
 const postRepository = new PostRepository();
 

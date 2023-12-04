@@ -1,12 +1,17 @@
-import { postWithImage, postWithoutImage } from "../../profile/js/posts.js";
+import { postWithImage, postWithoutImage } from "../../userProfile/js/post-template.js";
+import { openCommentsModal } from "../../feedPage/js/api.js"
+import { Comment } from "../../../class/comments.class.js";
 import { pageLoader } from "../../../components/pageLoader/index.js";
+import { renderCommentsByPost } from "../../feedPage/js/api.js";
 import {
-  commentsModal,
   error,
+  success,
   viewImageProfileModal,
 } from "../../../sweetAlert/sweet.js";
 import { User } from "../../../class/user.class.js";
 import { Chat } from "../../../class/chat.class.js";
+
+import "https://unpkg.com/scrollreveal";
 
 const user = new User();
 const initChatBtn = document.querySelector("#init-chat");
@@ -15,6 +20,39 @@ const viewProfileImage = document.querySelector("#image-options ul li");
 const controllsOptions = imgOptions.querySelectorAll("ul .option");
 const hideImgOptions = imgOptions.querySelector("header");
 const img = document.querySelector("#user-img");
+
+const modalElement = document.querySelector("#comment-modal")
+const commentsList = modalElement.querySelector("ul#comments")
+const modalCase = document.querySelector("#comment-modal-case")
+
+export function initCreateCommentBtn() {
+  const createCommentBtn = document.querySelector("#create-post")
+
+  createCommentBtn.addEventListener("click", async () => {
+    try {
+      const modalInput = document.querySelector("#input-box input")
+      const postId = modalElement.querySelector("header").getAttribute("post-id")
+
+      if (modalInput.value.trim() == "") return
+      const date = new Date().toLocaleString("pt-BR")
+      const commentClass = new Comment(modalInput.value, date, postId)
+
+      const newComment = await commentClass.createComment(commentClass)
+      modalInput.value = ""
+      modalElement.classList.remove("dont-have-comments")
+
+      const { postId: newPostId } = newComment
+
+      renderCommentsByPost(newComment, newPostId)
+      commentsList.scrollTo(0, commentsList.scrollHeight + 1000);
+
+      return success("Comentário publicado!")
+    } catch (err) {
+      console.log(err)
+      return error("Ocorreu um erro inesperado")
+    }
+  })
+}
 
 function viewOrHideOptions() {
   imgOptions.classList.toggle("view-image-options");
@@ -30,17 +68,20 @@ const getVisitedUserId = () => {
 
 function renderPost(post, user) {
   const postsLocation = document.querySelector("#posts-list");
-  const { created_at, description, image_url } = post;
-  const { name, avatar_url } = user;
+  const { created_at, description, image_url, id } = post;
+  const { name, avatar_url, id: userId } = user
 
   const postElement = document.createElement("div");
+  modalCase.querySelector("header").setAttribute("post-id", id)
+
   postElement.classList.add("post");
   if (image_url == "" || image_url == null) {
     postElement.innerHTML = postWithoutImage(
       avatar_url,
       name,
       created_at,
-      description
+      description,
+      id
     );
     postsLocation.appendChild(postElement);
   } else {
@@ -49,20 +90,40 @@ function renderPost(post, user) {
       name,
       created_at,
       description,
-      image_url
+      image_url,
+      id
     );
     postsLocation.appendChild(postElement);
   }
 
-  const commentBtn = postElement.querySelector("#comment-btn");
-  commentBtn.addEventListener("click", commentsModal);
+  initCreateCommentBtn()
+
+  const postText = postElement.querySelector(".post-text p");
+
+  if (postText.textContent == "") {
+    postElement.removeChild(postElement.querySelector(".post-text"));
+  }
+
   const sr = ScrollReveal({ reset: true });
+  const commentBtn = postElement.querySelector("#comment-btn");
+
+  commentBtn.addEventListener("click", (e) => {
+    if (e.target.nodeName !== "I") return
+    openCommentsModal(id)
+  });
 
   sr.reveal(".post", {
     origin: "bottom",
     distance: "1.5rem",
     duration: 600,
     reset: false,
+    zIndex: 0,
+    beforeReveal: (post) => {
+      post.style = `
+      visibility: visible; opacity: 1; transition: opacity 0.6s cubic-bezier(0.5, 0, 0, 1) 0s, transform 0.6s cubic-bezier(0.5, 0, 0, 1) 0s;
+      `;
+      pageLoader.stopLoader();
+    },
   });
 }
 

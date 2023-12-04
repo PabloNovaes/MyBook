@@ -10,6 +10,8 @@ export class Comment {
                     created,
                     postId,
                     userId
+                }, include: {
+                    User: true
                 }
             })
 
