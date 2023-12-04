@@ -13,7 +13,7 @@ pageRoutes.get("/login", verifyAuthState, pagesController.loginPage);
 pageRoutes.get("/payment", verifyToken, pagesController.paymentPage);
 pageRoutes.get("/chat", verifyToken, pagesController.chatPage);
 pageRoutes.get("/product/id=:id", pagesController.productPage);
-pageRoutes.get("/feed", verifyToken, pagesController.feedPage);
+pageRoutes.get("/feed", pagesController.feedPage);
 pageRoutes.get("/category=:category", pagesController.categoryPage);
 pageRoutes.get("/", pagesController.homePage);
 

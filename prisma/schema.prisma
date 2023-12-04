@@ -22,6 +22,7 @@ model User {
   password   String?
 
   adresses        Adress_per_user[]
+  comments        Comments[]
   posts           Post[]
   orders          Order[]
   ProductBag      ProductBag[]
@@ -103,7 +104,21 @@ model Post {
   User   User?   @relation(fields: [userId], references: [id])
   userId String?
 
+  comments Comments[]
+
   @@map("posts")
+}
+
+model Comments {
+  id      String @id @default(uuid())
+  content String @db.Text
+  created String
+
+  Post   Post?   @relation(fields: [postId], references: [id])
+  postId String?
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
 
 model Order {

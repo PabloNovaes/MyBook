@@ -59,7 +59,9 @@ export class ProductRepository {
     try {
       const book = await prisma.product.findMany({
         where: {
-          name: query
+          name: {
+            startsWith: query
+          }
         }
       })
 

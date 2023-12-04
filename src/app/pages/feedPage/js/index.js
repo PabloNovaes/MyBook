@@ -1,5 +1,6 @@
 import { renderPosts } from "../../feedPage/js/api.js";
 import { startPost } from "../../../sweetAlert/sweet.js";
+
 const header = document.querySelector("#main-header");
 const startPostBtn = document.querySelector("#init-post");
 

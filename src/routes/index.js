@@ -1,5 +1,6 @@
 import checkoutRoutes from "./checkout.routes.js";
 import productRoutes from "./products.routes.js";
+import commentRoutes from "./comments.routes.js";
 import accountRoutes from "./account.routes.js";
 import adressRoutes from "./adress.routes.js";
 import orderRoutes from "./order.routes.js";
@@ -14,6 +15,7 @@ const routes = Router();
 routes.use(checkoutRoutes);
 routes.use(productRoutes);
 routes.use(accountRoutes);
+routes.use(commentRoutes);
 routes.use(adressRoutes);
 routes.use(orderRoutes);
 routes.use(postRoutes);
