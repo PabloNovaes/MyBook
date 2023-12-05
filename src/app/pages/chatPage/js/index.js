@@ -19,8 +19,8 @@ export const chatWindow = {
       <img src=${avatar_url} alt="" />
        <div>
        <p class="content">${content}
-       <span class="send-in">${sendIn[0]}:${sendIn[1]}</span>
        </p>
+       <span class="send-in">${sendIn[0]}:${sendIn[1]}</span>
           
         </div>
     </div>

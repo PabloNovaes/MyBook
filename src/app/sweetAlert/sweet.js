@@ -127,8 +127,7 @@ export const startPost = async () => {
 
 export const viewImageProfileModal = (img) => {
   Swal.fire({
-    html: `<img src="${img}" style="
-    max-width: 50rem;">`,
+    html: `<img src="${img}" >`,
     showConfirmButton: false,
   });
 };

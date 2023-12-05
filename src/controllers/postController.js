@@ -1,6 +1,6 @@
 import { PostRepository } from "../repositories/postRepository.js";
 import { webpConversion } from "../utils/sharp/webpConverter.js";
-import { testDate } from "../utils/momentJs/index.js";
+import { orderByCreated, testDate } from "../utils/momentJs/index.js";
 import moment from "moment-timezone";
 
 const postRepository = new PostRepository();
@@ -39,7 +39,9 @@ export class PostController {
   async getPosts(req, res) {
     try {
       const { sub } = req.user;
-      const posts = await postRepository.handlePosts(sub);
+      let posts = await postRepository.handlePosts(sub);
+
+      posts = orderByCreated(posts)
 
       await posts.forEach(async (post) => {
         let date = post.created_at.split(",");
@@ -63,7 +65,9 @@ export class PostController {
   }
   async getAllPosts(req, res) {
     try {
-      const posts = await postRepository.handleAllPost();
+      let posts = await postRepository.handleAllPost();
+
+      posts = orderByCreated(posts)
 
       await posts.forEach(async (post) => {
         let date = post.created_at.split(",");

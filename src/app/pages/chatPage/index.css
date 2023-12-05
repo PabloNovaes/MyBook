@@ -314,35 +314,38 @@ main {
   display: flex;
   padding-inline: 0.8rem;
 
-  & div {
+  & div:nth-child(1) {
     display: flex;
     gap: 1rem;
-    max-width: 80%;
+    max-width: 90%;
+
+    & img {
+      width: 3.5rem;
+      height: 3.5rem;
+      object-fit: cover;
+      background-color: var(--primary);
+    }
+  }
+
+  & div:nth-child(2) {
+    background-color: var(--primary);
+    display: grid;
+    gap: .5rem;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    margin-top: 0.6rem;
 
     & .content {
-      background-color: var(--primary);
-      padding: 1rem;
-      border-radius: 1.8rem;
       font-weight: 400;
       font-size: 1.4rem;
       font-family: "Poppins";
-      margin-top: 0.6rem;
-      line-break: anywhere;
-      position: relative;
-
-      & .send-in {
-        font-weight: 500;
-        opacity: 0.8;
-        font-size: 1.1rem;
-        align-self: end;
-        min-width: 100%;
-      }
     }
 
-    & img {
-      height: 3.5rem;
-      width: 3.5rem;
-      background-color: var(--primary);
+    & .send-in {
+      font-weight: 500;
+      opacity: 0.8;
+      font-size: 1rem;
+      text-align: end;
     }
   }
 }
@@ -423,14 +426,6 @@ main {
 
     & #user-in-chat {
       width: 100%;
-    }
-  }
-
-  .message-box {
-    max-width: 98%;
-
-    & img {
-      width: 1rem;
     }
   }
 

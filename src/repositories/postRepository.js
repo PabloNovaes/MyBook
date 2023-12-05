@@ -34,9 +34,6 @@ export class PostRepository {
         include: {
           User: true,
         },
-        orderBy: {
-          created_at: "desc",
-        },
       });
       return posts;
     } catch (error) {
@@ -51,9 +48,6 @@ export class PostRepository {
       const posts = await prisma.post.findMany({
         include: {
           User: true,
-        },
-        orderBy: {
-          created_at: "desc",
         },
       });
 

@@ -262,6 +262,12 @@ h2.swal2-title {
   margin: 0 !important;
 }
 
+.swal2-html-container img {
+  max-width: 50rem;
+  max-height: calc(100dvh - 15rem);
+  object-fit: contain;
+}
+
 #start-post-modal {
   & img#post-image {
     max-width: 30rem !important;

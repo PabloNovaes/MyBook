@@ -1,5 +1,17 @@
 import moment from "moment-timezone";
 
+export function orderByCreated(data) {
+  return data.sort((a, b) => {
+    const [dateA, timeA] = a.created_at.split(",")
+    const [dateB, timeB] = b.created_at.split(",")
+
+    const current = moment(dateA + timeA, "DD/MM/YYYY HH:mm:ss").unix()
+    const next = moment(dateB + timeB, "DD/MM/YYYY HH:mm:ss").unix()
+
+    return current - next
+  })
+}
+
 export function testDate(date) {
   try {
     moment.tz.setDefault("America/Sao_Paulo")
