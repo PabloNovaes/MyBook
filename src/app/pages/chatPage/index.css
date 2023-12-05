@@ -189,7 +189,6 @@ main {
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        line-break: anywhere;
       }
 
       & .send-in {
