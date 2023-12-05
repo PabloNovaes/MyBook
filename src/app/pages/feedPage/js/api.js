@@ -183,7 +183,7 @@ export async function renderPosts() {
   let allPosts = await post.getAllPosts();
 
 
-  allPosts.posts.reverse().forEach((post) => {
+  allPosts.posts.forEach((post) => {
     const postsLocation = document.querySelector("#posts-list");
     const { created_at, description, image_url, id } = post;
     const { name, avatar_url, id: userId } = post.User;
