@@ -46,12 +46,12 @@ window.addEventListener("scroll", () => {
   }
 });
 
-startPostBtn.addEventListener("click", async () => {
-  const createPost = await startPost();
-  return createPost;
-});
-
 document.addEventListener('DOMContentLoaded', async () => {
+  startPostBtn.addEventListener("click", async () => {
+    const createPost = await startPost();
+    return createPost;
+  });
+
   await renderPosts()
   initCreateCommentBtn()
 })
