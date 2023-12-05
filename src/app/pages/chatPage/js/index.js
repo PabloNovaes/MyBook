@@ -29,6 +29,7 @@ export const chatWindow = {
     if (currentId.id == id) {
       messageElement.style.flexDirection = "row-reverse";
       messageElement.querySelector("div").style.flexDirection = "row-reverse";
+      messageElement.querySelector("div div").style.textAlign = "start";
     }
     localMessages.appendChild(messageElement);
   },
