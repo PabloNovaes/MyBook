@@ -35,7 +35,7 @@ export class PostRepository {
           User: true,
         },
         orderBy: {
-          created_at: "desc",
+          created_at: "asc",
         },
       });
       return posts;
@@ -53,7 +53,7 @@ export class PostRepository {
           User: true,
         },
         orderBy: {
-          created_at: "desc",
+          created_at: "asc",
         },
       });
 
