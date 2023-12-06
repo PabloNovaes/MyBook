@@ -385,7 +385,6 @@ nav {
   }
 }
 
-
 .book-data {
   display: flex;
   flex-direction: column;
@@ -474,7 +473,7 @@ nav {
     margin-left: 0;
     padding: 0;
 
-    /* & #main-header {
+    & #main-header {
       padding-inline: 1.2rem;
       gap: 10px;
       align-items: center;
@@ -504,7 +503,7 @@ nav {
           font-size: 4rem;
         }
       }
-    } */
+    }
   }
 
   #book-info {
