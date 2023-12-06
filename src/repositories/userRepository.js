@@ -86,4 +86,29 @@ export class UserRepository {
       await prisma.$disconnect();
     }
   }
+
+  async getAllUsers(query) {
+    try {
+      const users = prisma.user.findMany({
+        where: {
+          OR: [
+            {
+              name: {
+                startsWith: query, mode: "insensitive"
+              }
+            },
+            {
+              nickname: {
+                startsWith: query, mode: "insensitive"
+              }
+            }
+          ]
+        }
+      })
+
+      return users
+    } catch (error) {
+      return error
+    }
+  }
 }

@@ -2,6 +2,8 @@ import axios from "../../../services/axios/axios.js";
 import { auth } from "../services/firebase/auth.firebase.js";
 import { collection, db, doc, setDoc } from "../class/chat.class.js";
 
+let cancelToken = null
+
 export class User {
   email;
   name;
@@ -146,6 +148,18 @@ export class User {
       return response;
     } catch (error) {
       return error;
+    }
+  }
+
+  async findUser(query) {
+    try {
+      const response = await axios(`/users=${query}`)
+      const users = response.data
+
+      return users
+    }
+    catch (error) {
+      return error
     }
   }
 }

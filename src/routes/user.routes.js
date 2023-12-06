@@ -13,6 +13,7 @@ userRoutes.post(
 userRoutes.post("/users/update-data", verifyToken, userController.updateData);
 userRoutes.post("/users/id", verifyToken, userController.goToUserProfile);
 userRoutes.get("/users", verifyToken, userController.getUser);
+userRoutes.get("/users=:query", userController.searchUsers);
 userRoutes.post("/create", userController.createUser);
 
 export default userRoutes;

@@ -1,11 +1,11 @@
-const openSidebarBtn = document.querySelector("#sidebar_btn"),
-  closeSidebarBtn = document.querySelector("#close-btn"),
-  sidebar = document.querySelector("#sidebar"),
-  shadow = document.querySelector("#shadow"),
-  toogleTheme = document.querySelector("#toogleTheme"),
-  html = document.querySelector("#html"),
-  theme = localStorage.getItem("theme"),
-  toggle = toogleTheme;
+const openSidebarBtn = document.querySelector("#sidebar_btn")
+const closeSidebarBtn = document.querySelector("#close-btn")
+const toogleTheme = document.querySelector("#toogleTheme")
+const sidebar = document.querySelector("#sidebar")
+const shadow = document.querySelector("#shadow")
+const html = document.querySelector("#html")
+const theme = localStorage.getItem("theme")
+const toggle = toogleTheme;
 
 if (theme) {
   const toggle = toogleTheme;
@@ -49,6 +49,9 @@ toogleTheme.addEventListener("click", () => {
   switchTheme();
 });
 
+
+
 openSidebarBtn.addEventListener("click", openAndCloseSidebar);
+
 closeSidebarBtn.addEventListener("click", openAndCloseSidebar);
 

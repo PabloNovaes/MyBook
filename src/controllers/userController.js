@@ -24,8 +24,12 @@ export class UserController {
     }
 
     try {
+      const [firstName, lastName] = data.name.split(" ")
+      const nickname = `@${firstName}.${lastName}`
+
       data.id = data.id ?? id;
       data.password = await hashedPass(password);
+      data.nickname = nickname
 
       const createUser = await userRepository.create(data);
 
@@ -102,6 +106,18 @@ export class UserController {
       res.status(200).json({ message: "Dados atualizados", data: updateData });
     } catch (error) {
       res.status(400).json({ message: `Ocorreu um erro inesperado!` });
+    }
+  }
+
+  async searchUsers(req, res) {
+    try {
+      const { query } = req.params
+
+      const users = await userRepository.getAllUsers(query)
+
+      return res.status(200).json(users)
+    } catch (error) {
+      return res.status(400).json({ message: "Ocorreu um erro inesperado" })
     }
   }
 }
