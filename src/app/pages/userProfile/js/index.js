@@ -145,6 +145,8 @@ async function getData() {
   postQuantity = document.querySelector("#post-quantity p").innerText =
     posts.length;
 
+  if (posts.length == 0) return
+
   posts.forEach((post) => {
     renderPost(post, userData);
     pageLoader.stopLoader();
