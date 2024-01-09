@@ -1,5 +1,5 @@
 import { Chat } from "../../../class/chat.class.js";
-import { openAndCloseSidebar } from "../../../components/header/scripts/script.js";
+// import { openAndCloseSidebar } from "../../../components/header/scripts/script.js";
 const arrowBack = document.querySelector("#back-from-conversations");
 const localMessages = document.querySelector(".local-messages ul");
 const inputMessage = document.querySelector("#chat-body input");
@@ -103,6 +103,6 @@ localMessages.parentElement.addEventListener("touchmove", () =>
   inputMessage.blur()
 );
 
-sidebarBtn.addEventListener("click", openAndCloseSidebar);
+// sidebarBtn.addEventListener("click", openAndCloseSidebar);
 
 window.addEventListener("popstate", chatWindow.closeChat);
