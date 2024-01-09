@@ -128,29 +128,34 @@ function renderPost(post, user) {
 }
 
 async function getData() {
-  let userName, postQuantity, userImg, nickName;
+  try {
+    pageLoader.startLoader();
+    let userName, postQuantity, userImg, nickName;
 
-  pageLoader.startLoader();
 
-  const id = getVisitedUserId();
-  const data = await user.renderAnotherUserData(id);
+    const id = getVisitedUserId();
+    const data = await user.renderAnotherUserData(id);
 
-  const userData = data.user;
-  const posts = data.posts;
-  const { avatar_url, name, nickname } = userData;
+    const userData = data.user;
+    const posts = data.posts;
+    const { avatar_url, name, nickname } = userData;
 
-  userName = document.querySelector("#name").innerText = name;
-  nickName = document.querySelector("#user-name").innerText = nickname;
-  userImg = document.querySelector("#user-img").src = avatar_url;
-  postQuantity = document.querySelector("#post-quantity p").innerText =
-    posts.length;
+    userName = document.querySelector("#name").innerText = name;
+    nickName = document.querySelector("#user-name").innerText = nickname;
+    userImg = document.querySelector("#user-img").src = avatar_url;
+    postQuantity = document.querySelector("#post-quantity p").innerText =
+      posts.length;
 
-  if (posts.length == 0) return
+    if (posts.length == 0) return
 
-  posts.forEach((post) => {
-    renderPost(post, userData);
-    pageLoader.stopLoader();
-  });
+    posts.forEach((post) => {
+      renderPost(post, userData);
+    });
+  } catch {
+    return error("Ocorreu um erro inesperado")
+  } finally {
+    pageLoader.stopLoader()
+  }
 }
 
 initChatBtn.addEventListener("click", async () => {
